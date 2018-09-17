@@ -42,6 +42,8 @@ public class player19 implements ContestSubmission {
 
     public void run() {
         // Run your algorithm here
+        Initializations Inits = new Initializations();
+        Inits.test_print();
 
         int evals = 0;
         // init population
@@ -52,8 +54,6 @@ public class player19 implements ContestSubmission {
             // double child[] = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
             double child[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
             // Check fitness of unknown fuction
-            Double fitness = (double) evaluation_.evaluate(child);
-            System.out.println("Selected " + rouletteWheelSelection(child));
             evals++;
             // Select survivors
         }
