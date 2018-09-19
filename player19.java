@@ -9,6 +9,7 @@ public class player19 implements ContestSubmission {
     Random rnd_;
     ContestEvaluation evaluation_;
     private int evaluations_limit_;
+    private final int dimension = 10;
 
     public player19() {
         rnd_ = new Random();
@@ -42,25 +43,23 @@ public class player19 implements ContestSubmission {
     }
 
     public void run() {
+        double[][] population;
+        int populationSize = 100;
         // Run your algorithm here
-        Initializations Inits = new Initializations();
-        Inits.test_print();
-
+        Initializations Inits = new Initializations(dimension);
         Variations Vars = new Variations();
-        Vars.test_print();
-
         Selections Sels = new Selections();
-        Sels.test_print();
 
         int evals = 0;
         // init population
+        population = Inits.initPopulation(populationSize, evaluation_);
         // calculate fitness
         while (evals < evaluations_limit_) {
             // Select parents
             // Apply crossover / mutation operators
-            double child[] = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
+            // double child[] = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
             // Check fitness of unknown fuction
-            Double fitness = (double) evaluation_.evaluate(child);
+            // Double fitness = (double) evaluation_.evaluate(child);
             evals++;
             // Select survivors
         }
