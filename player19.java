@@ -64,7 +64,13 @@ public class player19 implements ContestSubmission {
             evals++;
             // Select survivors
         }
-
+        Double[][] mystring = new Double[][]{ //just an example of sorting by a column
+			{2.0,3.2},
+			{1.0,4.2},
+			{9.2,5.2},
+		};
+		Arrays.sort(mystring, (Double[] c1, Double[] c2) -> c1[0].compareTo(c2[0])); //sorting by a column
+		System.out.println(Arrays.deepToString(mystring));//print the array
     }
 
 }
