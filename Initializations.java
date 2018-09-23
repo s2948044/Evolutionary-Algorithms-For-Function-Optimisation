@@ -1,5 +1,4 @@
-import java.util.Arrays;
-import java.util.Random;
+import java.util.*;
 import org.vu.contest.ContestEvaluation;
 
 public class Initializations {

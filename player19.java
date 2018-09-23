@@ -1,9 +1,7 @@
 import org.vu.contest.ContestSubmission;
 import org.vu.contest.ContestEvaluation;
 
-import java.util.Random;
-import java.util.Properties;
-import java.util.Arrays;
+import java.util.*;
 
 public class player19 implements ContestSubmission {
     Random rnd_;
