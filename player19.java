@@ -61,10 +61,11 @@ public class player19 implements ContestSubmission {
             evals++;
             // Select survivors
         }
-        Double[][] mystring = new Double[][] { // just an example of sorting by a column
-                { 2.0, 3.2 }, { 1.0, 4.2 }, { 9.2, 5.2 }, };
-        Arrays.sort(mystring, (Double[] c1, Double[] c2) -> c1[0].compareTo(c2[0])); // sorting by a column
-        System.out.println(Arrays.deepToString(mystring));// print the array
+        double[][] mystring = new double[][] { // just an example matrix
+                { 2.0, 3.2, 2.0 }, { 1.0, 4.2, 1.0 }, { 9.2, 5.2, 9.2 }, {3.7, 2.9, 3.3} };
+        System.out.println("Original:" + Arrays.deepToString(mystring));// print the original array
+        double[][] newstring = Sels.survSelection(mystring, 2); //keep only the best 2 rows of 'mystring' based on the last column
+        System.out.println("New (keeps best 2):" + Arrays.deepToString(newstring)); //check if it works
 
 
 
