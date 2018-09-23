@@ -67,6 +67,18 @@ public class player19 implements ContestSubmission {
                 { 2.0, 3.2 }, { 1.0, 4.2 }, { 9.2, 5.2 }, };
         Arrays.sort(mystring, (Double[] c1, Double[] c2) -> c1[0].compareTo(c2[0])); // sorting by a column
         System.out.println(Arrays.deepToString(mystring));// print the array
+
+
+
+        // Test arr 
+        double[] arr = {1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0};
+
+        // Functions takes arr and swaps 2 floats
+        Vars.rnd_swap(arr);
+
+        // check if swapped
+        System.out.println(Arrays.toString(arr));
+
     }
 
 }
