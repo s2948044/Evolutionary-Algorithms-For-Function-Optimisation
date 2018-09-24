@@ -2,4 +2,4 @@ tmp/
 *.class
 .project
 .classpath
-submission.jar
+*.jar
