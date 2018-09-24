@@ -50,33 +50,42 @@ public class player19 implements ContestSubmission {
 
         int evals = 0;
         // init population
-        population = Inits.initPopulation(populationSize, evaluation_);
         // calculate fitness
+        population = Inits.initPopulation(populationSize, evaluation_, Initializations.RandomDistributions.NORMAL);
         while (evals < evaluations_limit_) {
             // Select parents
+            double[][] parents = Sels.parentSelection(population, evaluation_, 5, 2,
+                    Initializations.RandomDistributions.NORMAL);
             // Apply crossover / mutation operators
+            for (double[] individuals : parents) {
+                Vars.rnd_swap(individuals);
+            }
             // double child[] = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
             // Check fitness of unknown fuction
+            Inits.updateFitness(population, evaluation_);
             // Double fitness = (double) evaluation_.evaluate(child);
-            evals++;
             // Select survivors
+
+            evals++;
+
         }
-        double[][] mystring = new double[][] { // just an example matrix
-                { 2.0, 3.2, 2.0 }, { 1.0, 4.2, 1.0 }, { 9.2, 5.2, 9.2 }, {3.7, 2.9, 3.3} };
-        System.out.println("Original:" + Arrays.deepToString(mystring));// print the original array
-        double[][] newstring = Sels.survSelection(mystring, 2); //keep only the best 2 rows of 'mystring' based on the last column
-        System.out.println("New (keeps best 2):" + Arrays.deepToString(newstring)); //check if it works
+        // double[][] mystring = new double[][] { // just an example matrix
+        // { 2.0, 3.2, 2.0 }, { 1.0, 4.2, 1.0 }, { 9.2, 5.2, 9.2 }, {3.7, 2.9, 3.3} };
+        // System.out.println("Original:" + Arrays.deepToString(mystring));// print the
+        // original array
+        // double[][] newstring = Sels.survSelection(mystring, 2); //keep only the best
+        // 2 rows of 'mystring' based on the last column
+        // System.out.println("New (keeps best 2):" + Arrays.deepToString(newstring));
+        // //check if it works
 
+        // // Test arr
+        // double[] arr = {1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0};
 
+        // // Functions takes arr and swaps 2 floats
+        // Vars.rnd_swap(arr);
 
-        // Test arr 
-        double[] arr = {1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0};
-
-        // Functions takes arr and swaps 2 floats
-        Vars.rnd_swap(arr);
-
-        // check if swapped
-        System.out.println(Arrays.toString(arr));
+        // // check if swapped
+        // System.out.println(Arrays.toString(arr));
 
     }
 
