@@ -68,7 +68,7 @@ public class Selections {
         double[] fitnessValues = new double[population.length];
         for (int i = 0; i < population.length; i++) {
             fitnessValues[i] = (double) evaluation_
-                    .evaluate(Arrays.copyOfRange(population[i], 0, population[0].length));
+                    .evaluate(Arrays.copyOfRange(population[i], 0, population[0].length - 1));
         }
 
         // Use roulette wheel selection to pick (randomSize) of individuals out of the
