@@ -4,3 +4,5 @@ Variations.class
 Selections.class
 player19.class
 *.jar
+.project
+.classpath
