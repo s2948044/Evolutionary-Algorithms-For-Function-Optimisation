@@ -5,7 +5,7 @@ public class Variations {
 
 	}
 
-	public static void rnd_swap(double[] arr) {
+	public void rnd_swap(double[] arr) {
 
 		// take 2 idx numbers between 0 and 9
 		int idx1 = new Random().nextInt(9);

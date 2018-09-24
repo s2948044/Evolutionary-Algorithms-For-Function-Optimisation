@@ -5,7 +5,7 @@ public class Selections {
     public Selections() {
     }
 
-    public static void sortbyColumn(double population[][], int colToSort) {
+    public void sortbyColumn(double population[][], int colToSort) {
         // Using built-in sort function Arrays.sort
         Arrays.sort(population, new Comparator<double[]>() {
 
@@ -14,7 +14,7 @@ public class Selections {
             public int compare(final double[] entry1, final double[] entry2) {
 
                 // To sort in descending order
-                if (entry1[colToSort - 1] < entry2[colToSort - 1])
+                if (entry1[colToSort] < entry2[colToSort])
                     return 1;
                 else
                     return -1;
@@ -62,40 +62,45 @@ public class Selections {
         return i - 1;
     }
 
-    public double[][] parentSelection(double[][] population, ContestEvaluation evaluation_, int randomSize,
-            int intensionSize, Initializations.RandomDistributions rand) {
+    public int[] parentSelection(double[][] population, ContestEvaluation evaluation_, int randomSize,
+            int intensionSize, Initializations.RandomDistributions rand, Initializations Inits) {
         // Extract the fitness values per individuals in the population.
         double[] fitnessValues = new double[population.length];
         for (int i = 0; i < population.length; i++) {
             fitnessValues[i] = (double) evaluation_
-                    .evaluate(Arrays.copyOfRange(population[i], 0, population[0].length - 1));
+                    .evaluate(Arrays.copyOfRange(population[i], 0, Inits.solutionDimension));
         }
 
         // Use roulette wheel selection to pick (randomSize) of individuals out of the
         // population and select the best (intensionSize) of them.
-        int i = 0;
         int[] chosenInd = new int[randomSize];
-        outer: while (i < randomSize) {
-            chosenInd[i] = rouletteWheelSelection(fitnessValues, rand);
-            for (int j = 0; j < i; j++) {
-                if (chosenInd[i] == chosenInd[j]) {
-                    continue outer;
+        for (int i = 0; i < randomSize; i++) {
+            // chosenInd[i] = rouletteWheelSelection(fitnessValues, rand);
+            chosenInd[i] = new Random().nextInt(population.length - 1);
+            boolean overlapping = true;
+            while (overlapping) {
+                overlapping = false;
+                for (int j = 0; j < i; j++) {
+                    if (chosenInd[i] == chosenInd[j]) {
+                        // chosenInd[i] = rouletteWheelSelection(fitnessValues, rand);
+                        chosenInd[i] = new Random().nextInt(population.length - 1);
+                        overlapping = true;
+                        break;
+                    }
                 }
             }
-            i++;
         }
-        double[][] chosen = new double[randomSize][population[0].length];
-        i = 0;
-        for (int j : chosenInd) {
-            chosen[i] = Arrays.copyOf(population[j], population[j].length);
-            i++;
+        Arrays.sort(chosenInd);
+        int[] parentsInd = new int[intensionSize];
+        for (int i = 0; i < intensionSize; i++) {
+            parentsInd[i] = chosenInd[i];
         }
-        return survSelection(chosen, intensionSize);
+        return parentsInd;
     }
 
-    public double[][] survSelection(double[][] population, int intensionSize) {
-        sortbyColumn(population, population[0].length); // sort the current matrix of the population based on the
-                                                        // fitness stored at the last column
+    public double[][] survSelection(double[][] population, int intensionSize, Initializations Inits) {
+        sortbyColumn(population, Inits.solutionDimension); // sort the current matrix of the population based on the
+                                                           // fitness stored at the last column
         double[][] new_population = new double[intensionSize][population[0].length]; // create a new matrix for storing
                                                                                      // only the top numbers of
                                                                                      // individuals

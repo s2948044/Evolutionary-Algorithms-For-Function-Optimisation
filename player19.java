@@ -8,6 +8,7 @@ public class player19 implements ContestSubmission {
     ContestEvaluation evaluation_;
     private int evaluations_limit_;
     private final int dimension = 10;
+    public static boolean DEBUG = true;
 
     public player19() {
         rnd_ = new Random();
@@ -54,18 +55,21 @@ public class player19 implements ContestSubmission {
         population = Inits.initPopulation(populationSize, evaluation_, Initializations.RandomDistributions.NORMAL);
         while (evals < evaluations_limit_) {
             // Select parents
-            double[][] parents = Sels.parentSelection(population, evaluation_, 5, 2,
-                    Initializations.RandomDistributions.NORMAL);
+            Sels.sortbyColumn(population, Inits.solutionDimension);
+            int[] parentsInd = Sels.parentSelection(population, evaluation_, 5, 2,
+                    Initializations.RandomDistributions.NORMAL, Inits);
             // Apply crossover / mutation operators
-            for (double[] individuals : parents) {
-                Vars.rnd_swap(individuals);
+            for (int parentInd : parentsInd) {
+                Vars.rnd_swap(population[parentInd]);
             }
             // double child[] = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
             // Check fitness of unknown fuction
             Inits.updateFitness(population, evaluation_);
             // Double fitness = (double) evaluation_.evaluate(child);
             // Select survivors
-
+            System.out.println("Best fitness value at evaluation " + Integer.toString(evals) + ": "
+                    + Double.toString(Inits.maxScore));
+            // System.out.println(Arrays.toString(population));
             evals++;
 
         }
