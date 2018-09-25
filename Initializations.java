@@ -18,7 +18,13 @@ public class Initializations {
     public void updateFitness(double[][] population, ContestEvaluation evaluation_) {
         maxScore = -1;
         for (int i = 0; i < population.length; i++) {
-            double tempEval = (double) evaluation_.evaluate(Arrays.copyOfRange(population[i], 0, solutionDimension));
+
+            double[] tempPop = Arrays.copyOfRange(population[i], 0, solutionDimension);
+            if (i <= 2) {
+                System.out.print("Row " + Integer.toString(i) + " : ");
+                System.out.println(Arrays.toString(population[i]));
+            }
+            double tempEval = (double) evaluation_.evaluate(tempPop);
             population[i][solutionDimension] = tempEval;
 
             if (player19.DEBUG) {
