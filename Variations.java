@@ -28,4 +28,43 @@ public class Variations {
 
 	}
 
+	/**
+	 * 
+	 * @param population
+	 * @param parent1
+	 * @param parent2
+	 * @param Inits
+	 * @return Renewed population with the children.
+	 */
+	public double[][] order1CrossOver(double[][] population, double[] parent1, double[] parent2,
+			Initializations Inits) {
+		double[][] renewedPopulation = new double[population.length + 2][population[0].length];
+		double[] child1 = new double[population[0].length];
+		double[] child2 = new double[population[0].length];
+
+		int startInd = new Random().nextInt(Inits.solutionDimension);
+		int endInd = new Random().nextInt(Inits.solutionDimension - startInd) + startInd;
+
+		for (int i = startInd; i < endInd; i++) {
+			child1[i] = parent1[i];
+			child2[i] = parent2[i];
+		}
+
+		for (int i = 0; i < startInd; i++) {
+			child1[i] = parent2[i];
+			child2[i] = parent1[i];
+		}
+
+		for (int i = endInd; i < Inits.solutionDimension; i++) {
+			child1[i] = parent2[i];
+			child2[i] = parent1[i];
+		}
+
+		for (int i = 0; i < population.length; i++) {
+			renewedPopulation[i] = population[i];
+		}
+		renewedPopulation[population.length] = child1;
+		renewedPopulation[population.length + 1] = child2;
+		return renewedPopulation;
+	}
 }

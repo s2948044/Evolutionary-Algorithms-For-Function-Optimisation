@@ -61,20 +61,37 @@ public class player19 implements ContestSubmission {
         resetEvals();
         Inits.updateFitness(population, evaluation_);
         while (evals < evaluations_limit_) {
-            System.out.println("Best fitness value at evaluation " + Integer.toString(evals) + ": "
-                    + Double.toString(Inits.maxScore));
+            if (evals % 100 == 0) {
+                System.out.println("Best fitness value at evaluation " + Integer.toString(evals) + ": "
+                        + Double.toString(Inits.maxScore));
+            }
             // Select parents
             Sels.sortbyColumn(population, Inits.solutionDimension);
             int[] parentsInd = Sels.parentSelection_Elitism(population, evaluation_, 5, 2,
                     Initializations.RandomDistributions.NORMAL, Inits);
             // Apply crossover / mutation operators
-            for (int parentInd : parentsInd) {
-                Vars.rnd_swap(population[parentInd]);
+            // for (int parentInd : parentsInd) {
+            // Vars.rnd_swap(population[parentInd]);
+            // }
+            for (int i = 0; i < parentsInd.length; i = i + 2) {
+                population = Vars.order1CrossOver(population, population[parentsInd[i]], population[parentsInd[i + 1]],
+                        Inits);
             }
             // Check fitness of unknown fuction
-            Inits.updateFitness(population, evaluation_);
+            // Inits.updateFitness(population, evaluation_);
+            for (int i = 0; i < parentsInd.length; i++) {
+                double[] tempPop = Arrays.copyOfRange(population[populationSize + i], 0, Inits.solutionDimension);
+                double tempEval = (double) evaluation_.evaluate(tempPop);
+                population[populationSize + i][Inits.solutionDimension] = tempEval;
+                if (player19.DEBUG) {
+                    if (tempEval >= Inits.maxScore) {
+                        Inits.maxScore = tempEval;
+                    }
+                }
+                evals++;
+            }
             // Select survivors
-
+            population = Sels.survSelection_Elitism(population, populationSize, Inits);
         }
         System.out.println(
                 "Best fitness value at evaluation " + Integer.toString(evals) + ": " + Double.toString(Inits.maxScore));
