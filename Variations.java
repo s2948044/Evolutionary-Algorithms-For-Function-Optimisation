@@ -5,7 +5,12 @@ public class Variations {
 
 	}
 
-	public void rnd_swap(double[] arr) {
+	/**
+	 * Random swap mutation operator.
+	 * 
+	 * @param individual
+	 */
+	public void rnd_swap(double[] individual) {
 
 		// take 2 idx numbers between 0 and 9
 		int idx1 = new Random().nextInt(9);
@@ -17,9 +22,9 @@ public class Variations {
 		}
 
 		// switch numbers
-		double temp = arr[idx1];
-		arr[idx1] = arr[idx2];
-		arr[idx2] = temp;
+		double temp = individual[idx1];
+		individual[idx1] = individual[idx2];
+		individual[idx2] = temp;
 
 	}
 

@@ -5,6 +5,12 @@ public class Selections {
     public Selections() {
     }
 
+    /**
+     * Sort the population by fitness value at the 11th dimension.
+     * 
+     * @param population
+     * @param colToSort  Index of column to sort on.
+     */
     public void sortbyColumn(double population[][], int colToSort) {
         // Using built-in sort function Arrays.sort
         Arrays.sort(population, new Comparator<double[]>() {
@@ -62,13 +68,23 @@ public class Selections {
         return i - 1;
     }
 
-    public int[] parentSelection(double[][] population, ContestEvaluation evaluation_, int randomSize,
+    /**
+     * Parent selection based on Elitism.
+     * 
+     * @param population
+     * @param evaluation_
+     * @param randomSize    Number of ranomly selected individuals.
+     * @param intensionSize Number of finally picked best parents.
+     * @param rand          Specified random distribution.
+     * @param Inits
+     * @return
+     */
+    public int[] parentSelection_Elitism(double[][] population, ContestEvaluation evaluation_, int randomSize,
             int intensionSize, Initializations.RandomDistributions rand, Initializations Inits) {
         // Extract the fitness values per individuals in the population.
         double[] fitnessValues = new double[population.length];
         for (int i = 0; i < population.length; i++) {
-            fitnessValues[i] = (double) evaluation_
-                    .evaluate(Arrays.copyOfRange(population[i], 0, Inits.solutionDimension));
+            fitnessValues[i] = population[i][Inits.solutionDimension];
         }
 
         // Use roulette wheel selection to pick (randomSize) of individuals out of the
@@ -98,7 +114,15 @@ public class Selections {
         return parentsInd;
     }
 
-    public double[][] survSelection(double[][] population, int intensionSize, Initializations Inits) {
+    /**
+     * Survivor selection based on Elitism.
+     * 
+     * @param population
+     * @param intensionSize Number of finally selected individuals.
+     * @param Inits
+     * @return Purged population.
+     */
+    public double[][] survSelection_Elitism(double[][] population, int intensionSize, Initializations Inits) {
         sortbyColumn(population, Inits.solutionDimension); // sort the current matrix of the population based on the
                                                            // fitness stored at the last column
         double[][] new_population = new double[intensionSize][population[0].length]; // create a new matrix for storing

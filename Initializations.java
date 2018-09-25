@@ -1,8 +1,6 @@
 import java.util.*;
 import org.vu.contest.ContestEvaluation;
 
-import javafx.stage.Popup;
-
 public class Initializations {
     public final int solutionDimension;
     public double maxScore;
@@ -15,16 +13,19 @@ public class Initializations {
         UNIFORM, NORMAL;
     }
 
+    /**
+     * Update the fitness values for each individuals in the population.
+     * 
+     * @param population
+     * @param evaluation_
+     */
     public void updateFitness(double[][] population, ContestEvaluation evaluation_) {
         maxScore = -1;
         for (int i = 0; i < population.length; i++) {
-
             double[] tempPop = Arrays.copyOfRange(population[i], 0, solutionDimension);
-            if (i <= 2) {
-                System.out.print("Row " + Integer.toString(i) + " : ");
-                System.out.println(Arrays.toString(population[i]));
-            }
             double tempEval = (double) evaluation_.evaluate(tempPop);
+            player19.evals++;
+
             population[i][solutionDimension] = tempEval;
 
             if (player19.DEBUG) {
@@ -34,12 +35,6 @@ public class Initializations {
             }
         }
     }
-
-    // public void updateIndex(double[][] popluation) {
-    // for (int i = 0; i < popluation.length; i++) {
-    // popluation[i][solutionDimension + 1] = i;
-    // }
-    // }
 
     /**
      * Population initialization with 1 additional dimension to store the fitness
@@ -69,8 +64,6 @@ public class Initializations {
                     break;
                 }
             }
-            population[i][solutionDimension] = (double) evaluation_
-                    .evaluate(Arrays.copyOfRange(population[i], 0, solutionDimension));
         }
         return population;
     }
