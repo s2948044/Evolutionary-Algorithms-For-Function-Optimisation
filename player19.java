@@ -67,7 +67,7 @@ public class player19 implements ContestSubmission {
             }
             // Select parents
             Sels.sortbyColumn(population, Inits.solutionDimension);
-            int[] parentsInd = Sels.parentSelection_Elitism(population, evaluation_, 5, 2,
+            int[] parentsInd = Sels.parentSelection_Elitism(population, evaluation_, 50, 20,
                     Initializations.RandomDistributions.NORMAL, Inits);
             // Apply crossover / mutation operators
             // for (int parentInd : parentsInd) {

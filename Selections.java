@@ -20,10 +20,9 @@ public class Selections {
             public int compare(final double[] entry1, final double[] entry2) {
 
                 // To sort in descending order
-                if (entry1[colToSort] < entry2[colToSort])
-                    return 1;
-                else
-                    return -1;
+                Double fitness1 = new Double(entry1[colToSort]);
+                Double fitness2 = new Double(entry2[colToSort]);
+                return fitness2.compareTo(fitness1);
             }
         });
     }
@@ -92,14 +91,14 @@ public class Selections {
         int[] chosenInd = new int[randomSize];
         for (int i = 0; i < randomSize; i++) {
             // chosenInd[i] = rouletteWheelSelection(fitnessValues, rand);
-            chosenInd[i] = new Random().nextInt(population.length - 1);
+            chosenInd[i] = new Random().nextInt(population.length);
             boolean overlapping = true;
             while (overlapping) {
                 overlapping = false;
                 for (int j = 0; j < i; j++) {
                     if (chosenInd[i] == chosenInd[j]) {
                         // chosenInd[i] = rouletteWheelSelection(fitnessValues, rand);
-                        chosenInd[i] = new Random().nextInt(population.length - 1);
+                        chosenInd[i] = new Random().nextInt(population.length);
                         overlapping = true;
                         break;
                     }
