@@ -36,6 +36,7 @@ public class Selections {
      * Roulette Wheel Selection.
      * 
      * @param fitnessValues Array of fitness values corresponding to the population.
+     * @param rand          Specified random distribution.
      * @return Index of the selected individual.
      */
 
@@ -76,12 +77,8 @@ public class Selections {
      * Parent selection based on Elitism.
      * 
      * @param population
-     * @param evaluation_
-     * @param randomSize    Number of ranomly selected individuals.
-     * @param intensionSize Number of finally picked best parents.
-     * @param rand          Specified random distribution.
-     * @param Inits
-     * @return
+     * @param rand       Specified random distribution.
+     * @return Indices of the selected parents.
      */
     public int[] parentSelection_Elitism(double[][] population, Initializations.RandomDistributions rand) {
         // Extract the fitness values per individuals in the population.
@@ -121,8 +118,6 @@ public class Selections {
      * Survivor selection based on Elitism.
      * 
      * @param population
-     * @param intensionSize Number of finally selected individuals.
-     * @param Inits
      * @return Purged population.
      */
     public double[][] survSelection_Elitism(double[][] population) {

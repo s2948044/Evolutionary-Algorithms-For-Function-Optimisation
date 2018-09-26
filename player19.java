@@ -69,15 +69,20 @@ public class player19 implements ContestSubmission {
             // Apply crossover
             for (int i = 0; i < Cfgs.getparentSelected(); i = i + 2) {
                 // population = Vars.order1CrossOver(population, population[parentsInd[i]],
-                // population[parentsInd[i + 1]],
-                // Inits);
-                population = Vars.singleArithmeticCrossOver(population, population[parentsInd[i]],
+                // population[parentsInd[i + 1]]);
+                // population = Vars.singleArithmeticCrossOver(population,
+                // population[parentsInd[i]],
+                // population[parentsInd[i + 1]]);
+                // population = Vars.blendCrossOver(population, population[parentsInd[i]],
+                // population[parentsInd[i + 1]]);
+                population = Vars.wholeArithmeticCrossOver(population, population[parentsInd[i]],
                         population[parentsInd[i + 1]]);
             }
             // Apply mutation
             for (int i = Cfgs.getpopulationSize(); i < Cfgs.getpopulationSize() + Cfgs.getparentSelected(); i++) {
                 if (new Random().nextInt((int) (1 / Cfgs.getmutationRate())) == 0) {
-                    Vars.rnd_swap(population[i]);
+                    // Vars.rnd_swap(population[i]);
+                    Vars.nonUniformMutation(population[i]);
                 }
             }
             // Check fitness of unknown fuction
