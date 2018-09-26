@@ -7,8 +7,6 @@ public class player19 implements ContestSubmission {
     Random rnd_;
     ContestEvaluation evaluation_;
     private int evaluations_limit_;
-    private final int dimension = 10;
-    public static boolean DEBUG = true;
 
     public static int evals;
 
@@ -48,42 +46,46 @@ public class player19 implements ContestSubmission {
     }
 
     public void run() {
-        double[][] population;
-        int populationSize = 100;
         // Run your algorithm here
-        Initializations Inits = new Initializations(dimension);
-        Variations Vars = new Variations();
-        Selections Sels = new Selections();
+        Configs Cfgs = new Configs();
+        Initializations Inits = new Initializations(Cfgs, evaluation_);
+        Variations Vars = new Variations(Cfgs);
+        Selections Sels = new Selections(Cfgs, evaluation_);
 
         // init population
         // calculate fitness
-        population = Inits.initPopulation(populationSize, evaluation_, Initializations.RandomDistributions.NORMAL);
+        double[][] population;
+        population = Inits.initPopulation(Initializations.RandomDistributions.NORMAL);
         resetEvals();
-        Inits.updateFitness(population, evaluation_);
+        Inits.updateFitness(population);
         while (evals < evaluations_limit_) {
-            if (evals % 100 == 0) {
+            if (evals % Cfgs.getpopulationSize() == 0) {
                 System.out.println("Best fitness value at evaluation " + Integer.toString(evals) + ": "
                         + Double.toString(Inits.maxScore));
             }
             // Select parents
-            Sels.sortbyColumn(population, Inits.solutionDimension);
-            int[] parentsInd = Sels.parentSelection_Elitism(population, evaluation_, 50, 20,
-                    Initializations.RandomDistributions.NORMAL, Inits);
-            // Apply crossover / mutation operators
-            // for (int parentInd : parentsInd) {
-            // Vars.rnd_swap(population[parentInd]);
-            // }
-            for (int i = 0; i < parentsInd.length; i = i + 2) {
-                population = Vars.order1CrossOver(population, population[parentsInd[i]], population[parentsInd[i + 1]],
-                        Inits);
+            Sels.sortbyColumn(population, Cfgs.getdimension());
+            int[] parentsInd = Sels.parentSelection_Elitism(population, Initializations.RandomDistributions.NORMAL);
+            // Apply crossover
+            for (int i = 0; i < Cfgs.getparentSelected(); i = i + 2) {
+                // population = Vars.order1CrossOver(population, population[parentsInd[i]],
+                // population[parentsInd[i + 1]],
+                // Inits);
+                population = Vars.singleArithmeticCrossOver(population, population[parentsInd[i]],
+                        population[parentsInd[i + 1]]);
+            }
+            // Apply mutation
+            for (int i = Cfgs.getpopulationSize(); i < Cfgs.getpopulationSize() + Cfgs.getparentSelected(); i++) {
+                if (new Random().nextInt((int) (1 / Cfgs.getmutationRate())) == 0) {
+                    Vars.rnd_swap(population[i]);
+                }
             }
             // Check fitness of unknown fuction
-            // Inits.updateFitness(population, evaluation_);
-            for (int i = 0; i < parentsInd.length; i++) {
-                double[] tempPop = Arrays.copyOfRange(population[populationSize + i], 0, Inits.solutionDimension);
+            for (int i = 0; i < Cfgs.getparentSelected(); i++) {
+                double[] tempPop = Arrays.copyOfRange(population[Cfgs.getpopulationSize() + i], 0, Cfgs.getdimension());
                 double tempEval = (double) evaluation_.evaluate(tempPop);
-                population[populationSize + i][Inits.solutionDimension] = tempEval;
-                if (player19.DEBUG) {
+                population[Cfgs.getpopulationSize() + i][Cfgs.getdimension()] = tempEval;
+                if (Cfgs.getDEBUG()) {
                     if (tempEval >= Inits.maxScore) {
                         Inits.maxScore = tempEval;
                     }
@@ -91,7 +93,7 @@ public class player19 implements ContestSubmission {
                 evals++;
             }
             // Select survivors
-            population = Sels.survSelection_Elitism(population, populationSize, Inits);
+            population = Sels.survSelection_Elitism(population);
         }
         System.out.println(
                 "Best fitness value at evaluation " + Integer.toString(evals) + ": " + Double.toString(Inits.maxScore));

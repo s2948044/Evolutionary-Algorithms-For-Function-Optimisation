@@ -2,7 +2,12 @@ import java.util.*;
 import org.vu.contest.ContestEvaluation;
 
 public class Selections {
-    public Selections() {
+    private Configs _Cfgs;
+    private ContestEvaluation _evaluation;
+
+    public Selections(Configs Cfgs, ContestEvaluation evaluation_) {
+        _Cfgs = Cfgs;
+        _evaluation = evaluation_;
     }
 
     /**
@@ -78,18 +83,17 @@ public class Selections {
      * @param Inits
      * @return
      */
-    public int[] parentSelection_Elitism(double[][] population, ContestEvaluation evaluation_, int randomSize,
-            int intensionSize, Initializations.RandomDistributions rand, Initializations Inits) {
+    public int[] parentSelection_Elitism(double[][] population, Initializations.RandomDistributions rand) {
         // Extract the fitness values per individuals in the population.
         double[] fitnessValues = new double[population.length];
         for (int i = 0; i < population.length; i++) {
-            fitnessValues[i] = population[i][Inits.solutionDimension];
+            fitnessValues[i] = population[i][_Cfgs.getdimension()];
         }
 
         // Use roulette wheel selection to pick (randomSize) of individuals out of the
         // population and select the best (intensionSize) of them.
-        int[] chosenInd = new int[randomSize];
-        for (int i = 0; i < randomSize; i++) {
+        int[] chosenInd = new int[_Cfgs.getrandomSelected()];
+        for (int i = 0; i < _Cfgs.getrandomSelected(); i++) {
             // chosenInd[i] = rouletteWheelSelection(fitnessValues, rand);
             chosenInd[i] = new Random().nextInt(population.length);
             boolean overlapping = true;
@@ -106,8 +110,8 @@ public class Selections {
             }
         }
         Arrays.sort(chosenInd);
-        int[] parentsInd = new int[intensionSize];
-        for (int i = 0; i < intensionSize; i++) {
+        int[] parentsInd = new int[_Cfgs.getparentSelected()];
+        for (int i = 0; i < _Cfgs.getparentSelected(); i++) {
             parentsInd[i] = chosenInd[i];
         }
         return parentsInd;
@@ -121,13 +125,14 @@ public class Selections {
      * @param Inits
      * @return Purged population.
      */
-    public double[][] survSelection_Elitism(double[][] population, int intensionSize, Initializations Inits) {
-        sortbyColumn(population, Inits.solutionDimension); // sort the current matrix of the population based on the
-                                                           // fitness stored at the last column
-        double[][] new_population = new double[intensionSize][population[0].length]; // create a new matrix for storing
-                                                                                     // only the top numbers of
-                                                                                     // individuals
-        for (int i = 0; i < intensionSize; i++) {
+    public double[][] survSelection_Elitism(double[][] population) {
+        sortbyColumn(population, _Cfgs.getdimension()); // sort the current matrix of the population based on the
+                                                        // fitness stored at the last column
+        double[][] new_population = new double[_Cfgs.getpopulationSize()][population[0].length]; // create a new matrix
+                                                                                                 // for storing
+        // only the top numbers of
+        // individuals
+        for (int i = 0; i < _Cfgs.getpopulationSize(); i++) {
             for (int j = 0; j < population[0].length; j++) {
                 new_population[i][j] = population[i][j]; // copy from the old matrix to the new matrix
             }
