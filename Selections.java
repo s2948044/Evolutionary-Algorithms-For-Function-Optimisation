@@ -2,12 +2,10 @@ import java.util.*;
 import org.vu.contest.ContestEvaluation;
 
 public class Selections {
-    private Configs _Cfgs;
-    private ContestEvaluation _evaluation;
+    private Configs cfgs;
 
-    public Selections(Configs Cfgs, ContestEvaluation evaluation_) {
-        _Cfgs = Cfgs;
-        _evaluation = evaluation_;
+    public Selections(Configs cfgs) {
+        this.cfgs = cfgs;
     }
 
     /**
@@ -84,13 +82,13 @@ public class Selections {
         // Extract the fitness values per individuals in the population.
         double[] fitnessValues = new double[population.length];
         for (int i = 0; i < population.length; i++) {
-            fitnessValues[i] = population[i][_Cfgs.getdimension()];
+            fitnessValues[i] = population[i][this.cfgs.getDimension()];
         }
 
         // Use roulette wheel selection to pick (randomSize) of individuals out of the
         // population and select the best (intensionSize) of them.
-        int[] chosenInd = new int[_Cfgs.getrandomSelected()];
-        for (int i = 0; i < _Cfgs.getrandomSelected(); i++) {
+        int[] chosenInd = new int[this.cfgs.getRandomSelected()];
+        for (int i = 0; i < this.cfgs.getRandomSelected(); i++) {
             // chosenInd[i] = rouletteWheelSelection(fitnessValues, rand);
             chosenInd[i] = new Random().nextInt(population.length);
             boolean overlapping = true;
@@ -107,8 +105,8 @@ public class Selections {
             }
         }
         Arrays.sort(chosenInd);
-        int[] parentsInd = new int[_Cfgs.getparentSelected()];
-        for (int i = 0; i < _Cfgs.getparentSelected(); i++) {
+        int[] parentsInd = new int[this.cfgs.getParentSelected()];
+        for (int i = 0; i < this.cfgs.getParentSelected(); i++) {
             parentsInd[i] = chosenInd[i];
         }
         return parentsInd;
@@ -121,13 +119,14 @@ public class Selections {
      * @return Purged population.
      */
     public double[][] survSelection_Elitism(double[][] population) {
-        sortbyColumn(population, _Cfgs.getdimension()); // sort the current matrix of the population based on the
-                                                        // fitness stored at the last column
-        double[][] new_population = new double[_Cfgs.getpopulationSize()][population[0].length]; // create a new matrix
-                                                                                                 // for storing
+        sortbyColumn(population, this.cfgs.getDimension()); // sort the current matrix of the population based on the
+        // fitness stored at the last column
+        double[][] new_population = new double[this.cfgs.getPopulationSize()][population[0].length]; // create a new
+                                                                                                     // matrix
+        // for storing
         // only the top numbers of
         // individuals
-        for (int i = 0; i < _Cfgs.getpopulationSize(); i++) {
+        for (int i = 0; i < this.cfgs.getPopulationSize(); i++) {
             for (int j = 0; j < population[0].length; j++) {
                 new_population[i][j] = population[i][j]; // copy from the old matrix to the new matrix
             }

@@ -1,10 +1,10 @@
 import java.util.*;
 
 public class Variations {
-	private Configs _Cfgs;
+	private Configs cfgs;
 
-	public Variations(Configs Cfgs) {
-		_Cfgs = Cfgs;
+	public Variations(Configs cfgs) {
+		this.cfgs = cfgs;
 	}
 
 	/**
@@ -36,16 +36,16 @@ public class Variations {
 	 * @param individual
 	 */
 	public void uniformMutation(double[] individual) {
-		int[] mutationInds = new int[_Cfgs.getmutationSize()];
-		for (int i = 0; i < _Cfgs.getmutationSize(); i++) {
-			mutationInds[i] = new Random().nextInt(_Cfgs.getdimension());
+		int[] mutationInds = new int[this.cfgs.getMutationSize()];
+		for (int i = 0; i < this.cfgs.getMutationSize(); i++) {
+			mutationInds[i] = new Random().nextInt(this.cfgs.getDimension());
 			if (i != 0) {
 				boolean overlapping = true;
 				while (overlapping) {
 					overlapping = false;
 					for (int j = 0; j < i; j++) {
 						if (mutationInds[i] == mutationInds[j]) {
-							mutationInds[i] = new Random().nextInt(_Cfgs.getdimension());
+							mutationInds[i] = new Random().nextInt(this.cfgs.getDimension());
 							overlapping = true;
 							break;
 						}
@@ -54,8 +54,8 @@ public class Variations {
 			}
 		}
 		for (int mutationInd : mutationInds) {
-			individual[mutationInd] = new Random().nextDouble() * (_Cfgs.getupperBound() - _Cfgs.getlowerBound())
-					+ _Cfgs.getlowerBound();
+			individual[mutationInd] = new Random().nextDouble()
+					* (this.cfgs.getUpperBound() - this.cfgs.getLowerBound()) + this.cfgs.getLowerBound();
 		}
 	}
 
@@ -65,16 +65,16 @@ public class Variations {
 	 * @param individual
 	 */
 	public void nonUniformMutation(double[] individual) {
-		int[] mutationInds = new int[_Cfgs.getmutationSize()];
-		for (int i = 0; i < _Cfgs.getmutationSize(); i++) {
-			mutationInds[i] = new Random().nextInt(_Cfgs.getdimension());
+		int[] mutationInds = new int[this.cfgs.getMutationSize()];
+		for (int i = 0; i < this.cfgs.getMutationSize(); i++) {
+			mutationInds[i] = new Random().nextInt(this.cfgs.getDimension());
 			if (i != 0) {
 				boolean overlapping = true;
 				while (overlapping) {
 					overlapping = false;
 					for (int j = 0; j < i; j++) {
 						if (mutationInds[i] == mutationInds[j]) {
-							mutationInds[i] = new Random().nextInt(_Cfgs.getdimension());
+							mutationInds[i] = new Random().nextInt(this.cfgs.getDimension());
 							overlapping = true;
 							break;
 						}
@@ -84,7 +84,7 @@ public class Variations {
 		}
 		for (int mutationInd : mutationInds) {
 			individual[mutationInd] = individual[mutationInd]
-					+ new Random().nextGaussian() * _Cfgs.getmutationStepSize();
+					+ new Random().nextGaussian() * this.cfgs.getMutationStepSize();
 		}
 	}
 
@@ -101,16 +101,16 @@ public class Variations {
 		double[] child1 = new double[population[0].length];
 		double[] child2 = new double[population[0].length];
 
-		int k = new Random().nextInt(_Cfgs.getdimension());
+		int k = new Random().nextInt(this.cfgs.getDimension());
 		for (int i = 0; i < k; i++) {
 			child1[i] = parent1[i];
 			child2[i] = parent2[i];
 		}
 
-		child1[k] = _Cfgs.getmixingFactor() * parent2[k] + (1 - _Cfgs.getmixingFactor()) * parent1[k];
-		child2[k] = _Cfgs.getmixingFactor() * parent1[k] + (1 - _Cfgs.getmixingFactor()) * parent2[k];
+		child1[k] = this.cfgs.getMixingFactor() * parent2[k] + (1 - this.cfgs.getMixingFactor()) * parent1[k];
+		child2[k] = this.cfgs.getMixingFactor() * parent1[k] + (1 - this.cfgs.getMixingFactor()) * parent2[k];
 
-		for (int i = k + 1; i < _Cfgs.getdimension(); i++) {
+		for (int i = k + 1; i < this.cfgs.getDimension(); i++) {
 			child1[i] = parent1[i];
 			child2[i] = parent2[i];
 		}
@@ -137,15 +137,15 @@ public class Variations {
 		double[] child1 = new double[population[0].length];
 		double[] child2 = new double[population[0].length];
 
-		int k = new Random().nextInt(_Cfgs.getdimension());
+		int k = new Random().nextInt(this.cfgs.getDimension());
 		for (int i = 0; i < k; i++) {
 			child1[i] = parent1[i];
 			child2[i] = parent2[i];
 		}
 
-		for (int i = k; i < _Cfgs.getdimension(); i++) {
-			child1[i] = _Cfgs.getmixingFactor() * parent2[i] + (1 - _Cfgs.getmixingFactor()) * parent1[i];
-			child2[i] = _Cfgs.getmixingFactor() * parent1[i] + (1 - _Cfgs.getmixingFactor()) * parent2[i];
+		for (int i = k; i < this.cfgs.getDimension(); i++) {
+			child1[i] = this.cfgs.getMixingFactor() * parent2[i] + (1 - this.cfgs.getMixingFactor()) * parent1[i];
+			child2[i] = this.cfgs.getMixingFactor() * parent1[i] + (1 - this.cfgs.getMixingFactor()) * parent2[i];
 		}
 
 		for (int i = 0; i < population.length; i++) {
@@ -172,16 +172,16 @@ public class Variations {
 
 		double sum_1 = 0;
 		double sum_2 = 0;
-		for (int i = 0; i < _Cfgs.getdimension(); i++) {
+		for (int i = 0; i < this.cfgs.getDimension(); i++) {
 			sum_1 = sum_1 + parent1[i];
 			sum_2 = sum_2 + parent2[i];
 		}
-		double mean_1 = sum_1 / _Cfgs.getdimension();
-		double mean_2 = sum_2 / _Cfgs.getdimension();
+		double mean_1 = sum_1 / this.cfgs.getDimension();
+		double mean_2 = sum_2 / this.cfgs.getDimension();
 
-		for (int i = 0; i < _Cfgs.getdimension(); i++) {
-			child1[i] = _Cfgs.getmixingFactor() * mean_1 + (1 - _Cfgs.getmixingFactor()) * mean_2;
-			child2[i] = _Cfgs.getmixingFactor() * mean_2 + (1 - _Cfgs.getmixingFactor()) * mean_1;
+		for (int i = 0; i < this.cfgs.getDimension(); i++) {
+			child1[i] = this.cfgs.getMixingFactor() * mean_1 + (1 - this.cfgs.getMixingFactor()) * mean_2;
+			child2[i] = this.cfgs.getMixingFactor() * mean_2 + (1 - this.cfgs.getMixingFactor()) * mean_1;
 		}
 
 		for (int i = 0; i < population.length; i++) {
@@ -206,15 +206,15 @@ public class Variations {
 		double[] child1 = new double[population[0].length];
 		double[] child2 = new double[population[0].length];
 
-		for (int i = 0; i < _Cfgs.getdimension(); i++) {
+		for (int i = 0; i < this.cfgs.getDimension(); i++) {
 			double d = Math.abs(parent1[i] - parent2[i]);
-			child1[i] = (Math.min(parent1[i], parent2[i]) - _Cfgs.getmixingFactor() * d)
-					+ new Random().nextDouble() * ((Math.min(parent1[i], parent2[i]) + _Cfgs.getmixingFactor() * d)
-							- (Math.min(parent1[i], parent2[i]) - _Cfgs.getmixingFactor() * d));
+			child1[i] = (Math.min(parent1[i], parent2[i]) - this.cfgs.getMixingFactor() * d)
+					+ new Random().nextDouble() * ((Math.min(parent1[i], parent2[i]) + this.cfgs.getMixingFactor() * d)
+							- (Math.min(parent1[i], parent2[i]) - this.cfgs.getMixingFactor() * d));
 
-			child2[i] = (Math.min(parent1[i], parent2[i]) - _Cfgs.getmixingFactor() * d)
-					+ new Random().nextDouble() * ((Math.min(parent1[i], parent2[i]) + _Cfgs.getmixingFactor() * d)
-							- (Math.min(parent1[i], parent2[i]) - _Cfgs.getmixingFactor() * d));
+			child2[i] = (Math.min(parent1[i], parent2[i]) - this.cfgs.getMixingFactor() * d)
+					+ new Random().nextDouble() * ((Math.min(parent1[i], parent2[i]) + this.cfgs.getMixingFactor() * d)
+							- (Math.min(parent1[i], parent2[i]) - this.cfgs.getMixingFactor() * d));
 		}
 
 		for (int i = 0; i < population.length; i++) {
@@ -239,8 +239,8 @@ public class Variations {
 		double[] child1 = new double[population[0].length];
 		double[] child2 = new double[population[0].length];
 
-		int startInd = new Random().nextInt(_Cfgs.getdimension());
-		int endInd = new Random().nextInt(_Cfgs.getdimension() - startInd) + startInd;
+		int startInd = new Random().nextInt(this.cfgs.getDimension());
+		int endInd = new Random().nextInt(this.cfgs.getDimension() - startInd) + startInd;
 
 		for (int i = 0; i < startInd; i++) {
 			child1[i] = parent2[i];
@@ -252,7 +252,7 @@ public class Variations {
 			child2[i] = parent2[i];
 		}
 
-		for (int i = endInd; i < _Cfgs.getdimension(); i++) {
+		for (int i = endInd; i < this.cfgs.getDimension(); i++) {
 			child1[i] = parent2[i];
 			child2[i] = parent1[i];
 		}

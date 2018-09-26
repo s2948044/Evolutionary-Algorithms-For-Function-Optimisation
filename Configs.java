@@ -1,101 +1,101 @@
 public class Configs {
 
-    private final int _populationSize = 100;
-    private final int _dimension = 10;
-    private final int _addtionalDimension = 1;
-    private final boolean _DEBUG = true;
-    private final int _lowerBound = -5;
-    private final int _upperBound = 5;
+    private final int populationSize = 100;
+    private final int dimension = 10;
+    private final int addtionalDimension = 1;
+    private final boolean DEBUG = true;
+    private final int lowerBound = -5;
+    private final int upperBound = 5;
 
-    private double _mutationRate = 0.1;
-    private int _mutationSize = 1;
-    private int _randomSelected = 50;
-    private int _parentSelected = 20;
-    private double _mixingFactor = 0.3;
-    private double _initSigma = 2;
-    private double _mutationStepSize = 1;
+    private double mutationRate = 0.1;
+    private int mutationSize = 1;
+    private int randomSelected = 50;
+    private int parentSelected = 20;
+    private double mixingFactor = 0.3;
+    private double initSigma = 2;
+    private double mutationStepSize = 1;
 
     public Configs() {
     }
 
-    public int getpopulationSize() {
-        return _populationSize;
+    public int getPopulationSize() {
+        return this.populationSize;
     }
 
-    public int getdimension() {
-        return _dimension;
+    public int getDimension() {
+        return this.dimension;
     }
 
-    public int getadditionalDimension() {
-        return _addtionalDimension;
+    public int getAdditionalDimension() {
+        return this.addtionalDimension;
     }
 
     public boolean getDEBUG() {
-        return _DEBUG;
+        return this.DEBUG;
     }
 
-    public int getlowerBound() {
-        return _lowerBound;
+    public int getLowerBound() {
+        return this.lowerBound;
     }
 
-    public int getupperBound() {
-        return _upperBound;
+    public int getUpperBound() {
+        return this.upperBound;
     }
 
-    public void setmutationRate(double mutationRate) {
-        _mutationRate = mutationRate;
+    public double getMutationRate() {
+        return this.mutationRate;
     }
 
-    public double getmutationRate() {
-        return _mutationRate;
+    public void setMutationRate(double mutationRate) {
+        this.mutationRate = mutationRate;
     }
 
-    public void setmutationSize(int mutationSize) {
-        _mutationSize = mutationSize;
+    public int getMutationSize() {
+        return this.mutationSize;
     }
 
-    public int getmutationSize() {
-        return _mutationSize;
+    public void setMutationSize(int mutationSize) {
+        this.mutationSize = mutationSize;
     }
 
-    public void setrandomSelected(int randomSelected) {
-        _randomSelected = randomSelected;
+    public int getRandomSelected() {
+        return this.randomSelected;
     }
 
-    public int getrandomSelected() {
-        return _randomSelected;
+    public void setRandomSelected(int randomSelected) {
+        this.randomSelected = randomSelected;
     }
 
-    public void setparentSelected(int parentSelected) {
-        _parentSelected = parentSelected;
+    public int getParentSelected() {
+        return this.parentSelected;
     }
 
-    public int getparentSelected() {
-        return _parentSelected;
+    public void setParentSelected(int parentSelected) {
+        this.parentSelected = parentSelected;
     }
 
-    public void setmixingFactor(double mixingFactor) {
-        _mixingFactor = mixingFactor;
+    public double getMixingFactor() {
+        return this.mixingFactor;
     }
 
-    public double getmixingFactor() {
-        return _mixingFactor;
+    public void setMixingFactor(double mixingFactor) {
+        this.mixingFactor = mixingFactor;
     }
 
-    public void setinitSigma(double initSigma) {
-        _initSigma = initSigma;
+    public double getInitSigma() {
+        return this.initSigma;
     }
 
-    public double getinitSigma() {
-        return _initSigma;
+    public void setInitSigma(double initSigma) {
+        this.initSigma = initSigma;
     }
 
-    public void setmutationStepSize(double mutationStepSize) {
-        _mutationStepSize = mutationStepSize;
+    public double getMutationStepSize() {
+        return this.mutationStepSize;
     }
 
-    public double getmutationStepSize() {
-        return _mutationStepSize;
+    public void setMutationStepSize(double mutationStepSize) {
+        this.mutationStepSize = mutationStepSize;
     }
 
 }

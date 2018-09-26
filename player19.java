@@ -47,10 +47,10 @@ public class player19 implements ContestSubmission {
 
     public void run() {
         // Run your algorithm here
-        Configs Cfgs = new Configs();
-        Initializations Inits = new Initializations(Cfgs, evaluation_);
-        Variations Vars = new Variations(Cfgs);
-        Selections Sels = new Selections(Cfgs, evaluation_);
+        Configs cfgs = new Configs();
+        Initializations Inits = new Initializations(cfgs, evaluation_);
+        Variations Vars = new Variations(cfgs);
+        Selections Sels = new Selections(cfgs);
 
         // init population
         // calculate fitness
@@ -59,15 +59,15 @@ public class player19 implements ContestSubmission {
         resetEvals();
         Inits.updateFitness(population);
         while (evals < evaluations_limit_) {
-            if (evals % Cfgs.getpopulationSize() == 0) {
+            if (evals % cfgs.getPopulationSize() == 0) {
                 System.out.println("Best fitness value at evaluation " + Integer.toString(evals) + ": "
                         + Double.toString(Inits.maxScore));
             }
             // Select parents
-            Sels.sortbyColumn(population, Cfgs.getdimension());
+            Sels.sortbyColumn(population, cfgs.getDimension());
             int[] parentsInd = Sels.parentSelection_Elitism(population, Initializations.RandomDistributions.NORMAL);
             // Apply crossover
-            for (int i = 0; i < Cfgs.getparentSelected(); i = i + 2) {
+            for (int i = 0; i < cfgs.getParentSelected(); i = i + 2) {
                 // population = Vars.order1CrossOver(population, population[parentsInd[i]],
                 // population[parentsInd[i + 1]]);
                 // population = Vars.singleArithmeticCrossOver(population,
@@ -79,18 +79,18 @@ public class player19 implements ContestSubmission {
                         population[parentsInd[i + 1]]);
             }
             // Apply mutation
-            for (int i = Cfgs.getpopulationSize(); i < Cfgs.getpopulationSize() + Cfgs.getparentSelected(); i++) {
-                if (new Random().nextInt((int) (1 / Cfgs.getmutationRate())) == 0) {
+            for (int i = cfgs.getPopulationSize(); i < cfgs.getPopulationSize() + cfgs.getParentSelected(); i++) {
+                if (new Random().nextInt((int) (1 / cfgs.getMutationRate())) == 0) {
                     // Vars.rnd_swap(population[i]);
                     Vars.nonUniformMutation(population[i]);
                 }
             }
             // Check fitness of unknown fuction
-            for (int i = 0; i < Cfgs.getparentSelected(); i++) {
-                double[] tempPop = Arrays.copyOfRange(population[Cfgs.getpopulationSize() + i], 0, Cfgs.getdimension());
+            for (int i = 0; i < cfgs.getParentSelected(); i++) {
+                double[] tempPop = Arrays.copyOfRange(population[cfgs.getPopulationSize() + i], 0, cfgs.getDimension());
                 double tempEval = (double) evaluation_.evaluate(tempPop);
-                population[Cfgs.getpopulationSize() + i][Cfgs.getdimension()] = tempEval;
-                if (Cfgs.getDEBUG()) {
+                population[cfgs.getPopulationSize() + i][cfgs.getDimension()] = tempEval;
+                if (cfgs.getDEBUG()) {
                     if (tempEval >= Inits.maxScore) {
                         Inits.maxScore = tempEval;
                     }
