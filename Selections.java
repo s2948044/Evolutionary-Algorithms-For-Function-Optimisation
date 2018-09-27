@@ -38,7 +38,7 @@ public class Selections {
      * @return Index of the selected individual.
      */
 
-    public int rouletteWheelSelection(double[] fitnessValues, Initializations.RandomDistributions rand) {
+    public int rouletteWheelSelection(double[] fitnessValues) {
         // Sum up the fitnessValues of all the selectees.
         double fitnessSum = 0;
         for (double fitness : fitnessValues) {
@@ -53,14 +53,7 @@ public class Selections {
 
         // Init a random probability and return its corresponding index.
         double prob = 0;
-        switch (rand) {
-        case NORMAL:
-            prob = new Random().nextDouble();
-            break;
-        case UNIFORM:
-            prob = new Random().nextGaussian();
-            break;
-        }
+        prob = new Random().nextDouble();
 
         double probSum = 0;
         int i = 0;
@@ -89,14 +82,14 @@ public class Selections {
         // population and select the best (intensionSize) of them.
         int[] chosenInd = new int[this.cfgs.getRandomSelected()];
         for (int i = 0; i < this.cfgs.getRandomSelected(); i++) {
-            // chosenInd[i] = rouletteWheelSelection(fitnessValues, rand);
+            // chosenInd[i] = rouletteWheelSelection(fitnessValues);
             chosenInd[i] = new Random().nextInt(population.length);
             boolean overlapping = true;
             while (overlapping) {
                 overlapping = false;
                 for (int j = 0; j < i; j++) {
                     if (chosenInd[i] == chosenInd[j]) {
-                        // chosenInd[i] = rouletteWheelSelection(fitnessValues, rand);
+                        // chosenInd[i] = rouletteWheelSelection(fitnessValues);
                         chosenInd[i] = new Random().nextInt(population.length);
                         overlapping = true;
                         break;

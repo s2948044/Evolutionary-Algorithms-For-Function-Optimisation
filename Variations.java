@@ -36,26 +36,11 @@ public class Variations {
 	 * @param individual
 	 */
 	public void uniformMutation(double[] individual) {
-		int[] mutationInds = new int[this.cfgs.getMutationSize()];
-		for (int i = 0; i < this.cfgs.getMutationSize(); i++) {
-			mutationInds[i] = new Random().nextInt(this.cfgs.getDimension());
-			if (i != 0) {
-				boolean overlapping = true;
-				while (overlapping) {
-					overlapping = false;
-					for (int j = 0; j < i; j++) {
-						if (mutationInds[i] == mutationInds[j]) {
-							mutationInds[i] = new Random().nextInt(this.cfgs.getDimension());
-							overlapping = true;
-							break;
-						}
-					}
-				}
+		for (int i = 0; i < cfgs.getDimension(); i++) {
+			if (new Random().nextInt((int) (1 / cfgs.getMutationRate())) == 0) {
+				individual[i] = new Random().nextDouble() * (this.cfgs.getUpperBound() - this.cfgs.getLowerBound())
+						+ this.cfgs.getLowerBound();
 			}
-		}
-		for (int mutationInd : mutationInds) {
-			individual[mutationInd] = new Random().nextDouble()
-					* (this.cfgs.getUpperBound() - this.cfgs.getLowerBound()) + this.cfgs.getLowerBound();
 		}
 	}
 
@@ -65,6 +50,17 @@ public class Variations {
 	 * @param individual
 	 */
 	public void nonUniformMutation(double[] individual) {
+		for (int i = 0; i < cfgs.getDimension(); i++) {
+			individual[i] = individual[i] + new Random().nextGaussian() * this.cfgs.getMutationStepSize();
+		}
+	}
+
+	/**
+	 * Older version of non-uniform mutation operator(wrondly implmented).
+	 * 
+	 * @param individual
+	 */
+	public void customizedMutation(double[] individual) {
 		int[] mutationInds = new int[this.cfgs.getMutationSize()];
 		for (int i = 0; i < this.cfgs.getMutationSize(); i++) {
 			mutationInds[i] = new Random().nextInt(this.cfgs.getDimension());
@@ -86,6 +82,41 @@ public class Variations {
 			individual[mutationInd] = individual[mutationInd]
 					+ new Random().nextGaussian() * this.cfgs.getMutationStepSize();
 		}
+	}
+
+	/**
+	 * Self-adaptive uncorrelated mutation with single mutation step size.
+	 * 
+	 * @param individual
+	 */
+	public void singleUncorrelatedMutation(double[] individual) {
+		cfgs.setMutationStepSize(
+				cfgs.getMutationStepSize() * Math.exp(cfgs.getMutationLearningRate() * new Random().nextGaussian()));
+		if (cfgs.getMutationStepSize() < cfgs.getMutationStepSizeBound()) {
+			cfgs.setMutationStepSize(cfgs.getMutationStepSizeBound());
+		}
+		for (int i = 0; i < cfgs.getDimension(); i++) {
+			individual[i] = individual[i] + cfgs.getMutationStepSize() * new Random().nextGaussian();
+		}
+	}
+
+	/**
+	 * Self-adaptive uncorrelated mutation with multiple mutation step sizes.
+	 * 
+	 * @param individual
+	 */
+	public void multiUncorrelatedMutation(double[] individual) {
+		double[] ndMutationStepSize = cfgs.getNdMutationStepSize();
+		double overallNormalDist = new Random().nextGaussian();
+		for (int i = 0; i < cfgs.getDimension(); i++) {
+			ndMutationStepSize[i] = ndMutationStepSize[i] * Math.exp(cfgs.getMutationStepSize() * overallNormalDist
+					+ cfgs.getSecondaryMutationLearningRate() * new Random().nextGaussian());
+			if (ndMutationStepSize[i] < cfgs.getMutationStepSizeBound()) {
+				ndMutationStepSize[i] = cfgs.getMutationStepSizeBound();
+			}
+			individual[i] = individual[i] + ndMutationStepSize[i] * new Random().nextGaussian();
+		}
+		System.out.println(Arrays.toString(cfgs.getNdMutationStepSize()));
 	}
 
 	/**

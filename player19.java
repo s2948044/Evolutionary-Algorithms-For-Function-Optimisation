@@ -52,6 +52,7 @@ public class player19 implements ContestSubmission {
         Variations Vars = new Variations(cfgs);
         Selections Sels = new Selections(cfgs);
 
+        cfgs.initParams();
         // init population
         // calculate fitness
         double[][] population;
@@ -65,24 +66,30 @@ public class player19 implements ContestSubmission {
             }
             // Select parents
             Sels.sortbyColumn(population, cfgs.getDimension());
-            int[] parentsInd = Sels.parentSelection_Elitism(population, Initializations.RandomDistributions.NORMAL);
+            int[] parentsInd = Sels.parentSelection_Elitism(population, Initializations.RandomDistributions.UNIFORM);
             // Apply crossover
             for (int i = 0; i < cfgs.getParentSelected(); i = i + 2) {
                 // population = Vars.order1CrossOver(population, population[parentsInd[i]],
                 // population[parentsInd[i + 1]]);
-                 population = Vars.singleArithmeticCrossOver(population,
-                 population[parentsInd[i]],
-                 population[parentsInd[i + 1]]);
+                population = Vars.singleArithmeticCrossOver(population, population[parentsInd[i]],
+                        population[parentsInd[i + 1]]);
+                // population = Vars.simpleArithmeticCrossOver(population,
+                // population[parentsInd[i]],
+                // population[parentsInd[i + 1]]);
                 // population = Vars.blendCrossOver(population, population[parentsInd[i]],
                 // population[parentsInd[i + 1]]);
-                //population = Vars.wholeArithmeticCrossOver(population, population[parentsInd[i]],
-                //        population[parentsInd[i + 1]]);
+                // population = Vars.wholeArithmeticCrossOver(population,
+                // population[parentsInd[i]],
+                // population[parentsInd[i + 1]]);
             }
             // Apply mutation
             for (int i = cfgs.getPopulationSize(); i < cfgs.getPopulationSize() + cfgs.getParentSelected(); i++) {
                 if (new Random().nextInt((int) (1 / cfgs.getMutationRate())) == 0) {
                     // Vars.rnd_swap(population[i]);
-                    Vars.nonUniformMutation(population[i]);
+                    Vars.customizedMutation(population[i]);
+                    // Vars.nonUniformMutation(population[i]);
+                    // Vars.singleUncorrelatedMutation(population[i]);
+                    // Vars.multiUncorrelatedMutation(population[i]);
                 }
             }
             // Check fitness of unknown fuction

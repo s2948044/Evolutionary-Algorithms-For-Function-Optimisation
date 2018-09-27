@@ -7,15 +7,33 @@ public class Configs {
     private final int lowerBound = -5;
     private final int upperBound = 5;
 
-    private double mutationRate = 0.1;
-    private int mutationSize = 1;
-    private int randomSelected = 50;
-    private int parentSelected = 20;
-    private double mixingFactor = 0.3;
-    private double initSigma = 0.05;
-    private double mutationStepSize = 1;
+    private double mutationRate;
+    private int mutationSize;
+    private double mutationLearningRate;
+    private int randomSelected;
+    private int parentSelected;
+    private double mixingFactor;
+    private double initSigma;
+    private double mutationStepSize;
+    private double mutationStepSizeBound;
+    private double[] ndMutationStepSize;
+    private double secondaryMutationLearningRate;
 
     public Configs() {
+    }
+
+    public void initParams() {
+        setMutationRate(0.1);
+        setMutationSize(1);
+        setMutationLearningRate(1 / Math.sqrt(2 * this.dimension));
+        setRandomSelected(50);
+        setParentSelected(20);
+        setMixingFactor(0.3);
+        setInitSigma(0.05);
+        setMutationStepSize(1);
+        setMutationStepSizeBound(0.00001);
+        setSecondaryMutationLearningRate(1 / Math.sqrt(2 * Math.sqrt(this.dimension)));
+        setNdMutationStepSize(new double[] { 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001 });
     }
 
     public int getPopulationSize() {
@@ -96,6 +114,38 @@ public class Configs {
 
     public void setMutationStepSize(double mutationStepSize) {
         this.mutationStepSize = mutationStepSize;
+    }
+
+    public double getMutationLearningRate() {
+        return this.mutationLearningRate;
+    }
+
+    public void setMutationLearningRate(double mutationLearningRate) {
+        this.mutationLearningRate = mutationLearningRate;
+    }
+
+    public double getMutationStepSizeBound() {
+        return this.mutationStepSizeBound;
+    }
+
+    public void setMutationStepSizeBound(double mutationStepSizeBound) {
+        this.mutationStepSizeBound = mutationStepSizeBound;
+    }
+
+    public double[] getNdMutationStepSize() {
+        return this.ndMutationStepSize;
+    }
+
+    public void setNdMutationStepSize(double[] ndMutationStepSize) {
+        this.ndMutationStepSize = ndMutationStepSize;
+    }
+
+    public double getSecondaryMutationLearningRate() {
+        return this.secondaryMutationLearningRate;
+    }
+
+    public void setSecondaryMutationLearningRate(double secondaryMutationLearningRate) {
+        this.secondaryMutationLearningRate = secondaryMutationLearningRate;
     }
 
 }
