@@ -70,13 +70,13 @@ public class player19 implements ContestSubmission {
             for (int i = 0; i < cfgs.getParentSelected(); i = i + 2) {
                 // population = Vars.order1CrossOver(population, population[parentsInd[i]],
                 // population[parentsInd[i + 1]]);
-                // population = Vars.singleArithmeticCrossOver(population,
-                // population[parentsInd[i]],
-                // population[parentsInd[i + 1]]);
+                 population = Vars.singleArithmeticCrossOver(population,
+                 population[parentsInd[i]],
+                 population[parentsInd[i + 1]]);
                 // population = Vars.blendCrossOver(population, population[parentsInd[i]],
                 // population[parentsInd[i + 1]]);
-                population = Vars.wholeArithmeticCrossOver(population, population[parentsInd[i]],
-                        population[parentsInd[i + 1]]);
+                //population = Vars.wholeArithmeticCrossOver(population, population[parentsInd[i]],
+                //        population[parentsInd[i + 1]]);
             }
             // Apply mutation
             for (int i = cfgs.getPopulationSize(); i < cfgs.getPopulationSize() + cfgs.getParentSelected(); i++) {

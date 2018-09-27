@@ -12,7 +12,7 @@ public class Configs {
     private int randomSelected = 50;
     private int parentSelected = 20;
     private double mixingFactor = 0.3;
-    private double initSigma = 2;
+    private double initSigma = 0.05;
     private double mutationStepSize = 1;
 
     public Configs() {
