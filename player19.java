@@ -66,20 +66,19 @@ public class player19 implements ContestSubmission {
             }
             // Select parents
             Sels.sortbyColumn(population, cfgs.getDimension());
-            int[] parentsInd = Sels.parentSelection_Elitism(population, Initializations.RandomDistributions.UNIFORM);
+            int[] parentsInd = Sels.parentSelection_RankedBased(population, 1.9);
+            //int[] parentsInd = Sels.parentSelection_Elitism(population, Initializations.RandomDistributions.UNIFORM);
             // Apply crossover
             for (int i = 0; i < cfgs.getParentSelected(); i = i + 2) {
                 // population = Vars.order1CrossOver(population, population[parentsInd[i]],
                 // population[parentsInd[i + 1]]);
                 population = Vars.singleArithmeticCrossOver(population, population[parentsInd[i]],
-                        population[parentsInd[i + 1]]);
-                // population = Vars.simpleArithmeticCrossOver(population,
-                // population[parentsInd[i]],
+                   population[parentsInd[i + 1]]);
+                // population = Vars.simpleArithmeticCrossOver(population, population[parentsInd[i]],
                 // population[parentsInd[i + 1]]);
                 // population = Vars.blendCrossOver(population, population[parentsInd[i]],
                 // population[parentsInd[i + 1]]);
-                // population = Vars.wholeArithmeticCrossOver(population,
-                // population[parentsInd[i]],
+                // population = Vars.wholeArithmeticCrossOver(population, population[parentsInd[i]],
                 // population[parentsInd[i + 1]]);
             }
             // Apply mutation
