@@ -104,36 +104,37 @@ public class Selections {
         }
         return parentsInd;
     }
-    
+
     /**
      * Parent selection based on Rank.
      * 
      * @param population
-     * @param s_value	a factor to measure advantage of best individual (set from 1.0 ~ 2.0)
      * @return Indices of the selected parents.
      */
-	public int[] parentSelection_RankedBased(double[][] population, double s_value){
-		int[] parentsInd = new int[this.cfgs.getParentSelected()];
+    public int[] parentSelection_RankedBased(double[][] population) {
+        int[] parentsInd = new int[this.cfgs.getParentSelected()];
         // Compute the corresponding probabilities.
         double[] probs = new double[population.length];
         for (int i = 0; i < probs.length; i++) {
-            probs[i] = (2-s_value)/population.length + (2*(population.length-1-i)*(s_value-1))/(population.length*(population.length-1));
+            probs[i] = (2 - this.cfgs.getS_value()) / population.length
+                    + (2 * (population.length - 1 - i) * (this.cfgs.getS_value() - 1))
+                            / (population.length * (population.length - 1));
         }
         int selectedNr = 0;
-        while(selectedNr < this.cfgs.getParentSelected()){
-			double prob = 0;
-			prob = new Random().nextDouble();
-			double probSum = 0;
-			int i = 0;
-			while (prob - probSum > 0) {
-				probSum += probs[i];
-				i++;
-			}
-			parentsInd[selectedNr] = i - 1; 
-			selectedNr++;
-		}
-		return parentsInd;
-	}
+        while (selectedNr < this.cfgs.getParentSelected()) {
+            double prob = 0;
+            prob = new Random().nextDouble();
+            double probSum = 0;
+            int i = 0;
+            while (prob - probSum > 0) {
+                probSum += probs[i];
+                i++;
+            }
+            parentsInd[selectedNr] = i - 1;
+            selectedNr++;
+        }
+        return parentsInd;
+    }
 
     /**
      * Survivor selection based on Elitism.
