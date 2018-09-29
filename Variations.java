@@ -116,7 +116,7 @@ public class Variations {
 			}
 			individual[i] = individual[i] + ndMutationStepSize[i] * new Random().nextGaussian();
 		}
-		System.out.println(Arrays.toString(cfgs.getNdMutationStepSize()));
+		// System.out.println(Arrays.toString(cfgs.getNdMutationStepSize()));
 	}
 
 	/**
