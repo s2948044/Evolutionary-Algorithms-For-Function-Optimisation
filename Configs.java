@@ -1,62 +1,103 @@
 public class Configs {
     // Immutable parameters:
-    // Total number of individuals of each generation.
+    /**
+     * Total number of individuals of each generation.
+     */
     private final int populationSize = 100;
 
-    // Dimension of the solution vector to the problem. (1 x N)
+    /**
+     * Dimension of the solution vector to the problem. (1 x N)
+     */
     private final int dimension = 10;
 
-    // Additional dimention to the solution vector to encode different values.
+    /**
+     * Additional dimention to the solution vector to encode different values.
+     */
     private final int addtionalDimension = 1;
 
-    // Public flag for debugging.
+    /**
+     * Public flag for debugging.
+     */
     private final boolean DEBUG = true;
 
-    // Lower bound of domain for each element in the solution vector.
+    /**
+     * Lower bound of domain for each element in the solution vector.
+     */
     private final int lowerBound = -5;
 
-    // Upper bound of domain for each element in the solution vector.
+    /**
+     * Upper bound of domain for each element in the solution vector.
+     */
     private final int upperBound = 5;
 
     // Mutable parameters:
-    // Rate of occurence for mutation for each child.
+    /**
+     * Rate of occurence for mutation for each child.
+     */
     private double mutationRate;
 
-    // Number of dimensions to mutate during mutation.
+    /**
+     * Number of dimensions to mutate during mutation.
+     */
     private int mutationSize;
 
-    // Overall learning rate for self-adaptive mutation methods.
+    /**
+     * Overall learning rate for self-adaptive mutation methods.
+     */
     private double mutationLearningRate;
 
-    // Number of randomly selected candidates for parent selections based on
-    // Elitism.
+    /**
+     * Number of randomly selected candidates for parent selections based on
+     * Elitism.
+     */
     private int randomSelected;
 
-    // Number of parents selected for reproduction.
+    /**
+     * Number of parents selected for reproduction.
+     */
     private int parentSelected;
 
-    // Mixing factor for some mutation methods(e.g. single/simple/whole arithmetic
-    // mutation and blend crossover).
+    /**
+     * Mixing factor for some mutation methods(e.g. single/simple/whole arithmetic
+     * mutation and blend crossover).
+     */
     private double mixingFactor;
 
-    // Standard deviation during initialization of the population.
+    /**
+     * Standard deviation during initialization of the population.
+     */
     private double initSigma;
 
-    // Standard deviation of mutation change.
+    /**
+     * Standard deviation of mutation change.
+     */
     private double mutationStepSize;
 
-    // Lower bound for mutation step size to avoid tending to 0.
+    /**
+     * Lower bound for mutation step size to avoid tending to 0.
+     */
     private double mutationStepSizeBound;
 
-    // Multidimensional mutation step size corresponding to each dimeansion in the
-    // solution vector.
+    /**
+     * Multidimensional mutation step size corresponding to each dimeansion in the
+     * solution vector.
+     */
     private double[] ndMutationStepSize;
 
-    // Coordinate wise learning rate for self-adaptive mutations.
+    /**
+     * Coordinate wise learning rate for self-adaptive mutations.
+     */
     private double secondaryMutationLearningRate;
 
-    // A factor to measure advantage of best individual (set from 1.0 ~ 2.0)
+    /**
+     * A factor to measure advantage of best individual (set from 1.0 ~ 2.0)
+     */
     private double s_value;
+
+    /**
+     * Covarience matrix for self-apative correalted mutation.
+     */
+    private double[][] covarienceMatrix;
 
     public Configs() {
     }
