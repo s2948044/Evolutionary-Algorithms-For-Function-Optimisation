@@ -21,8 +21,8 @@ endif
 default: classes runtime submission
 classes: $(MAIN_CLASS:.java=.class) $(CLASSES:.java=.class)
 runtime:
-	$(JZIP) uf testrun.jar $(subst $$,\$$, $(filter-out $(EXCLUDED:.java=.class), $(wildcard *.class))) org
+	$(JZIP) uf testrun.jar $(subst $$,\$$, $(filter-out $(EXCLUDED:.java=.class), $(wildcard *.class))) org cern corejava hep umontreal
 submission:
-	$(JZIP) cmf MainClass.txt submission.jar $(MAIN_CLASS:.java=.class) $(subst $$,\$$, $(filter-out $(EXCLUDED:.java=.class), $(wildcard *.class))) org
+	$(JZIP) cmf MainClass.txt submission.jar $(MAIN_CLASS:.java=.class) $(subst $$,\$$, $(filter-out $(EXCLUDED:.java=.class), $(wildcard *.class))) org cern corejava hep umontreal
 clean:
 	$(RM) $(MAIN_CLASS:.java=.class) $(CLASSES:.java=.class)

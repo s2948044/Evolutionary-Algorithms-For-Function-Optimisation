@@ -1,8 +1,6 @@
 import org.vu.contest.ContestSubmission;
 import org.vu.contest.ContestEvaluation;
 
-import org.apache.commons.math3.analysis.function.Abs;
-
 import java.util.*;
 
 public class player19 implements ContestSubmission {
@@ -90,10 +88,11 @@ public class player19 implements ContestSubmission {
             for (int i = cfgs.getPopulationSize(); i < cfgs.getPopulationSize() + cfgs.getParentSelected(); i++) {
                 if (new Random().nextInt((int) (1 / cfgs.getMutationRate())) == 0) {
                     // Vars.rnd_swap(population[i]);
-                    Vars.customizedMutation(population[i]);
+                    // Vars.customizedMutation(population[i]);
                     // Vars.nonUniformMutation(population[i]);
                     // Vars.singleUncorrelatedMutation(population[i]);
                     // Vars.multiUncorrelatedMutation(population[i]);
+                    Vars.correlatedMutation(population[i]);
                 }
             }
             // Check fitness of unknown fuction
@@ -114,8 +113,6 @@ public class player19 implements ContestSubmission {
         System.out.println(
                 "Best fitness value at evaluation " + Integer.toString(evals) + ": " + Double.toString(Inits.maxScore));
 
-        Abs abs = new Abs();
-        System.out.println(abs.value(-10.0d));
     }
 
 }

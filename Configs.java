@@ -95,15 +95,26 @@ public class Configs {
     private double s_value;
 
     /**
-     * Covarience matrix for self-apative correalted mutation.
+     * Factors indicating the correlation between each dimensions in the solution
+     * vector.
+     */
+    private double[] correlationFactors;
+
+    /**
+     * Covarience matrix for self-apative correlated mutation.
      */
     private double[][] covarienceMatrix;
+
+    /**
+     * Correlation angle for self-adaptive correlated mutation.
+     */
+    private double correlationAngle;
 
     public Configs() {
     }
 
     public void initParams() {
-        setMutationRate(0.1);
+        setMutationRate(0.01);
         setMutationSize(1);
         setMutationLearningRate(1 / Math.sqrt(2 * this.dimension));
         setRandomSelected(50);
@@ -115,6 +126,10 @@ public class Configs {
         setSecondaryMutationLearningRate(1 / Math.sqrt(2 * Math.sqrt(this.dimension)));
         setNdMutationStepSize(new double[] { 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001 });
         setS_value(1.9);
+        setCorrelationFactors(new double[this.dimension * (this.dimension - 1) / 2]);
+        initCovarianceMatrix();
+        setCovarianceMatrix(this.ndMutationStepSize, this.correlationFactors);
+        setCorrelationAngle(5 * Math.PI / 180);
 
     }
 
@@ -236,6 +251,45 @@ public class Configs {
 
     public void setS_value(double s_value) {
         this.s_value = s_value;
+    }
+
+    public double[] getCorrelationFactors() {
+        return this.correlationFactors;
+    }
+
+    public void setCorrelationFactors(double[] correlationFactors) {
+        this.correlationFactors = correlationFactors;
+    }
+
+    public void initCovarianceMatrix() {
+        this.covarienceMatrix = new double[this.dimension][this.dimension];
+    }
+
+    public double[][] getCovarienceMatrix() {
+        return this.covarienceMatrix;
+    }
+
+    public void setCovarianceMatrix(double[] ndMutationStepSize, double[] correlationFactors) {
+        int indCounter = 0;
+        for (int i = 0; i < this.dimension; i++) {
+            for (int j = i; j < this.dimension; j++) {
+                if (j == i) {
+                    this.covarienceMatrix[i][j] = ndMutationStepSize[i] * ndMutationStepSize[i];
+                } else {
+                    this.covarienceMatrix[i][j] = correlationFactors[indCounter];
+                    this.covarienceMatrix[j][i] = correlationFactors[indCounter];
+                    indCounter++;
+                }
+            }
+        }
+    }
+
+    public double getCorrelationAngle() {
+        return this.correlationAngle;
+    }
+
+    public void setCorrelationAngle(double correlationAngle) {
+        this.correlationAngle = correlationAngle;
     }
 
 }
