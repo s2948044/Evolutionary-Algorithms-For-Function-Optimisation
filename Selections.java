@@ -84,18 +84,18 @@ public class Selections {
         for (int i = 0; i < this.cfgs.getRandomSelected(); i++) {
             // chosenInd[i] = rouletteWheelSelection(fitnessValues);
             chosenInd[i] = new Random().nextInt(population.length);
-            boolean overlapping = true;
-            while (overlapping) {
-                overlapping = false;
-                for (int j = 0; j < i; j++) {
-                    if (chosenInd[i] == chosenInd[j]) {
-                        // chosenInd[i] = rouletteWheelSelection(fitnessValues);
-                        chosenInd[i] = new Random().nextInt(population.length);
-                        overlapping = true;
-                        break;
-                    }
-                }
-            }
+            // boolean overlapping = true;
+            // while (overlapping) {
+            // overlapping = false;
+            // for (int j = 0; j < i; j++) {
+            // if (chosenInd[i] == chosenInd[j]) {
+            // // chosenInd[i] = rouletteWheelSelection(fitnessValues);
+            // chosenInd[i] = new Random().nextInt(population.length);
+            // overlapping = true;
+            // break;
+            // }
+            // }
+            // }
         }
         Arrays.sort(chosenInd);
         int[] parentsInd = new int[this.cfgs.getParentSelected()];

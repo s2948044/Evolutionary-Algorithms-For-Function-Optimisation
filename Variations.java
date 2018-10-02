@@ -116,8 +116,9 @@ public class Variations {
 		double[] ndMutationStepSize = this.cfgs.getNdMutationStepSize();
 		double overallNormalDist = new Random().nextGaussian();
 		for (int i = 0; i < this.cfgs.getDimension(); i++) {
-			ndMutationStepSize[i] = ndMutationStepSize[i] * Math.exp(this.cfgs.getMutationStepSize() * overallNormalDist
-					+ this.cfgs.getSecondaryMutationLearningRate() * new Random().nextGaussian());
+			ndMutationStepSize[i] = ndMutationStepSize[i]
+					* Math.exp(this.cfgs.getMutationLearningRate() * overallNormalDist
+							+ this.cfgs.getSecondaryMutationLearningRate() * new Random().nextGaussian());
 			if (ndMutationStepSize[i] < this.cfgs.getMutationStepSizeBound()) {
 				ndMutationStepSize[i] = this.cfgs.getMutationStepSizeBound();
 			}
@@ -133,12 +134,15 @@ public class Variations {
 		double[] means = new double[this.cfgs.getDimension()];
 
 		for (int i = 0; i < this.cfgs.getDimension(); i++) {
-			ndMutationStepSize[i] = ndMutationStepSize[i] * Math.exp(this.cfgs.getMutationStepSize() * overallNormalDist
-					+ this.cfgs.getSecondaryMutationLearningRate() * new Random().nextGaussian());
+			ndMutationStepSize[i] = ndMutationStepSize[i]
+					* Math.exp(this.cfgs.getMutationLearningRate() * overallNormalDist
+							+ this.cfgs.getSecondaryMutationLearningRate() * new Random().nextGaussian());
 			if (ndMutationStepSize[i] < this.cfgs.getMutationStepSizeBound()) {
 				ndMutationStepSize[i] = this.cfgs.getMutationStepSizeBound();
 			}
 		}
+
+		// System.out.println(Arrays.toString(ndMutationStepSize));
 
 		for (int i = 0; i < this.cfgs.getDimension() * (this.cfgs.getDimension() - 1) / 2; i++) {
 			correlationFactors[i] = correlationFactors[i] + this.cfgs.getCorrelationAngle() * overallNormalDist;
@@ -148,7 +152,6 @@ public class Variations {
 		}
 
 		this.cfgs.setCovarianceMatrix(ndMutationStepSize, correlationFactors);
-
 		// DoubleMatrix2D covarianceMatrix = new
 		// DoubleFactory2D.make(this.cfgs.getCovarienceMatrix());
 		RandomStream stream = new MRG31k3p();
@@ -161,6 +164,7 @@ public class Variations {
 				this.cfgs.getCovarienceMatrix());
 		double[] tmp = new double[this.cfgs.getDimension()];
 		generator2.nextPoint(tmp);
+		// System.out.println(Arrays.toString(tmp));
 		// RandomGenerator rng = new JDKRandomGenerator();
 		// MultivariateNormalDistribution sampler = new
 		// MultivariateNormalDistribution(rng, means, covarianceMatrix);

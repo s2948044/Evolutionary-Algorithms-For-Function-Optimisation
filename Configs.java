@@ -116,15 +116,15 @@ public class Configs {
     public void initParams() {
         setMutationRate(0.01);
         setMutationSize(1);
-        setMutationLearningRate(1 / Math.sqrt(2 * this.dimension));
-        setRandomSelected(50);
-        setParentSelected(20);
-        setMixingFactor(0.3);
-        setInitSigma(0.05);
+        setMutationLearningRate(0.001 * 1 / Math.sqrt(2 * this.dimension));
+        setRandomSelected(20);
+        setParentSelected(10);
+        setMixingFactor(0.7);
+        setInitSigma(2);
         setMutationStepSize(1);
         setMutationStepSizeBound(0.00001);
-        setSecondaryMutationLearningRate(1 / Math.sqrt(2 * Math.sqrt(this.dimension)));
-        setNdMutationStepSize(new double[] { 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001 });
+        setSecondaryMutationLearningRate(0.001 * 1 / Math.sqrt(2 * Math.sqrt(this.dimension)));
+        setNdMutationStepSize(new double[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 });
         setS_value(1.9);
         setCorrelationFactors(new double[this.dimension * (this.dimension - 1) / 2]);
         initCovarianceMatrix();
