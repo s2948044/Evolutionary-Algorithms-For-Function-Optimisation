@@ -3,7 +3,7 @@ public class Configs {
     /**
      * Total number of individuals of each generation.
      */
-    private final int populationSize = 100;
+    private final int populationSize = 20;
 
     /**
      * Dimension of the solution vector to the problem. (1 x N)

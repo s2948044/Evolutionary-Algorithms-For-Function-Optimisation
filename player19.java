@@ -62,13 +62,12 @@ public class player19 implements ContestSubmission {
         population = Inits.initPopulation(Initializations.RandomDistributions.NORMAL);
         resetEvals();
         Inits.updateFitness(population);
-        System.out.println("evaluation,fitness");
 
         while (evals < evaluations_limit_) {
             if (evals % cfgs.getPopulationSize() == 0) {
                 // System.out.println("Best fitness value at evaluation " + Integer.toString(evals) + ": "
                 //         + Double.toString(Inits.maxScore));
-                System.out.println(Integer.toString(evals) + "," + Double.toString(Inits.maxScore));
+                System.out.print("[" + Integer.toString(evals) + "," + Double.toString(Inits.maxScore) "],");
 
             }
             // Select parents
