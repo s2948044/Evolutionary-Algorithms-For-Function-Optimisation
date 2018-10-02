@@ -67,7 +67,7 @@ public class player19 implements ContestSubmission {
             if (evals % cfgs.getPopulationSize() == 0) {
                 // System.out.println("Best fitness value at evaluation " + Integer.toString(evals) + ": "
                 //         + Double.toString(Inits.maxScore));
-                System.out.print("[" + Integer.toString(evals) + "," + Double.toString(Inits.maxScore) "],");
+                System.out.print(Integer.toString(evals) + "," + Double.toString(Inits.maxScore) + ",");
 
             }
             // Select parents
