@@ -238,4 +238,7 @@ public class Configs {
         this.s_value = s_value;
     }
 
+    public void print_values(double score){
+        System.out.println(score);
+    }
 }
