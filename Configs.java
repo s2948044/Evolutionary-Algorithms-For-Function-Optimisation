@@ -101,7 +101,7 @@ public class Configs {
     private double[][] covarienceMatrix;
 
     /**
-     * JSON string
+     * JSON string creater (For data block)
      */
     private String jstring;
 
@@ -111,23 +111,18 @@ public class Configs {
         this.x_data.add(x);
     }
 
-    public void init_data_jstring(ArrayList x){
+    public void make_data_jstring(ArrayList x){
         this.jstring = "{'data' : {'y':[";
         
         for (int i = 0; i < x.size()-1; i++) {
             this.jstring = this.jstring + Double.toString(this.x_data.get(i)) + ",";
         }
-        this.jstring = this.jstring + Double.toString(this.x_data.get(x.size()-1));
-
-        this.jstring = this.jstring + "], 'x': [";
+        this.jstring = this.jstring + Double.toString(this.x_data.get(x.size()-1))+ "], 'x': [";
 
         for (int i = 0; i < x.size()-1; i++ ) {
              this.jstring = this.jstring + Integer.toString(i) + ",";
         }
-
-        this.jstring = this.jstring + Integer.toString(x.size()) ;
-
-        this.jstring = this.jstring + "] } }";
+        this.jstring = this.jstring + Integer.toString(x.size()) + "] } }";
     }
 
     public ArrayList get_xdata(){
