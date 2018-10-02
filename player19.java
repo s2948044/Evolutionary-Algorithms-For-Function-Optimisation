@@ -63,11 +63,14 @@ public class player19 implements ContestSubmission {
         resetEvals();
         Inits.updateFitness(population);
 
+
         while (evals < evaluations_limit_) {
             if (evals % cfgs.getPopulationSize() == 0) {
+                cfgs.append_xdata(Inits.maxScore);
                 // System.out.println("Best fitness value at evaluation " + Integer.toString(evals) + ": "
                 //         + Double.toString(Inits.maxScore));
-                System.out.print(Double.toString(Inits.maxScore) + ",");
+                // System.out.print(Double.toString(Inits.maxScore) + ",");
+
 
             }
             // Select parents
@@ -117,11 +120,17 @@ public class player19 implements ContestSubmission {
 
         }
 
+        cfgs.init_data_jstring(cfgs.get_xdata());
+
         // System.out.println(
         //         "Best fitness value at evaluation " + Integer.toString(evals) + ": " + Double.toString(Inits.maxScore));
 
         // Abs abs = new Abs();
         // System.out.println(abs.value(-10.0d));
+        // System.out.println("{'run': 1, 'vars': {'mut': 'random','cross': 'point'}, 'values': [1,2,3]}");
+        System.out.println(cfgs.get_data_jstring());
+
+
 
     }
 

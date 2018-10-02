@@ -1,3 +1,4 @@
+import java.util.*;
 public class Configs {
     // Immutable parameters:
     /**
@@ -98,6 +99,48 @@ public class Configs {
      * Covarience matrix for self-apative correalted mutation.
      */
     private double[][] covarienceMatrix;
+
+    /**
+     * JSON string
+     */
+    private String jstring;
+
+    private ArrayList<Double> x_data = new ArrayList<Double>();
+
+    public void append_xdata(double x){
+        this.x_data.add(x);
+    }
+
+    public void init_data_jstring(ArrayList x){
+        this.jstring = "{'data' : {'y':[";
+        
+        for (int i = 0; i < x.size()-1; i++) {
+            this.jstring = this.jstring + Double.toString(this.x_data.get(i)) + ",";
+        }
+        this.jstring = this.jstring + Double.toString(this.x_data.get(x.size()-1));
+
+        this.jstring = this.jstring + "], 'x': [";
+
+        for (int i = 0; i < x.size()-1; i++ ) {
+             this.jstring = this.jstring + Integer.toString(i) + ",";
+        }
+
+        this.jstring = this.jstring + Integer.toString(x.size()) ;
+
+        this.jstring = this.jstring + "] } }";
+    }
+
+    public ArrayList get_xdata(){
+        return this.x_data;
+    }
+
+    public String get_data_jstring(){
+        return this.jstring;
+    }
+
+    public void concat_jstring(String json){
+        this.jstring = this.jstring + json;
+    }
 
     public Configs() {
     }
