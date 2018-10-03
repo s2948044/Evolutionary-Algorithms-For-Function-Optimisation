@@ -4,6 +4,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 import json
 
+populations = [100,90,80,60,50,40,30]
+mixingfactors = [0.8,0.7,0.6,.5,.4,.3]
+
 def plot_result(x,y):
 	plt.plot(x,y)
 	plt.xlabel('x every 100 evalution')
@@ -15,26 +18,32 @@ def plot_result(x,y):
 def make():
 	subprocess.run("makeme")	
 
-def getTerminalOutput():
-	population = 20
-	mixingfactor = 0.6
-	# return subprocess.run(['java','-jar','testrun.jar','-submission=player19','-evaluation=BentCigarFunction', '-seed=1'], stdout=subprocess.PIPE)
-	return subprocess.run(['java','-jar', '-Dpopulation='+str(population), '-DmixingFactor='+str(mixingfactor),'testrun.jar','-submission=player19','-evaluation=SchaffersEvaluation', '-seed=1'], stdout=subprocess.PIPE)
+
+def runEA(population, mixingfactor):
+	result = subprocess.run(['java','-jar', '-Dpopulation='+str(population),  '-DmixingFactor='+str(mixingfactor),'testrun.jar','-submission=player19','-evaluation=BentCigarFunction', '-seed=1'], stdout=subprocess.PIPE)
+	# return subprocess.run(['java','-jar', '-Dpopulation='+str(population), '-DmixingFactor='+str(mixingfactor),'testrun.jar','-submission=player19','-evaluation=SchaffersEvaluation', '-seed=1'], stdout=subprocess.PIPE)
+	return result.stdout.decode('utf-8').replace('\'','"').split('\r')[0]
+	# return result.stdout[:-44].decode('utf-8').replace('\'','"')
 
 
-def getJsonString():
-	# return getTerminalOutput().stdout[:-44].decode('utf-8').replace('\'','"')
-	return getTerminalOutput().stdout[:-47].decode('utf-8').replace('\'','"')
+# def getJsonString():
+	# return runEA()
+	# return getTerminalOutput().stdout[:-47].decode('utf-8').replace('\'','"')
+
 
 
 
 
 def main():
-	make()
-	# print(getJsonString())
-	js = json.loads(getJsonString())
-	# print(json.dumps(js, indent=2, sort_keys=True))
-	plot_result(js["data"]["x"],js["data"]["y"])
+	# make()
+	for i in range(6):
+		population = populations[i]
+		mixingfactor = mixingfactors[i]
+
+		print(runEA(population, mixingfactor))
+		# js = json.loads(runEA(population, mixingfactor))
+		# print(json.dumps(js, indent=2, sort_keys=True))
+	# plot_result(js["data"]["x"],js["data"]["y"])
 
 
 

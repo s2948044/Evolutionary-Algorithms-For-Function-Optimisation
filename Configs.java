@@ -109,9 +109,10 @@ public class Configs {
 
     private String methods_jstring;
 
-    // public String build_methods_jstring(){
-    //     // this.methods_jstring = "methods: {'variables': {'populationsize:'" + Integer.toString(this.populationsize) +", mutationsize:" + Integer.toString(this.mutationSize) +", mixingfactor:" + Double.toString(this.mixingFactor);
-    // }
+    public String build_methods_jstring(){
+        this.methods_jstring = "{ 'methods': {'variables': {'populationsize':" + Integer.toString(getPopulationSize()) +", 'mutationsize':" + Integer.toString(getMutationSize()) +", 'mixingfactor':" + Double.toString(getMixingFactor()) + "} } }";
+        return this.methods_jstring;
+   }
 
     public void append_xdata(double x){
         this.x_data.add(x);

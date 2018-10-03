@@ -128,7 +128,9 @@ public class player19 implements ContestSubmission {
         // Abs abs = new Abs();
         // System.out.println(abs.value(-10.0d));
         // System.out.println("{'run': 1, 'vars': {'mut': 'random','cross': 'point'}, 'values': [1,2,3]}");
-        System.out.println(cfgs.get_data_jstring());
+        // System.out.println(cfgs.get_data_jstring());
+
+        System.out.println(cfgs.build_methods_jstring());
 
 
 
