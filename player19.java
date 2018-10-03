@@ -49,6 +49,7 @@ public class player19 implements ContestSubmission {
     }
 
     public void run() {
+        // System.out.println(Double.parseDouble(System.getProperty("var2")));
         // Run your algorithm here
         Configs cfgs = new Configs();
         Initializations Inits = new Initializations(cfgs, evaluation_);
@@ -65,6 +66,7 @@ public class player19 implements ContestSubmission {
 
 
         while (evals < evaluations_limit_) {
+
             if (evals % cfgs.getPopulationSize() == 0) {
                 cfgs.append_xdata(Inits.maxScore);
                 // System.out.println("Best fitness value at evaluation " + Integer.toString(evals) + ": "
@@ -80,10 +82,30 @@ public class player19 implements ContestSubmission {
             // Initializations.RandomDistributions.UNIFORM);
             // Apply crossover
             for (int i = 0; i < cfgs.getParentSelected(); i = i + 2) {
-                // population = Vars.order1CrossOver(population, population[parentsInd[i]],
-                // population[parentsInd[i + 1]]);
-                population = Vars.singleArithmeticCrossOver(population, population[parentsInd[i]],
+
+                // population = Vars.singleArithmeticCrossOver(population, population[parentsInd[i]],
+                // population[parentsInd[i + 1]]);   
+
+                if (cfgs.getVarChoice() == 1){
+                    population = Vars.singleArithmeticCrossOver(population, population[parentsInd[i]],
+                        population[parentsInd[i + 1]]);   
+                }
+                if (cfgs.getVarChoice() == 2){
+                    population = Vars.order1CrossOver(population, population[parentsInd[i]],
                         population[parentsInd[i + 1]]);
+                }
+                if (cfgs.getVarChoice() == 3){
+                    population = Vars.singleArithmeticCrossOver(population, population[parentsInd[i]],
+                        population[parentsInd[i + 1]]);
+                }
+                if (cfgs.getVarChoice() == 4){
+                    population = Vars.blendCrossOver(population, population[parentsInd[i]],
+                        population[parentsInd[i + 1]]);
+                }
+                if (cfgs.getVarChoice() == 5){
+                    population = Vars.wholeArithmeticCrossOver(population, population[parentsInd[i]], 
+                        population[parentsInd[i + 1]]);
+                }
                 // population = Vars.simpleArithmeticCrossOver(population,
                 // population[parentsInd[i]],
                 // population[parentsInd[i + 1]]);
@@ -129,8 +151,11 @@ public class player19 implements ContestSubmission {
         // System.out.println(abs.value(-10.0d));
         // System.out.println("{'run': 1, 'vars': {'mut': 'random','cross': 'point'}, 'values': [1,2,3]}");
         // System.out.println(cfgs.get_data_jstring());
+<<<<<<< HEAD
+=======
 
         System.out.println(cfgs.build_methods_jstring());
+>>>>>>> cf83f8a5c8c2891baf2d94c085bd7c0570620658
 
 
 
