@@ -22,7 +22,9 @@ def make():
 def runEA(population, mixingfactor):
 	result = subprocess.run(['java','-jar', '-Dpopulation='+str(population),  '-DmixingFactor='+str(mixingfactor),'testrun.jar','-submission=player19','-evaluation=BentCigarFunction', '-seed=1'], stdout=subprocess.PIPE)
 	# return subprocess.run(['java','-jar', '-Dpopulation='+str(population), '-DmixingFactor='+str(mixingfactor),'testrun.jar','-submission=player19','-evaluation=SchaffersEvaluation', '-seed=1'], stdout=subprocess.PIPE)
-	return result.stdout.decode('utf-8').replace('\'','"').split('\r')[0]
+	jsonstring = result.stdout.decode('utf-8').replace('\'','"').split('\r')[0]
+	
+	return jsonstring
 	# return result.stdout[:-44].decode('utf-8').replace('\'','"')
 
 
