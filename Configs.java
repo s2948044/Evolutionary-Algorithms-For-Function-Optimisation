@@ -109,6 +109,16 @@ public class Configs {
 
     private ArrayList<Double> x_data = new ArrayList<Double>();
 
+<<<<<<< HEAD
+=======
+    private String methods_jstring;
+
+    public String build_methods_jstring(){
+        this.methods_jstring = "{ 'methods': {'variables': {'populationsize':" + Integer.toString(getPopulationSize()) +", 'mutationsize':" + Integer.toString(getMutationSize()) +", 'mixingfactor':" + Double.toString(getMixingFactor()) + "} } }";
+        return this.methods_jstring;
+   }
+
+>>>>>>> cf83f8a5c8c2891baf2d94c085bd7c0570620658
     public void append_xdata(double x){
         this.x_data.add(x);
     }
