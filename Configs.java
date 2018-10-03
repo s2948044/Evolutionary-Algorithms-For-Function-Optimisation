@@ -101,7 +101,7 @@ public class Configs {
     private double[][] covarienceMatrix;
 
     /**
-     * JSON string creater (For data block)
+     * JSON string creater (For data block)     
      */
     private String jstring;
 
