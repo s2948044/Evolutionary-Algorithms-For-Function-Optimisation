@@ -5,3 +5,6 @@ tmp/
 *.jar
 *.tmp
 .DS_Store
+runEA.py
+runEA.py
+testrun.jar
