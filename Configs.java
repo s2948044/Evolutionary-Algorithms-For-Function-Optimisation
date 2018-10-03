@@ -4,7 +4,7 @@ public class Configs {
     /**
      * Total number of individuals of each generation.
      */
-    private final int populationSize = 20;
+    private final int populationSize = Integer.parseInt(System.getProperty("population"));
 
     /**
      * Dimension of the solution vector to the problem. (1 x N)
@@ -107,6 +107,12 @@ public class Configs {
 
     private ArrayList<Double> x_data = new ArrayList<Double>();
 
+    private String methods_jstring;
+
+    // public String build_methods_jstring(){
+    //     // this.methods_jstring = "methods: {'variables': {'populationsize:'" + Integer.toString(this.populationsize) +", mutationsize:" + Integer.toString(this.mutationSize) +", mixingfactor:" + Double.toString(this.mixingFactor);
+    // }
+
     public void append_xdata(double x){
         this.x_data.add(x);
     }
@@ -133,6 +139,8 @@ public class Configs {
         return this.jstring;
     }
 
+
+
     public void concat_jstring(String json){
         this.jstring = this.jstring + json;
     }
@@ -146,7 +154,7 @@ public class Configs {
         setMutationLearningRate(1 / Math.sqrt(2 * this.dimension));
         setRandomSelected(50);
         setParentSelected(20);
-        setMixingFactor(0.3);
+        setMixingFactor(Double.parseDouble(System.getProperty("mixingFactor")));
         setInitSigma(0.05);
         setMutationStepSize(1);
         setMutationStepSizeBound(0.00001);

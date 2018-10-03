@@ -120,7 +120,7 @@ public class player19 implements ContestSubmission {
 
         }
 
-        cfgs.init_data_jstring(cfgs.get_xdata());
+        cfgs.make_data_jstring(cfgs.get_xdata());
 
         // System.out.println(
         //         "Best fitness value at evaluation " + Integer.toString(evals) + ": " + Double.toString(Inits.maxScore));
