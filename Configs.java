@@ -1,7 +1,5 @@
 import java.util.*;
 public class Configs {
-
-    private final int varChoice = Integer.parseInt(System.getProperty("varChose"));
     // Immutable parameters:
     /**
      * Total number of individuals of each generation.
@@ -109,8 +107,6 @@ public class Configs {
 
     private ArrayList<Double> x_data = new ArrayList<Double>();
 
-<<<<<<< HEAD
-=======
     private String methods_jstring;
 
     public String build_methods_jstring(){
@@ -118,7 +114,6 @@ public class Configs {
         return this.methods_jstring;
    }
 
->>>>>>> cf83f8a5c8c2891baf2d94c085bd7c0570620658
     public void append_xdata(double x){
         this.x_data.add(x);
     }
@@ -145,6 +140,8 @@ public class Configs {
         return this.jstring;
     }
 
+
+
     public void concat_jstring(String json){
         this.jstring = this.jstring + json;
     }
@@ -170,10 +167,6 @@ public class Configs {
 
     public int getPopulationSize() {
         return this.populationSize;
-    }
-
-    public int getVarChoice() {
-        return this.varChoice;
     }
 
     public int getDimension() {

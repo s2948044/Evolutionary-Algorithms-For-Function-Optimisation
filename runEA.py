@@ -6,6 +6,7 @@ import json
 
 populations = [100,90,80,60,50,40,30]
 mixingfactors = [0.8,0.7,0.6,.5,.4,.3]
+varchoice = 2
 
 def plot_result(x,y):
 	plt.plot(x,y)
@@ -20,7 +21,7 @@ def make():
 
 
 def runEA(population, mixingfactor):
-	result = subprocess.run(['java','-jar', '-Dpopulation='+str(population),  '-DmixingFactor='+str(mixingfactor),'testrun.jar','-submission=player19','-evaluation=BentCigarFunction', '-seed=1'], stdout=subprocess.PIPE)
+	result = subprocess.run(['java','-jar', '-Dpopulation='+str(population),  '-DmixingFactor='+str(mixingfactor), '-DvarChoice='+str(varchoice),'testrun.jar','-submission=player19','-evaluation=BentCigarFunction', '-seed=1'], stdout=subprocess.PIPE)
 	# return subprocess.run(['java','-jar', '-Dpopulation='+str(population), '-DmixingFactor='+str(mixingfactor),'testrun.jar','-submission=player19','-evaluation=SchaffersEvaluation', '-seed=1'], stdout=subprocess.PIPE)
 	jsonstring = result.stdout.decode('utf-8').replace('\'','"').split('\r')[0]
 	
