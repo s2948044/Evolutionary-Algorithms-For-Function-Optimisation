@@ -113,7 +113,7 @@ public class Configs {
     private String methods_jstring;
 
     public String build_methods_jstring(){
-        this.methods_jstring = "{ 'methods': {'variables': {'populationsize':" + Integer.toString(getPopulationSize()) +", 'mutationsize':" + Integer.toString(getMutationSize()) +", 'mixingfactor':" + Double.toString(getMixingFactor()) + "} } }";
+        this.methods_jstring = "{ 'methods': {'variables': {'populationsize':" + Integer.toString(getPopulationSize()) +", 'mutationsize':" + Integer.toString(getMutationSize()) +", 'mixingfactor':" + Double.toString(getMixingFactor()) + "}, 'crossover':"+Integer.toString(this.varChoice)+" }, ";
         return this.methods_jstring;
    }
 
@@ -122,7 +122,7 @@ public class Configs {
     }
 
     public void make_data_jstring(ArrayList x){
-        this.jstring = "{'data' : {'y':[";
+        this.jstring = "'data' : {'y':[";
         
         for (int i = 0; i < x.size()-1; i++) {
             this.jstring = this.jstring + Double.toString(this.x_data.get(i)) + ",";
@@ -133,6 +133,9 @@ public class Configs {
              this.jstring = this.jstring + Integer.toString(i) + ",";
         }
         this.jstring = this.jstring + Integer.toString(x.size()) + "] } }";
+
+        this.methods_jstring = build_methods_jstring();
+        concat_jstring(this.methods_jstring);
     }
 
     public ArrayList get_xdata(){
@@ -146,7 +149,7 @@ public class Configs {
 
 
     public void concat_jstring(String json){
-        this.jstring = this.jstring + json;
+        this.jstring = json + this.jstring;
     }
 
     public Configs() {
