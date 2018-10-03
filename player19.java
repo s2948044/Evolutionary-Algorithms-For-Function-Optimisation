@@ -81,9 +81,29 @@ public class player19 implements ContestSubmission {
             // Apply crossover
             for (int i = 0; i < cfgs.getParentSelected(); i = i + 2) {
                 // population = Vars.order1CrossOver(population, population[parentsInd[i]],
-                // population[parentsInd[i + 1]]);
-                population = Vars.singleArithmeticCrossOver(population, population[parentsInd[i]],
+
+                // population = Vars.singleArithmeticCrossOver(population, population[parentsInd[i]],
+                // population[parentsInd[i + 1]]);   
+                if (cfgs.getVarChoice() == 1){
+                    population = Vars.singleArithmeticCrossOver(population, population[parentsInd[i]],
+                        population[parentsInd[i + 1]]);   
+                }
+                if (cfgs.getVarChoice() == 2){
+                    population = Vars.order1CrossOver(population, population[parentsInd[i]],
                         population[parentsInd[i + 1]]);
+                }
+                if (cfgs.getVarChoice() == 3){
+                    population = Vars.singleArithmeticCrossOver(population, population[parentsInd[i]],
+                        population[parentsInd[i + 1]]);
+                }
+                if (cfgs.getVarChoice() == 4){
+                    population = Vars.blendCrossOver(population, population[parentsInd[i]],
+                        population[parentsInd[i + 1]]);
+                }
+                if (cfgs.getVarChoice() == 5){
+                    population = Vars.wholeArithmeticCrossOver(population, population[parentsInd[i]], 
+                        population[parentsInd[i + 1]]);
+                }
                 // population = Vars.simpleArithmeticCrossOver(population,
                 // population[parentsInd[i]],
                 // population[parentsInd[i + 1]]);
@@ -128,8 +148,8 @@ public class player19 implements ContestSubmission {
         // Abs abs = new Abs();
         // System.out.println(abs.value(-10.0d));
         // System.out.println("{'run': 1, 'vars': {'mut': 'random','cross': 'point'}, 'values': [1,2,3]}");
+        
         // System.out.println(cfgs.get_data_jstring());
-
         System.out.println(cfgs.build_methods_jstring());
 
 

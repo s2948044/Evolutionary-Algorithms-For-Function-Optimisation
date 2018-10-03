@@ -1,5 +1,8 @@
 import java.util.*;
 public class Configs {
+
+    // private final int varChoice = 1;
+    private final int varChoice = Integer.parseInt(System.getProperty("varChoice"));
     // Immutable parameters:
     /**
      * Total number of individuals of each generation.
@@ -163,6 +166,10 @@ public class Configs {
         setNdMutationStepSize(new double[] { 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001 });
         setS_value(1.9);
 
+    }
+
+    public int getVarChoice() {
+        return this.varChoice;
     }
 
     public int getPopulationSize() {
