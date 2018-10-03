@@ -1,8 +1,8 @@
 import java.util.*;
 public class Configs {
 
-    // private final int varChoice = 1;
-    private final int varChoice = Integer.parseInt(System.getProperty("varChoice"));
+
+    private final String varChoice = System.getProperty("varChoice");
     // Immutable parameters:
     /**
      * Total number of individuals of each generation.
@@ -168,7 +168,7 @@ public class Configs {
 
     }
 
-    public int getVarChoice() {
+    public String getVarChoice() {
         return this.varChoice;
     }
 

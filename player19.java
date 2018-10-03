@@ -84,23 +84,19 @@ public class player19 implements ContestSubmission {
 
                 // population = Vars.singleArithmeticCrossOver(population, population[parentsInd[i]],
                 // population[parentsInd[i + 1]]);   
-                if (cfgs.getVarChoice() == 1){
+                if (cfgs.getVarChoice().equals("singleArithmeticCrossOver")){
                     population = Vars.singleArithmeticCrossOver(population, population[parentsInd[i]],
                         population[parentsInd[i + 1]]);   
-                }
-                if (cfgs.getVarChoice() == 2){
+                } else if (cfgs.getVarChoice().equals("order1CrossOver")){
                     population = Vars.order1CrossOver(population, population[parentsInd[i]],
                         population[parentsInd[i + 1]]);
-                }
-                if (cfgs.getVarChoice() == 3){
+                } else if (cfgs.getVarChoice().equals("singleArithmeticCrossOver")){
                     population = Vars.singleArithmeticCrossOver(population, population[parentsInd[i]],
                         population[parentsInd[i + 1]]);
-                }
-                if (cfgs.getVarChoice() == 4){
+                } else if (cfgs.getVarChoice().equals("blendCrossOver")){
                     population = Vars.blendCrossOver(population, population[parentsInd[i]],
                         population[parentsInd[i + 1]]);
-                }
-                if (cfgs.getVarChoice() == 5){
+                } else if (cfgs.getVarChoice().equals("wholeArithmeticCrossOver")){
                     population = Vars.wholeArithmeticCrossOver(population, population[parentsInd[i]], 
                         population[parentsInd[i + 1]]);
                 }

@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import json
 
-varChoice = 1
+varChoice = "singleArithmeticCrossOver"
 populations = [100,90,80,60,50,40,30]
 mixingfactors = [0.8,0.7,0.6,.5,.4,.3]
 # varchoice = 2
@@ -18,7 +18,7 @@ def plot_result(x,y):
 
 
 def make():
-	subprocess.run("makeme")	
+	subprocess.run("make")	
 
 
 def runEA(population, mixingfactor, varChoice):
