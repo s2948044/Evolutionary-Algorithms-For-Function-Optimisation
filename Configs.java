@@ -1,10 +1,12 @@
 import java.util.*;
 public class Configs {
+
+    private final int varChoice = Integer.parseInt(System.getProperty("varChose"));
     // Immutable parameters:
     /**
      * Total number of individuals of each generation.
      */
-    private final int populationSize = 20;
+    private final int populationSize = Integer.parseInt(System.getProperty("population"));
 
     /**
      * Dimension of the solution vector to the problem. (1 x N)
@@ -146,7 +148,7 @@ public class Configs {
         setMutationLearningRate(1 / Math.sqrt(2 * this.dimension));
         setRandomSelected(50);
         setParentSelected(20);
-        setMixingFactor(0.3);
+        setMixingFactor(Double.parseDouble(System.getProperty("mixingFactor")));
         setInitSigma(0.05);
         setMutationStepSize(1);
         setMutationStepSizeBound(0.00001);
@@ -158,6 +160,10 @@ public class Configs {
 
     public int getPopulationSize() {
         return this.populationSize;
+    }
+
+    public int getVarChoice() {
+        return this.varChoice;
     }
 
     public int getDimension() {
