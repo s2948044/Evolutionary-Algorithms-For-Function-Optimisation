@@ -5,7 +5,6 @@ import org.apache.commons.math3.analysis.function.Abs;
 
 import java.util.*;
 
-
 public class player19 implements ContestSubmission {
     Random rnd_;
     ContestEvaluation evaluation_;
@@ -63,14 +62,13 @@ public class player19 implements ContestSubmission {
         resetEvals();
         Inits.updateFitness(population);
 
-
         while (evals < evaluations_limit_) {
             if (evals % cfgs.getPopulationSize() == 0) {
                 cfgs.append_xdata(Inits.maxScore);
-                // System.out.println("Best fitness value at evaluation " + Integer.toString(evals) + ": "
-                //         + Double.toString(Inits.maxScore));
+                // System.out.println("Best fitness value at evaluation " +
+                // Integer.toString(evals) + ": "
+                // + Double.toString(Inits.maxScore));
                 // System.out.print(Double.toString(Inits.maxScore) + ",");
-
 
             }
             // Select parents
@@ -82,27 +80,29 @@ public class player19 implements ContestSubmission {
             for (int i = 0; i < cfgs.getParentSelected(); i = i + 2) {
                 // population = Vars.order1CrossOver(population, population[parentsInd[i]],
 
-                // population = Vars.singleArithmeticCrossOver(population, population[parentsInd[i]],
-                // population[parentsInd[i + 1]]);   
-                if (cfgs.getVarChoice() == 1){
+                // population = Vars.singleArithmeticCrossOver(population,
+                // population[parentsInd[i]],
+                // population[parentsInd[i + 1]]);
+                switch (cfgs.getVarChoice()) {
+                case 1:
                     population = Vars.singleArithmeticCrossOver(population, population[parentsInd[i]],
-                        population[parentsInd[i + 1]]);   
-                }
-                if (cfgs.getVarChoice() == 2){
-                    population = Vars.order1CrossOver(population, population[parentsInd[i]],
-                        population[parentsInd[i + 1]]);
-                }
-                if (cfgs.getVarChoice() == 3){
-                    population = Vars.singleArithmeticCrossOver(population, population[parentsInd[i]],
-                        population[parentsInd[i + 1]]);
-                }
-                if (cfgs.getVarChoice() == 4){
+                            population[parentsInd[i + 1]]);
+                    break;
+
+                case 2:
+                    population = Vars.simpleArithmeticCrossOver(population, population[parentsInd[i]],
+                            population[parentsInd[i + 1]]);
+                    break;
+
+                case 3:
+                    population = Vars.wholeArithmeticCrossOver(population, population[parentsInd[i]],
+                            population[parentsInd[i + 1]]);
+                    break;
+
+                case 4:
                     population = Vars.blendCrossOver(population, population[parentsInd[i]],
-                        population[parentsInd[i + 1]]);
-                }
-                if (cfgs.getVarChoice() == 5){
-                    population = Vars.wholeArithmeticCrossOver(population, population[parentsInd[i]], 
-                        population[parentsInd[i + 1]]);
+                            population[parentsInd[i + 1]]);
+                    break;
                 }
                 // population = Vars.simpleArithmeticCrossOver(population,
                 // population[parentsInd[i]],
@@ -114,15 +114,16 @@ public class player19 implements ContestSubmission {
                 // population[parentsInd[i + 1]]);
             }
             // Apply mutation
-            for (int i = cfgs.getPopulationSize(); i < cfgs.getPopulationSize() + cfgs.getParentSelected(); i++) {
-                if (new Random().nextInt((int) (1 / cfgs.getMutationRate())) == 0) {
-                    // Vars.rnd_swap(population[i]);
-                    Vars.customizedMutation(population[i]);
-                    // Vars.nonUniformMutation(population[i]);
-                    // Vars.singleUncorrelatedMutation(population[i]);
-                    // Vars.multiUncorrelatedMutation(population[i]);
-                }
-            }
+            // for (int i = cfgs.getPopulationSize(); i < cfgs.getPopulationSize() +
+            // cfgs.getParentSelected(); i++) {
+            // if (new Random().nextInt((int) (1 / cfgs.getMutationRate())) == 0) {
+            // // Vars.rnd_swap(population[i]);
+            // Vars.customizedMutation(population[i]);
+            // // Vars.nonUniformMutation(population[i]);
+            // // Vars.singleUncorrelatedMutation(population[i]);
+            // // Vars.multiUncorrelatedMutation(population[i]);
+            // }
+            // }
             // Check fitness of unknown fuction
             for (int i = 0; i < cfgs.getParentSelected(); i++) {
                 double[] tempPop = Arrays.copyOfRange(population[cfgs.getPopulationSize() + i], 0, cfgs.getDimension());
@@ -143,17 +144,17 @@ public class player19 implements ContestSubmission {
         cfgs.make_data_jstring(cfgs.get_xdata());
 
         // System.out.println(
-        //         "Best fitness value at evaluation " + Integer.toString(evals) + ": " + Double.toString(Inits.maxScore));
+        // "Best fitness value at evaluation " + Integer.toString(evals) + ": " +
+        // Double.toString(Inits.maxScore));
 
         // Abs abs = new Abs();
         // System.out.println(abs.value(-10.0d));
-        // System.out.println("{'run': 1, 'vars': {'mut': 'random','cross': 'point'}, 'values': [1,2,3]}");
-        
+        // System.out.println("{'run': 1, 'vars': {'mut': 'random','cross': 'point'},
+        // 'values': [1,2,3]}");
+
         String json = cfgs.get_data_jstring();
         System.out.println(json);
         // System.out.println(cfgs.build_methods_jstring());
-
-
 
     }
 
