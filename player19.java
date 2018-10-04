@@ -1,8 +1,6 @@
 import org.vu.contest.ContestSubmission;
 import org.vu.contest.ContestEvaluation;
 
-import org.apache.commons.math3.analysis.function.Abs;
-
 import java.util.*;
 
 public class player19 implements ContestSubmission {
@@ -109,9 +107,8 @@ public class player19 implements ContestSubmission {
                 // population[parentsInd[i + 1]]);
                 // population = Vars.blendCrossOver(population, population[parentsInd[i]],
                 // population[parentsInd[i + 1]]);
-                // population = Vars.wholeArithmeticCrossOver(population,
-                // population[parentsInd[i]],
-                // population[parentsInd[i + 1]]);
+                population = Vars.wholeArithmeticCrossOver(population, population[parentsInd[i]],
+                        population[parentsInd[i + 1]]);
             }
             // Apply mutation
             // for (int i = cfgs.getPopulationSize(); i < cfgs.getPopulationSize() +

@@ -1,6 +1,6 @@
 import java.util.*;
-public class Configs {
 
+public class Configs {
 
     private final int varChoice = Integer.parseInt(System.getProperty("varChoice"));
     // Immutable parameters:
@@ -99,12 +99,23 @@ public class Configs {
     private double s_value;
 
     /**
-     * Covarience matrix for self-apative correalted mutation.
+     * Factors indicating the correlation between each dimensions in the solution
+     * vector.
+     */
+    private double[] correlationFactors;
+
+    /**
+     * Covarience matrix for self-apative correlated mutation.
      */
     private double[][] covarienceMatrix;
 
     /**
-     * JSON string creater (For data block)     
+     * Correlation angle for self-adaptive correlated mutation.
+     */
+    private double correlationAngle;
+
+    /**
+     * JSON string creater (For data block)
      */
     private String jstring;
 
@@ -112,29 +123,31 @@ public class Configs {
 
     private String methods_jstring;
 
-    public String build_methods_jstring(){
-        this.methods_jstring = "{ 'methods': {'variables': {'populationsize':" + Integer.toString(getPopulationSize()) +", 'mutationsize':" + Integer.toString(getMutationSize()) +", 'mixingfactor':" + Double.toString(getMixingFactor()) + "}, 'crossover':"+Integer.toString(this.varChoice)+" }, ";
+    public String build_methods_jstring() {
+        this.methods_jstring = "{ 'methods': {'variables': {'populationsize':" + Integer.toString(getPopulationSize())
+                + ", 'mutationsize':" + Integer.toString(getMutationSize()) + ", 'mixingfactor':"
+                + Double.toString(getMixingFactor()) + "}, 'crossover':" + Integer.toString(this.varChoice) + " }, ";
         return this.methods_jstring;
-   }
+    }
 
-    public void append_xdata(double x){
+    public void append_xdata(double x) {
         this.x_data.add(x);
     }
 
-    public double return_xdata_3(){
-        return this.x_data.get(this.x_data.size()-3);
+    public double return_xdata_3() {
+        return this.x_data.get(this.x_data.size() - 3);
     }
 
-    public void make_data_jstring(ArrayList x){
+    public void make_data_jstring(ArrayList x) {
         this.jstring = "'data' : {'y':[";
-        
-        for (int i = 0; i < x.size()-1; i++) {
+
+        for (int i = 0; i < x.size() - 1; i++) {
             this.jstring = this.jstring + Double.toString(this.x_data.get(i)) + ",";
         }
-        this.jstring = this.jstring + Double.toString(this.x_data.get(x.size()-1))+ "], 'x': [";
+        this.jstring = this.jstring + Double.toString(this.x_data.get(x.size() - 1)) + "], 'x': [";
 
-        for (int i = 0; i < x.size()-1; i++ ) {
-             this.jstring = this.jstring + Integer.toString(i) + ",";
+        for (int i = 0; i < x.size() - 1; i++) {
+            this.jstring = this.jstring + Integer.toString(i) + ",";
         }
         this.jstring = this.jstring + Integer.toString(x.size()) + "] } }";
 
@@ -142,16 +155,15 @@ public class Configs {
         concat_jstring(this.methods_jstring);
     }
 
-    public ArrayList get_xdata(){
+    public ArrayList get_xdata() {
         return this.x_data;
     }
 
-    public String get_data_jstring(){
+    public String get_data_jstring() {
         return this.jstring;
     }
 
-
-    public void concat_jstring(String json){
+    public void concat_jstring(String json) {
         this.jstring = json + this.jstring;
     }
 
@@ -159,7 +171,7 @@ public class Configs {
     }
 
     public void initParams() {
-        setMutationRate(0.1);
+        setMutationRate(0.01);
         setMutationSize(1);
         setMutationLearningRate(1 / Math.sqrt(2 * this.dimension));
         setRandomSelected(50);
@@ -168,9 +180,13 @@ public class Configs {
         setInitSigma(0.05);
         setMutationStepSize(1);
         setMutationStepSizeBound(0.00001);
-        setSecondaryMutationLearningRate(1 / Math.sqrt(2 * Math.sqrt(this.dimension)));
-        setNdMutationStepSize(new double[] { 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001 });
+        setSecondaryMutationLearningRate(0.001 * 1 / Math.sqrt(2 * Math.sqrt(this.dimension)));
+        setNdMutationStepSize(new double[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 });
         setS_value(1.9);
+        setCorrelationFactors(new double[this.dimension * (this.dimension - 1) / 2]);
+        initCovarianceMatrix();
+        setCovarianceMatrix(this.ndMutationStepSize, this.correlationFactors);
+        setCorrelationAngle(5 * Math.PI / 180);
 
     }
 
@@ -298,7 +314,47 @@ public class Configs {
         this.s_value = s_value;
     }
 
-    public void print_values(double score){
+    public void print_values(double score) {
         System.out.println(score);
     }
+
+    public double[] getCorrelationFactors() {
+        return this.correlationFactors;
+    }
+
+    public void setCorrelationFactors(double[] correlationFactors) {
+        this.correlationFactors = correlationFactors;
+    }
+
+    public void initCovarianceMatrix() {
+        this.covarienceMatrix = new double[this.dimension][this.dimension];
+    }
+
+    public double[][] getCovarienceMatrix() {
+        return this.covarienceMatrix;
+    }
+
+    public void setCovarianceMatrix(double[] ndMutationStepSize, double[] correlationFactors) {
+        int indCounter = 0;
+        for (int i = 0; i < this.dimension; i++) {
+            for (int j = i; j < this.dimension; j++) {
+                if (j == i) {
+                    this.covarienceMatrix[i][j] = ndMutationStepSize[i] * ndMutationStepSize[i];
+                } else {
+                    this.covarienceMatrix[i][j] = correlationFactors[indCounter];
+                    this.covarienceMatrix[j][i] = correlationFactors[indCounter];
+                    indCounter++;
+                }
+            }
+        }
+    }
+
+    public double getCorrelationAngle() {
+        return this.correlationAngle;
+    }
+
+    public void setCorrelationAngle(double correlationAngle) {
+        this.correlationAngle = correlationAngle;
+    }
+
 }
