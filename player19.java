@@ -107,8 +107,9 @@ public class player19 implements ContestSubmission {
                 // population[parentsInd[i + 1]]);
                 // population = Vars.blendCrossOver(population, population[parentsInd[i]],
                 // population[parentsInd[i + 1]]);
-                population = Vars.wholeArithmeticCrossOver(population, population[parentsInd[i]],
-                        population[parentsInd[i + 1]]);
+                // population = Vars.wholeArithmeticCrossOver(population,
+                // population[parentsInd[i]],
+                // population[parentsInd[i + 1]]);
             }
             // Apply mutation
             // for (int i = cfgs.getPopulationSize(); i < cfgs.getPopulationSize() +
