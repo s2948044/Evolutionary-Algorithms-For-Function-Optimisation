@@ -139,7 +139,12 @@ public class player19 implements ContestSubmission {
 
         }
 
-        cfgs.make_data_jstring(cfgs.get_xdata());
+        // For details:
+        // cfgs.make_data_jstring(cfgs.get_xdata());
+
+        // For MBF statistics:
+        cfgs.append_mbfdata(Inits.maxScore);
+        cfgs.make_data_jstring(cfgs.get_mbfdata());
 
         // System.out.println(
         // "Best fitness value at evaluation " + Integer.toString(evals) + ": " +

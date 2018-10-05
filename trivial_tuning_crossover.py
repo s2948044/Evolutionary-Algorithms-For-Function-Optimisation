@@ -17,7 +17,7 @@ epochs = 100
 
 population = 100
 evaluations = ["BentCigarFunction", "KatsuuraEvaluation", "SchaffersEvaluation"]
-varNames = ["singleArithmeticCrossOver", "singleArithmeticCrossOver", "wholeArithmeticCrossOver", "blendCrossOver"]
+varNames = ["singleArithmeticCrossOver", "simpleArithmeticCrossOver", "wholeArithmeticCrossOver", "blendCrossOver"]
 
 # makefile (change to your own 'make.exe' command)
 
@@ -48,15 +48,17 @@ def main():
     for varchoice in varchoices:
         MBF = []
         for mixingfactor in mixingfactors:
+            BF = []
             for i in range(epochs):
                 # make json object
                 js = json.loads(runEA(population=population, mixingfactor=mixingfactor, varchoice=varchoice, evalchoice=evalchoice))
                 x = js['data']['x']
                 y = js['data']['y']
-            MBF.append(np.mean(y))
+                BF.append(y)
+            MBF.append(np.mean(BF))
             # plot data of algortihm
         plt.plot(mixingfactors, MBF, label=varNames[varchoice] + 'mixf=' + str(mixingfactor), color=colors[varchoice])
-    # plt.legend()
+    plt.legend()
     plt.show()
 
 

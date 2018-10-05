@@ -121,6 +121,11 @@ public class Configs {
 
     private ArrayList<Double> x_data = new ArrayList<Double>();
 
+    /**
+     * Mean best fitness data for statistics.
+     */
+    private ArrayList<Double> mbf_data = new ArrayList<Double>();
+
     private String methods_jstring;
 
     public String build_methods_jstring() {
@@ -128,6 +133,14 @@ public class Configs {
                 + ", 'mutationsize':" + Integer.toString(getMutationSize()) + ", 'mixingfactor':"
                 + Double.toString(getMixingFactor()) + "}, 'crossover':" + Integer.toString(this.varChoice) + " }, ";
         return this.methods_jstring;
+    }
+
+    public void append_mbfdata(double mbf) {
+        this.mbf_data.add(mbf);
+    }
+
+    public double return_mbfdata_3() {
+        return this.mbf_data.get(this.x_data.size() - 3);
     }
 
     public void append_xdata(double x) {
@@ -153,6 +166,10 @@ public class Configs {
 
         this.methods_jstring = build_methods_jstring();
         concat_jstring(this.methods_jstring);
+    }
+
+    public ArrayList get_mbfdata() {
+        return this.mbf_data;
     }
 
     public ArrayList get_xdata() {
