@@ -36,13 +36,30 @@ public class player19 implements ContestSubmission {
         boolean isMultimodal = Boolean.parseBoolean(props.getProperty("Multimodal"));
         boolean hasStructure = Boolean.parseBoolean(props.getProperty("Regular"));
         boolean isSeparable = Boolean.parseBoolean(props.getProperty("Separable"));
+        //System.out.println(isMultimodal);
+        //System.out.println(hasStructure);
+        //System.out.println(isSeparable);
 
         // Do sth with property values, e.g. specify relevant settings of your algorithm
-        if (isMultimodal) {
-            // Do sth
-        } else {
-            // Do sth else
-        }
+        if (!isMultimodal) {
+			if (!hasStructure){
+				if (!isSeparable){
+					//BentCigar
+				}
+			}
+		}
+		if (isMultimodal) {
+			if (!hasStructure){
+				if (!isSeparable){
+					//KatsuuraEvaluation
+				}
+			}
+			if (hasStructure){
+				if (!isSeparable){
+					//SchaffersEvaluation
+				}
+			}
+		}
     }
 
     public void run() {
@@ -66,6 +83,7 @@ public class player19 implements ContestSubmission {
             }
             // Select parents
             Sels.sortbyColumn(population, cfgs.getDimension());
+            // System.out.println(Arrays.toString(population));
             int[] parentsInd = Sels.parentSelection_RankedBased(population);
             // int[] parentsInd = Sels.parentSelection_Elitism(population,
             // Initializations.RandomDistributions.UNIFORM);
@@ -81,18 +99,18 @@ public class player19 implements ContestSubmission {
                 // population[parentsInd[i + 1]]);
                 // population = Vars.blendCrossOver(population, population[parentsInd[i]],
                 // population[parentsInd[i + 1]]);
-                population = Vars.wholeArithmeticCrossOver(population, population[parentsInd[i]],
+                 population = Vars.wholeArithmeticCrossOver(population, population[parentsInd[i]],
                         population[parentsInd[i + 1]]);
             }
             // Apply mutation
             for (int i = cfgs.getPopulationSize(); i < cfgs.getPopulationSize() + cfgs.getParentSelected(); i++) {
                 if (new Random().nextInt((int) (1 / cfgs.getMutationRate())) == 0) {
                     // Vars.rnd_swap(population[i]);
-                    // Vars.customizedMutation(population[i]);
+                     Vars.customizedMutation(population[i]);
                     // Vars.nonUniformMutation(population[i]);
                     // Vars.singleUncorrelatedMutation(population[i]);
                     // Vars.multiUncorrelatedMutation(population[i]);
-                    Vars.correlatedMutation(population[i]);
+                    // Vars.correlatedMutation(population[i]);
                 }
             }
             // Check fitness of unknown fuction
@@ -112,7 +130,7 @@ public class player19 implements ContestSubmission {
         }
         System.out.println(
                 "Best fitness value at evaluation " + Integer.toString(evals) + ": " + Double.toString(Inits.maxScore));
-        System.out.println(Arrays.deepToString(population));
+        // System.out.println(Arrays.deepToString(population));
     }
 
 }

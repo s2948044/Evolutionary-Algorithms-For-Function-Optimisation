@@ -114,11 +114,11 @@ public class Configs {
     }
 
     public void initParams() {
-        setMutationRate(0.01);
+        setMutationRate(0.1);
         setMutationSize(1);
         setMutationLearningRate(0.001 * 1 / Math.sqrt(2 * this.dimension));
-        setRandomSelected(20);
-        setParentSelected(10);
+        setRandomSelected(50);
+        setParentSelected(20);
         setMixingFactor(0.7);
         setInitSigma(2);
         setMutationStepSize(1);

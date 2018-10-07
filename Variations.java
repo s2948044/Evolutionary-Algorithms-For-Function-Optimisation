@@ -189,6 +189,8 @@ public class Variations {
 		double[] child2 = new double[population[0].length];
 
 		int k = new Random().nextInt(this.cfgs.getDimension());
+		// System.out.println(k);
+		// System.out.println(this.cfgs.getDimension());
 		for (int i = 0; i < k; i++) {
 			child1[i] = parent1[i];
 			child2[i] = parent2[i];
@@ -257,18 +259,9 @@ public class Variations {
 		double[] child1 = new double[population[0].length];
 		double[] child2 = new double[population[0].length];
 
-		double sum_1 = 0;
-		double sum_2 = 0;
 		for (int i = 0; i < this.cfgs.getDimension(); i++) {
-			sum_1 = sum_1 + parent1[i];
-			sum_2 = sum_2 + parent2[i];
-		}
-		double mean_1 = sum_1 / this.cfgs.getDimension();
-		double mean_2 = sum_2 / this.cfgs.getDimension();
-
-		for (int i = 0; i < this.cfgs.getDimension(); i++) {
-			child1[i] = this.cfgs.getMixingFactor() * mean_1 + (1 - this.cfgs.getMixingFactor()) * mean_2;
-			child2[i] = this.cfgs.getMixingFactor() * mean_2 + (1 - this.cfgs.getMixingFactor()) * mean_1;
+			child1[i] = this.cfgs.getMixingFactor() * parent2[i] + (1 - this.cfgs.getMixingFactor()) * parent1[i];
+			child2[i] = this.cfgs.getMixingFactor() * parent1[i] + (1 - this.cfgs.getMixingFactor()) * parent2[i];
 		}
 
 		for (int i = 0; i < population.length; i++) {

@@ -113,6 +113,7 @@ public class Selections {
      */
     public int[] parentSelection_RankedBased(double[][] population) {
         int[] parentsInd = new int[this.cfgs.getParentSelected()];
+        // System.out.println(this.cfgs.getParentSelected());
         // Compute the corresponding probabilities.
         double[] probs = new double[population.length];
         for (int i = 0; i < probs.length; i++) {
@@ -124,6 +125,7 @@ public class Selections {
         while (selectedNr < this.cfgs.getParentSelected()) {
             double prob = 0;
             prob = new Random().nextDouble();
+            // System.out.println(prob);
             double probSum = 0;
             int i = 0;
             while (prob - probSum > 0) {
