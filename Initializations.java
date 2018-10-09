@@ -24,7 +24,6 @@ public class Initializations {
         maxScore = -1;
         for (int i = 0; i < population.length; i++) {
             double[] tempPop = Arrays.copyOfRange(population[i], 0, this.cfgs.getDimension());
-            // System.out.println(this.cfgs.getDimension());
             double tempEval = (double) this.evaluation_.evaluate(tempPop);
             player19.evals++;
 

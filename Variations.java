@@ -44,10 +44,8 @@ public class Variations {
 	 */
 	public void uniformMutation(double[] individual) {
 		for (int i = 0; i < this.cfgs.getDimension(); i++) {
-			if (new Random().nextInt((int) (1 / this.cfgs.getMutationRate())) == 0) {
-				individual[i] = new Random().nextDouble() * (this.cfgs.getUpperBound() - this.cfgs.getLowerBound())
-						+ this.cfgs.getLowerBound();
-			}
+			individual[i] = new Random().nextDouble() * (this.cfgs.getUpperBound() - this.cfgs.getLowerBound())
+					+ this.cfgs.getLowerBound();
 		}
 	}
 
@@ -63,7 +61,7 @@ public class Variations {
 	}
 
 	/**
-	 * Older version of non-uniform mutation operator(wrondly implmented).
+	 * Older version of non-uniform mutation operator(wrongly implemented).
 	 * 
 	 * @param individual
 	 */
@@ -98,7 +96,7 @@ public class Variations {
 	 */
 	public void singleUncorrelatedMutation(double[] individual) {
 		this.cfgs.setMutationStepSize(this.cfgs.getMutationStepSize()
-				* Math.exp(this.cfgs.getMutationLearningRate() * new Random().nextGaussian()));
+				* Math.exp(this.cfgs.getSingleMutationLearningRate() * new Random().nextGaussian()));
 		if (this.cfgs.getMutationStepSize() < this.cfgs.getMutationStepSizeBound()) {
 			this.cfgs.setMutationStepSize(this.cfgs.getMutationStepSizeBound());
 		}
@@ -124,7 +122,7 @@ public class Variations {
 			}
 			individual[i] = individual[i] + ndMutationStepSize[i] * new Random().nextGaussian();
 		}
-		// System.out.println(Arrays.toString(cfgs.getNdMutationStepSize()));
+		// System.out.println(Arrays.toString(this.cfgs.getNdMutationStepSize()));
 	}
 
 	public void correlatedMutation(double[] individual) {
@@ -145,11 +143,12 @@ public class Variations {
 		// System.out.println(Arrays.toString(ndMutationStepSize));
 
 		for (int i = 0; i < this.cfgs.getDimension() * (this.cfgs.getDimension() - 1) / 2; i++) {
-			correlationFactors[i] = correlationFactors[i] + this.cfgs.getCorrelationAngle() * overallNormalDist;
+			correlationFactors[i] = correlationFactors[i] + this.cfgs.getCorrelationAngle() * new Random().nextGaussian();
 			if (Math.abs(correlationFactors[i]) > Math.PI) {
 				correlationFactors[i] = correlationFactors[i] - 2 * Math.PI * Math.signum(correlationFactors[i]);
 			}
 		}
+		// System.out.println(Arrays.toString(correlationFactors));
 
 		this.cfgs.setCovarianceMatrix(ndMutationStepSize, correlationFactors);
 		// DoubleMatrix2D covarianceMatrix = new
@@ -189,8 +188,6 @@ public class Variations {
 		double[] child2 = new double[population[0].length];
 
 		int k = new Random().nextInt(this.cfgs.getDimension());
-		// System.out.println(k);
-		// System.out.println(this.cfgs.getDimension());
 		for (int i = 0; i < k; i++) {
 			child1[i] = parent1[i];
 			child2[i] = parent2[i];
