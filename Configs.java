@@ -2,7 +2,6 @@ import java.util.*;
 
 public class Configs {
 
-    private final int varChoice = Integer.parseInt(System.getProperty("varChoice"));
     // Immutable parameters:
     /**
      * Dimension of the solution vector to the problem. (1 x N)
@@ -30,6 +29,16 @@ public class Configs {
     private final int upperBound = 5;
 
     // Mutable parameters:
+    /**
+     * Choice for the crossover method.
+     */
+    private int xoverChoice;
+
+    /**
+     * Choice for the mutation method.
+     */
+    private int mutationChoice;
+
     /**
      * Total number of individuals of each generation.
      */
@@ -141,7 +150,7 @@ public class Configs {
     public String build_methods_jstring() {
         this.methods_jstring = "{ 'methods': {'variables': {'populationsize':" + Integer.toString(getPopulationSize())
                 + ", 'mutationsize':" + Integer.toString(getMutationSize()) + ", 'mixingfactor':"
-                + Double.toString(getMixingFactor()) + "}, 'crossover':" + Integer.toString(this.varChoice) + " }, ";
+                + Double.toString(getMixingFactor()) + "}, 'crossover':" + Integer.toString(this.xoverChoice) + " }, ";
         return this.methods_jstring;
     }
 
@@ -198,6 +207,8 @@ public class Configs {
     }
 
     public void initParams() {
+        setXoverChoice(Integer.parseInt(System.getProperty("xoverChoice")));
+        setMutationChoice(Integer.parseInt(System.getProperty("mutationChoice")));
         setPopulationSize(Integer.parseInt(System.getProperty("population")));
         setMutationRate(0.1); // should be in range [populationSize, 0.1].
         setMutationSize(1);
@@ -220,8 +231,20 @@ public class Configs {
         setCorrelationAngle(Math.toRadians(5));
     }
 
-    public int getVarChoice() {
-        return this.varChoice;
+    public int getXoverChoice() {
+        return this.xoverChoice;
+    }
+
+    public void setXoverChoice(int xoverChoice) {
+        this.xoverChoice = xoverChoice;
+    }
+
+    public int getMutationChoice() {
+        return this.mutationChoice;
+    }
+
+    public void setMutationChoice(int mutationChoice) {
+        this.mutationChoice = mutationChoice;
     }
 
     public int getPopulationSize() {

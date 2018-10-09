@@ -74,50 +74,7 @@ public class player19 implements ContestSubmission {
         // init population
         // calculate fitness
         double[][] population;
-        if (!isMultimodal) {
-            if (!hasStructure) {
-                if (!isSeparable) {
-                    // set the customised parameters (if necessary) for BentCigar
-                    System.out.println("BentCigar");
-                    cfgs.setPopulationSize(100);
-                    cfgs.setTournamentSize(10);
-                    cfgs.setParentSelected(60);
-                    cfgs.setMutationRate(0.8);
-                }
-            }
-        }
-        if (isMultimodal) {
-            if (!hasStructure) {
-                if (!isSeparable) {
-                    // set the customised parameters (if necessary) for KatsuuraEvaluation
-                    System.out.println("KatsuuraEvaluation");
-                    cfgs.setPopulationSize(500);
-                    cfgs.setTournamentSize(20);
-                    cfgs.setParentSelected(250);
-                    cfgs.setMutationRate(0.5);
-                }
-            }
-            if (hasStructure) {
-                if (!isSeparable) {
-                    // set the customised parameters (if necessary) SchaffersEvaluation
-                    System.out.println("SchaffersEvaluation");
-                    cfgs.setPopulationSize(2000);
-                    cfgs.setTournamentSize(100);
-                    cfgs.setParentSelected(1000);
-                    cfgs.setMutationRate(0.8);
-                }
-            }
-        }
         population = Inits.initPopulation(Initializations.RandomDistributions.NORMAL);
-        for (int i = 0; i < population.length; i++) {
-            for (int j = 0; j < population[0].length - 1; j++) {
-                // System.out.print(population[i][j] + " ");
-                if (population[i][j] > 5 || population[i][j] < -5) {
-                    System.out.print(population[i][j] + " ");
-                    System.out.println("Warning!"); // check if any value goes out of [-5,5]
-                }
-            }
-        }
         // System.out.println("Population Size " + population.length);
         resetEvals();
         Inits.updateFitness(population);
@@ -146,7 +103,7 @@ public class player19 implements ContestSubmission {
                 // population = Vars.singleArithmeticCrossOver(population,
                 // population[parentsInd[i]],
                 // population[parentsInd[i + 1]]);
-                switch (cfgs.getVarChoice()) {
+                switch (cfgs.getXoverChoice()) {
                 case 1:
                     population = Vars.singleArithmeticCrossOver(population, population[parentsInd[i]],
                             population[parentsInd[i + 1]]);
@@ -180,8 +137,37 @@ public class player19 implements ContestSubmission {
             // for (int i = cfgs.getPopulationSize(); i < cfgs.getPopulationSize() +
             // cfgs.getParentSelected(); i++) {
             // if (new Random().nextInt((int) (1 / cfgs.getMutationRate())) == 0) {
-            // // Vars.rnd_swap(population[i]);
+            // switch (cfgs.getMutationChoice()) {
+            // case 1:
+            // Vars.rnd_swap(population[i]);
+            // break;
+
+            // case 2:
+            // Vars.uniformMutation(population[i]);
+            // break;
+
+            // case 3:
+            // Vars.nonUniformMutation(population[i]);
+            // break;
+
+            // case 4:
             // Vars.customizedMutation(population[i]);
+            // break;
+
+            // case 5:
+            // Vars.singleUncorrelatedMutation(population[i]);
+            // break;
+
+            // case 6:
+            // Vars.multiUncorrelatedMutation(population[i]);
+            // break;
+
+            // case 7:
+            // Vars.correlatedMutation(population[i]);
+            // break;
+            // }
+            // // Vars.rnd_swap(population[i]);
+            // // Vars.customizedMutation(population[i]);
             // // Vars.nonUniformMutation(population[i]);
             // // Vars.singleUncorrelatedMutation(population[i]);
             // // Vars.multiUncorrelatedMutation(population[i]);
