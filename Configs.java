@@ -5,11 +5,6 @@ public class Configs {
     private final int varChoice = Integer.parseInt(System.getProperty("varChoice"));
     // Immutable parameters:
     /**
-     * Total number of individuals of each generation.
-     */
-    private final int populationSize = Integer.parseInt(System.getProperty("population"));
-
-    /**
      * Dimension of the solution vector to the problem. (1 x N)
      */
     private final int dimension = 10;
@@ -36,6 +31,16 @@ public class Configs {
 
     // Mutable parameters:
     /**
+     * Total number of individuals of each generation.
+     */
+    private int populationSize;
+
+    /**
+     * Size of Tournament.
+     */
+    private int tournamentSize;
+
+    /**
      * Rate of occurence for mutation for each child.
      */
     private double mutationRate;
@@ -44,6 +49,11 @@ public class Configs {
      * Number of dimensions to mutate during mutation.
      */
     private int mutationSize;
+
+    /**
+     * Learning rate for single uncorrelated self-adaptive mutation methods.
+     */
+    private double singleMutationLearningRate;
 
     /**
      * Overall learning rate for self-adaptive mutation methods.
@@ -188,23 +198,26 @@ public class Configs {
     }
 
     public void initParams() {
-        setMutationRate(0.01);
+        setPopulationSize(Integer.parseInt(System.getProperty("population")));
+        setMutationRate(0.1); // should be in range [populationSize, 0.1].
         setMutationSize(1);
-        setMutationLearningRate(1 / Math.sqrt(2 * this.dimension));
-        setRandomSelected(50);
-        setParentSelected(20);
-        setMixingFactor(Double.parseDouble(System.getProperty("mixingFactor")));
-        setInitSigma(0.05);
+        setTournamentSize(100);
+        setSingleMutationLearningRate(0.01 * (1 / Math.sqrt(this.dimension))); // the 0.01 can be manipulated.
+        setMutationLearningRate(0.003 * (1 / Math.sqrt(2 * this.dimension))); // the 0.01 can be manipulated.
+        setRandomSelected(50); // should be less than populationSize.
+        setParentSelected(20); // should be less than RandomSelected.
+        setMixingFactor(0.5); // should be in range (0, 1).
+        setInitSigma(2);
         setMutationStepSize(1);
-        setMutationStepSizeBound(0.00001);
-        setSecondaryMutationLearningRate(0.001 * 1 / Math.sqrt(2 * Math.sqrt(this.dimension)));
+        setMutationStepSizeBound(0.001);
+        setSecondaryMutationLearningRate(0.007 * (1 / Math.sqrt(2 * Math.sqrt(this.dimension)))); // the 0.01 can be
+                                                                                                  // manipulated.
         setNdMutationStepSize(new double[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 });
-        setS_value(1.9);
+        setS_value(1.9); // should be in range (0, 2].
         setCorrelationFactors(new double[this.dimension * (this.dimension - 1) / 2]);
         initCovarianceMatrix();
         setCovarianceMatrix(this.ndMutationStepSize, this.correlationFactors);
-        setCorrelationAngle(5 * Math.PI / 180);
-
+        setCorrelationAngle(Math.toRadians(5));
     }
 
     public int getVarChoice() {
@@ -213,6 +226,10 @@ public class Configs {
 
     public int getPopulationSize() {
         return this.populationSize;
+    }
+
+    public void setPopulationSize(int populationSize) {
+        this.populationSize = populationSize;
     }
 
     public int getDimension() {
@@ -233,6 +250,14 @@ public class Configs {
 
     public int getUpperBound() {
         return this.upperBound;
+    }
+
+    public int getTournamentSize() {
+        return this.tournamentSize;
+    }
+
+    public void setTournamentSize(int tournamentSize) {
+        this.tournamentSize = tournamentSize;
     }
 
     public double getMutationRate() {
@@ -289,6 +314,14 @@ public class Configs {
 
     public void setMutationStepSize(double mutationStepSize) {
         this.mutationStepSize = mutationStepSize;
+    }
+
+    public double getSingleMutationLearningRate() {
+        return this.singleMutationLearningRate;
+    }
+
+    public void setSingleMutationLearningRate(double singleMutationLearningRate) {
+        this.singleMutationLearningRate = singleMutationLearningRate;
     }
 
     public double getMutationLearningRate() {
@@ -358,12 +391,19 @@ public class Configs {
                 if (j == i) {
                     this.covarienceMatrix[i][j] = ndMutationStepSize[i] * ndMutationStepSize[i];
                 } else {
-                    this.covarienceMatrix[i][j] = correlationFactors[indCounter];
-                    this.covarienceMatrix[j][i] = correlationFactors[indCounter];
+                    this.covarienceMatrix[i][j] = 0.5
+                            * (ndMutationStepSize[i] * ndMutationStepSize[i]
+                                    - ndMutationStepSize[j] * ndMutationStepSize[j])
+                            * Math.tan(2 * correlationFactors[indCounter]);
+                    this.covarienceMatrix[j][i] = 0.5
+                            * (ndMutationStepSize[j] * ndMutationStepSize[j]
+                                    - ndMutationStepSize[i] * ndMutationStepSize[i])
+                            * Math.tan(2 * correlationFactors[indCounter]);
                     indCounter++;
                 }
             }
         }
+        // System.out.println(Arrays.deepToString(covarienceMatrix));
     }
 
     public double getCorrelationAngle() {
