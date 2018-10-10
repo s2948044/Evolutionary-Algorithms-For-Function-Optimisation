@@ -241,7 +241,7 @@ public class Configs {
         setMutationStepSize(1);
         setMutationStepSizeBound(0.001);
         setSecondaryMutationCoefficient(Double.parseDouble(System.getProperty("SecondaryMC"))); //should be from 0 to 0.1
-        setSecondaryMutationLearningRate(0.007 * (1 / Math.sqrt(2 * Math.sqrt(this.dimension))));
+        setSecondaryMutationLearningRate(1 / Math.sqrt(2 * Math.sqrt(this.dimension)));
         setNdMutationStepSize(new double[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 });
         setS_value(1.9); // should be in range (0, 2].
         setCorrelationFactors(new double[this.dimension * (this.dimension - 1) / 2]);
