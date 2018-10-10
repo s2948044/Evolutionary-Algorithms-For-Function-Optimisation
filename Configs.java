@@ -143,7 +143,7 @@ public class Configs {
     }
 
     public void initParams() {
-		setPopulationSize(100);
+        setPopulationSize(100);
         setMutationRate(0.1); // should be in range [populationSize, 0.1].
         setMutationSize(1);
         setTournamentSize(100);
