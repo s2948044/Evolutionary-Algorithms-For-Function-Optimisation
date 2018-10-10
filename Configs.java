@@ -85,6 +85,23 @@ public class Configs {
      * mutation and blend crossover).
      */
     private double mixingFactor;
+    
+    /**
+     * Coefficient factor for the Single Uncorrelated Mutation (p1).
+     */
+    private double singleMutationCoefficient;
+    
+    /**
+     * Overall coefficient factor for the Multi Uncorrelated Mutation
+     * and Correlated Mutation (p2).
+     */
+    private double overallMutationCoefficient;
+    
+    /**
+     * Secondary coefficient factor for the Multi Uncorrelated Mutation
+     * and Correlated Mutation (p3).
+     */
+    private double secondaryMutationCoefficient;
 
     /**
      * Standard deviation during initialization of the population.
@@ -213,16 +230,18 @@ public class Configs {
         // setMutationRate(0.1); // should be in range [populationSize, 0.1].
         setMutationSize(1);
         // setTournamentSize(100);
-        setSingleMutationLearningRate(0.01 * (1 / Math.sqrt(this.dimension))); // the 0.01 can be manipulated.
-        setMutationLearningRate(0.003 * (1 / Math.sqrt(2 * this.dimension))); // the 0.01 can be manipulated.
+        setSingleMutationCoefficient(0.01); //should be from 0 to 0.1
+        setSingleMutationLearningRate(1 / Math.sqrt(this.dimension));
+        setOverallMutationCoefficient(0.003); //should be from 0 to 0.1
+        setMutationLearningRate(1 / Math.sqrt(2 * this.dimension));
         setRandomSelected(50); // should be less than populationSize.
         // setParentSelected(20); // should be less than RandomSelected.
         setMixingFactor(0.5); // should be in range (0, 1).
         setInitSigma(2);
         setMutationStepSize(1);
         setMutationStepSizeBound(0.001);
-        setSecondaryMutationLearningRate(0.007 * (1 / Math.sqrt(2 * Math.sqrt(this.dimension)))); // the 0.01 can be
-                                                                                                  // manipulated.
+        setSecondaryMutationCoefficient(0.007); //should be from 0 to 0.1
+        setSecondaryMutationLearningRate(0.007 * (1 / Math.sqrt(2 * Math.sqrt(this.dimension))));
         setNdMutationStepSize(new double[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 });
         setS_value(1.9); // should be in range (0, 2].
         setCorrelationFactors(new double[this.dimension * (this.dimension - 1) / 2]);
@@ -289,6 +308,30 @@ public class Configs {
 
     public void setMutationRate(double mutationRate) {
         this.mutationRate = mutationRate;
+    }
+    
+    public double getSingleMutationCoefficient() {
+        return this.singleMutationCoefficient;
+    }
+
+    public void setSingleMutationCoefficient(double singleMutationCoefficient) {
+        this.singleMutationCoefficient = singleMutationCoefficient;
+    }
+    
+    public double getOverallMutationCoefficient() {
+        return this.overallMutationCoefficient;
+    }
+
+    public void setOverallMutationCoefficient(double overallMutationCoefficient) {
+        this.overallMutationCoefficient = overallMutationCoefficient;
+    }
+    
+    public double getSecondaryMutationCoefficient() {
+        return this.secondaryMutationCoefficient;
+    }
+
+    public void setSecondaryMutationCoefficient(double secondaryMutationCoefficient) {
+        this.secondaryMutationCoefficient = secondaryMutationCoefficient;
     }
 
     public int getMutationSize() {
