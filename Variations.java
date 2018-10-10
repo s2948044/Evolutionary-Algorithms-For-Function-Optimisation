@@ -96,7 +96,8 @@ public class Variations {
 	 */
 	public void singleUncorrelatedMutation(double[] individual) {
 		this.cfgs.setMutationStepSize(this.cfgs.getMutationStepSize()
-				* Math.exp(this.cfgs.getSingleMutationLearningRate() * new Random().nextGaussian()));
+				* Math.exp(this.cfgs.getSingleMutationLearningRate() 
+				* this.cfgs.getSingleMutationCoefficient() * new Random().nextGaussian()));
 		if (this.cfgs.getMutationStepSize() < this.cfgs.getMutationStepSizeBound()) {
 			this.cfgs.setMutationStepSize(this.cfgs.getMutationStepSizeBound());
 		}
@@ -115,8 +116,10 @@ public class Variations {
 		double overallNormalDist = new Random().nextGaussian();
 		for (int i = 0; i < this.cfgs.getDimension(); i++) {
 			ndMutationStepSize[i] = ndMutationStepSize[i]
-					* Math.exp(this.cfgs.getMutationLearningRate() * overallNormalDist
-							+ this.cfgs.getSecondaryMutationLearningRate() * new Random().nextGaussian());
+					* Math.exp(this.cfgs.getMutationLearningRate() 
+					* this.cfgs.getOverallMutationCoefficient() * overallNormalDist
+					+ this.cfgs.getSecondaryMutationLearningRate() 
+					* this.cfgs.getSecondaryMutationCoefficient() * new Random().nextGaussian());
 			if (ndMutationStepSize[i] < this.cfgs.getMutationStepSizeBound()) {
 				ndMutationStepSize[i] = this.cfgs.getMutationStepSizeBound();
 			}
@@ -133,8 +136,10 @@ public class Variations {
 
 		for (int i = 0; i < this.cfgs.getDimension(); i++) {
 			ndMutationStepSize[i] = ndMutationStepSize[i]
-					* Math.exp(this.cfgs.getMutationLearningRate() * overallNormalDist
-							+ this.cfgs.getSecondaryMutationLearningRate() * new Random().nextGaussian());
+					* Math.exp(this.cfgs.getMutationLearningRate() 
+					* this.cfgs.getOverallMutationCoefficient() * overallNormalDist
+					+ this.cfgs.getSecondaryMutationLearningRate() 
+					* this.cfgs.getSecondaryMutationCoefficient() * new Random().nextGaussian());
 			if (ndMutationStepSize[i] < this.cfgs.getMutationStepSizeBound()) {
 				ndMutationStepSize[i] = this.cfgs.getMutationStepSizeBound();
 			}
