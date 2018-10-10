@@ -111,8 +111,20 @@ public class player19 implements ContestSubmission {
         Inits.updateFitness(population);
 
         while (evals < evaluations_limit_) {
+            
+            if (evals % (4*cfgs.getPopulationSize()) == 0) {
+                System.out.println("Best fitness value at evaluation " + Integer.toString(evals) + ": "
+                        + Double.toString(Inits.maxScore) + "  " + Double.toString(cfgs.x_data.get(cfgs.x_data.size()-1)));
+                if (Inits.maxScore ==  cfgs.x_data.get(cfgs.x_data.size()-1)){
+                    population = Inits.initPopulation(Initializations.RandomDistributions.NORMAL);
+                    Inits.updateFitness(population);
+                }
+            }
+            
             if (evals % cfgs.getPopulationSize() == 0) {
                 cfgs.append_xdata(Inits.maxScore);
+                System.out.println("Best fitness value at evaluation " + Integer.toString(evals) + ": "
+                + Double.toString(Inits.maxScore));
                 // System.out.println("Best fitness value at evaluation " +
                 // Integer.toString(evals) + ": "
                 // + Double.toString(Inits.maxScore));

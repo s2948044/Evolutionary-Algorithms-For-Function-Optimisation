@@ -155,7 +155,7 @@ public class Configs {
      */
     private String jstring;
 
-    private ArrayList<Double> x_data = new ArrayList<Double>();
+    public ArrayList<Double> x_data = new ArrayList<Double>();
 
     /**
      * Mean best fitness data for statistics.
@@ -182,6 +182,10 @@ public class Configs {
     public void append_xdata(double x) {
         this.x_data.add(x);
     }
+
+    // public double return_last_datap(){
+    //     return this.x_data.get(this.x_data.size()-1);
+    // }
 
     public double return_xdata_3() {
         return this.x_data.get(this.x_data.size() - 3);

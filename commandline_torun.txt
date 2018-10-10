@@ -1,3 +1,3 @@
 java -jar testrun.jar -submission=player19 -evaluation=BentCigarFunction -seed=1
 
-java -jar -DmixingFactor=.2 -DxoverChoice=1 -DmutationChoice=4 -DSingleMC=.01 -DOverallMC=0.1 -DSecondaryMC=.1 testrun.jar -submission=player19 -evaluation=BentCigarFunction -seed=1
+java -jar -DmixingFactor=.2 -DxoverChoice=1 -DmutationChoice=4 -DSingleMC=.01 -DOverallMC=0.003 -DSecondaryMC=.007 testrun.jar -submission=player19 -evaluation=SchaffersEvaluation -seed=1
