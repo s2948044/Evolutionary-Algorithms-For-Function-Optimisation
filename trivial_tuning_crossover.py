@@ -7,23 +7,31 @@ import time
 
 start_time = time.time()
 
-mixingfactors = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
-xoverChoices = [0, 1, 2, 3]
-mutationChoices = [0, 1, 2, 3, 4, 5, 6]
-# mixingfactors = [0, 0.1]
+mixs = [0, 0.25, 0.5, 0.75, 1]
+p1s = [0.01, 0.05, 0.1]
+p2s = [0.01, 0.05, 0.1]
+p3s = [0.01, 0.05, 0.1]
+# xoverChoices = [0, 1, 2, 3]
+xoverChoices = [1, 2]
+
+# mutationChoices = [0, 1, 2, 3, 4, 5, 6]
+mutationChoices = [4, 5, 6]
+
+# mix = [0, 0.1]
 # varchoices = [0, 1]
 
 evalChoices = [0, 1, 2]
-epochs = 100
+epochs = 1
 
 evaluations = ["BentCigarFunction", "KatsuuraEvaluation", "SchaffersEvaluation"]
 xoverNames = ["singleArithmeticCrossOver", "simpleArithmeticCrossOver", "wholeArithmeticCrossOver", "blendCrossOver"]
+mutationNames = ["rnd_swap", "uniformMutation", "nonUniformMutation", "customizedMutation", "singleUncorrelatedMutation", "multiUncorrelatedMutation", "correlatedMutation"]
 
 # makefile (change to your own 'make.exe' command)
 
 
 def make():
-    subprocess.run("mingw32-make")
+    subprocess.run("makeme")
 
 # run algorithm with parameter values. Returns json string
 
@@ -42,28 +50,53 @@ def main():
 
     make()
 
+
+    MBF = []
+
+
     colors = ['b', 'g', 'r', 'c']
     evalChoice = evalChoices[0]
-    mutationChoice = 0
+    # mutationChoice = 0
 
     for xoverChoice in xoverChoices:
-        MBF = []
-        for mixingfactor in mixingfactors:
-            BF = []
-            for i in range(epochs):
-                # make json object
-                js = json.loads(runEA(mixingfactor=mixingfactor,
-                                      xoverChoice=xoverChoice, mutationChoice=mutationChoice, evalChoice=evalChoice))
-                x = js['data']['x']
-                y = js['data']['y']
-                BF.append(y)
-            MBF.append(np.mean(BF))
+        for mutationChoice in mutationChoices:
+            for mix in mixs:
+
+                if mutationChoice == 4:
+                    for p1 in p1s:  
+                        BF = []
+                        for i in range(epochs):
+                            # make json object
+                            js = json.loads(runEA(mixingfactor=mix, xoverChoice=xoverChoice, mutationChoice=mutationChoice, evalChoice=evalChoice))
+                            y = js['data']['y']
+                            BF.append(y)
+                        MBF.append([np.mean(BF), xoverChoice, mutationChoice, mix, p1, "-", "-"])
+
+
+                else:
+                    MBF = []
+                    for p2 in p2s:
+                        for p3 in p3s:
+                            BF = []
+                            for i in range(epochs):
+                                # make json object
+                                js = json.loads(runEA(mixingfactor=mix, xoverChoice=xoverChoice, mutationChoice=mutationChoice, evalChoice=evalChoice))
+                                y = js['data']['y']
+                                BF.append(y)
+                            MBF.append([np.mean(BF), xoverChoice, mutationChoice, mix, "-", p2, p3])
+
+
+                print(MBF)
+                break
+            break
+        break
+            
             # plot data of algortihm
-        plt.plot(mixingfactors, MBF, label=xoverNames[xoverChoice], color=colors[xoverChoice])
-    plt.legend()
-    plt.xlabel("Mixing Factor")
-    plt.ylabel("Score")
-    plt.show()
+        # plt.plot(mix, MBF, label=xoverNames[xoverChoice], color=colors[xoverChoice])
+    # plt.legend()
+    # plt.xlabel("Mixing Factor")
+    # plt.ylabel("Score")
+    # plt.show()
 
 
 main()
