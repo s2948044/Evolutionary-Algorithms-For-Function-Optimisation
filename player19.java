@@ -74,6 +74,37 @@ public class player19 implements ContestSubmission {
         // init population
         // calculate fitness
         double[][] population;
+        if (!isMultimodal) {
+            if (!hasStructure) {
+                if (!isSeparable) {
+                    // set the customised parameters (if necessary) for BentCigar
+                    cfgs.setPopulationSize(100);
+                    cfgs.setTournamentSize(10);
+                    cfgs.setParentSelected(60);
+                    cfgs.setMutationRate(0.8);
+                }
+            }
+        }
+        if (isMultimodal) {
+            if (!hasStructure) {
+                if (!isSeparable) {
+                    // set the customised parameters (if necessary) for KatsuuraEvaluation
+                    cfgs.setPopulationSize(500);
+                    cfgs.setTournamentSize(20);
+                    cfgs.setParentSelected(250);
+                    cfgs.setMutationRate(0.5);
+                }
+            }
+            if (hasStructure) {
+                if (!isSeparable) {
+                    // set the customised parameters (if necessary) SchaffersEvaluation
+                    cfgs.setPopulationSize(2000);
+                    cfgs.setTournamentSize(100);
+                    cfgs.setParentSelected(1000);
+                    cfgs.setMutationRate(0.8);
+                }
+            }
+        }
         population = Inits.initPopulation(Initializations.RandomDistributions.NORMAL);
         // System.out.println("Population Size " + population.length);
         resetEvals();

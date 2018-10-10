@@ -209,14 +209,14 @@ public class Configs {
     public void initParams() {
         setXoverChoice(Integer.parseInt(System.getProperty("xoverChoice")));
         setMutationChoice(Integer.parseInt(System.getProperty("mutationChoice")));
-        setPopulationSize(Integer.parseInt(System.getProperty("population")));
-        setMutationRate(0.1); // should be in range [populationSize, 0.1].
+        // setPopulationSize(Integer.parseInt(System.getProperty("population")));
+        // setMutationRate(0.1); // should be in range [populationSize, 0.1].
         setMutationSize(1);
-        setTournamentSize(100);
+        // setTournamentSize(100);
         setSingleMutationLearningRate(0.01 * (1 / Math.sqrt(this.dimension))); // the 0.01 can be manipulated.
         setMutationLearningRate(0.003 * (1 / Math.sqrt(2 * this.dimension))); // the 0.01 can be manipulated.
         setRandomSelected(50); // should be less than populationSize.
-        setParentSelected(20); // should be less than RandomSelected.
+        // setParentSelected(20); // should be less than RandomSelected.
         setMixingFactor(0.5); // should be in range (0, 1).
         setInitSigma(2);
         setMutationStepSize(1);

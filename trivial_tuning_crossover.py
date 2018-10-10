@@ -16,7 +16,6 @@ mutationChoices = [0, 1, 2, 3, 4, 5, 6]
 evalChoices = [0, 1, 2]
 epochs = 100
 
-population = 100
 evaluations = ["BentCigarFunction", "KatsuuraEvaluation", "SchaffersEvaluation"]
 xoverNames = ["singleArithmeticCrossOver", "simpleArithmeticCrossOver", "wholeArithmeticCrossOver", "blendCrossOver"]
 
@@ -29,8 +28,8 @@ def make():
 # run algorithm with parameter values. Returns json string
 
 
-def runEA(population, mixingfactor, xoverChoice, mutationChoice, evalChoice):
-    result = subprocess.run(['java', '-jar', '-Dpopulation=' + str(population), '-DmixingFactor=' + str(mixingfactor), '-DxoverChoice=' +
+def runEA(mixingfactor, xoverChoice, mutationChoice, evalChoice):
+    result = subprocess.run(['java', '-jar', '-DmixingFactor=' + str(mixingfactor), '-DxoverChoice=' +
                              str(xoverChoice + 1), '-DmutationChoice=' + str(mutationChoice + 1), 'testrun.jar', '-submission=player19', '-evaluation=' + str(evaluations[evalChoice]), '-seed=1'], stdout=subprocess.PIPE)
     jsonstring = result.stdout.decode('utf-8').replace('\'', '"').split('\r')[0]
 
@@ -44,7 +43,7 @@ def main():
     make()
 
     colors = ['b', 'g', 'r', 'c']
-    evalChoice = evalChoices[2]
+    evalChoice = evalChoices[0]
     mutationChoice = 0
 
     for xoverChoice in xoverChoices:
@@ -53,15 +52,17 @@ def main():
             BF = []
             for i in range(epochs):
                 # make json object
-                js = json.loads(runEA(population=population, mixingfactor=mixingfactor,
+                js = json.loads(runEA(mixingfactor=mixingfactor,
                                       xoverChoice=xoverChoice, mutationChoice=mutationChoice, evalChoice=evalChoice))
                 x = js['data']['x']
                 y = js['data']['y']
                 BF.append(y)
             MBF.append(np.mean(BF))
             # plot data of algortihm
-        plt.plot(mixingfactors, MBF, label=xoverNames[xoverChoice] + 'mixf=' + str(mixingfactor), color=colors[xoverChoice])
+        plt.plot(mixingfactors, MBF, label=xoverNames[xoverChoice], color=colors[xoverChoice])
     plt.legend()
+    plt.xlabel("Mixing Factor")
+    plt.ylabel("Score")
     plt.show()
 
 

@@ -26,8 +26,8 @@ def make():
 # run algorithm with parameter values. Returns json string
 
 
-def runEA(population, mixingfactor, xoverChoice, mutationChoice):
-    result = subprocess.run(['java', '-jar', '-Dpopulation=' + str(population), '-DmixingFactor=' + str(mixingfactor), '-DxoverChoice=' +
+def runEA(mixingfactor, xoverChoice, mutationChoice):
+    result = subprocess.run(['java', '-jar', '-DmixingFactor=' + str(mixingfactor), '-DxoverChoice=' +
                              str(xoverChoice), '-DmutationChoice=' + str(mutationChoice), 'testrun.jar', '-submission=player19', '-evaluation=SchaffersEvaluation', '-seed=1'], stdout=subprocess.PIPE)
     jsonstring = result.stdout.decode('utf-8').replace('\'', '"').split('\r')[0]
 
@@ -39,8 +39,6 @@ def runEA(population, mixingfactor, xoverChoice, mutationChoice):
 def main():
 
     make()
-
-    population = 20
 
     colors = ['b', 'g', 'r', 'c']
 
@@ -58,7 +56,7 @@ def main():
             mixingfactor = .8
 
             # make json object
-            js = json.loads(runEA(population, mixingfactor, xoverChoice, mutationChoice))
+            js = json.loads(runEA(mixingfactor, xoverChoice, mutationChoice))
             x = js['data']['x']
             y = js['data']['y']
 
