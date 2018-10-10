@@ -241,6 +241,11 @@ public class player19 implements ContestSubmission {
         System.out.println(json);
         // System.out.println(cfgs.build_methods_jstring());
 
+        // TEST COMMANDLINE SETS
+        // System.out.println(Double.parseDouble(System.getProperty("SingleMC")));
+        // System.out.println(Double.parseDouble(System.getProperty("OverallMC")));
+        // System.out.println(Double.parseDouble(System.getProperty("SecondaryMC")));
+
     }
 
 }
