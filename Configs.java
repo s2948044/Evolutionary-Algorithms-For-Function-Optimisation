@@ -85,21 +85,21 @@ public class Configs {
      * mutation and blend crossover).
      */
     private double mixingFactor;
-    
+
     /**
      * Coefficient factor for the Single Uncorrelated Mutation (p1).
      */
     private double singleMutationCoefficient;
-    
+
     /**
-     * Overall coefficient factor for the Multi Uncorrelated Mutation
-     * and Correlated Mutation (p2).
+     * Overall coefficient factor for the Multi Uncorrelated Mutation and Correlated
+     * Mutation (p2).
      */
     private double overallMutationCoefficient;
-    
+
     /**
-     * Secondary coefficient factor for the Multi Uncorrelated Mutation
-     * and Correlated Mutation (p3).
+     * Secondary coefficient factor for the Multi Uncorrelated Mutation and
+     * Correlated Mutation (p3).
      */
     private double secondaryMutationCoefficient;
 
@@ -230,9 +230,9 @@ public class Configs {
         // setMutationRate(0.1); // should be in range [populationSize, 0.1].
         setMutationSize(1);
         // setTournamentSize(100);
-        setSingleMutationCoefficient(Double.parseDouble(System.getProperty("SingleMC"))); //should be from 0 to 0.1
+        setSingleMutationCoefficient(Double.parseDouble(System.getProperty("SingleMC"))); // should be from 0 to 0.1
         setSingleMutationLearningRate(1 / Math.sqrt(this.dimension));
-        setOverallMutationCoefficient(Double.parseDouble(System.getProperty("OverallMC"))); //should be from 0 to 0.1
+        setOverallMutationCoefficient(Double.parseDouble(System.getProperty("OverallMC"))); // should be from 0 to 0.1
         setMutationLearningRate(1 / Math.sqrt(2 * this.dimension));
         setRandomSelected(50); // should be less than populationSize.
         // setParentSelected(20); // should be less than RandomSelected.
@@ -240,7 +240,8 @@ public class Configs {
         setInitSigma(2);
         setMutationStepSize(1);
         setMutationStepSizeBound(0.001);
-        setSecondaryMutationCoefficient(Double.parseDouble(System.getProperty("SecondaryMC"))); //should be from 0 to 0.1
+        setSecondaryMutationCoefficient(Double.parseDouble(System.getProperty("SecondaryMC"))); // should be from 0 to
+                                                                                                // 0.1
         setSecondaryMutationLearningRate(1 / Math.sqrt(2 * Math.sqrt(this.dimension)));
         setNdMutationStepSize(new double[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 });
         setS_value(1.9); // should be in range (0, 2].
@@ -309,7 +310,7 @@ public class Configs {
     public void setMutationRate(double mutationRate) {
         this.mutationRate = mutationRate;
     }
-    
+
     public double getSingleMutationCoefficient() {
         return this.singleMutationCoefficient;
     }
@@ -317,7 +318,7 @@ public class Configs {
     public void setSingleMutationCoefficient(double singleMutationCoefficient) {
         this.singleMutationCoefficient = singleMutationCoefficient;
     }
-    
+
     public double getOverallMutationCoefficient() {
         return this.overallMutationCoefficient;
     }
@@ -325,7 +326,7 @@ public class Configs {
     public void setOverallMutationCoefficient(double overallMutationCoefficient) {
         this.overallMutationCoefficient = overallMutationCoefficient;
     }
-    
+
     public double getSecondaryMutationCoefficient() {
         return this.secondaryMutationCoefficient;
     }
