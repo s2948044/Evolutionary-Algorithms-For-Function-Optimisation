@@ -95,9 +95,9 @@ public class Variations {
 	 * @param individual
 	 */
 	public void singleUncorrelatedMutation(double[] individual) {
-		this.cfgs.setMutationStepSize(this.cfgs.getMutationStepSize()
-				* Math.exp(this.cfgs.getSingleMutationLearningRate() 
-				* this.cfgs.getSingleMutationCoefficient() * new Random().nextGaussian()));
+		this.cfgs.setMutationStepSize(
+				this.cfgs.getMutationStepSize() * Math.exp(this.cfgs.getSingleMutationLearningRate()
+						* this.cfgs.getSingleMutationCoefficient() * new Random().nextGaussian()));
 		if (this.cfgs.getMutationStepSize() < this.cfgs.getMutationStepSizeBound()) {
 			this.cfgs.setMutationStepSize(this.cfgs.getMutationStepSizeBound());
 		}
@@ -115,11 +115,10 @@ public class Variations {
 		double[] ndMutationStepSize = this.cfgs.getNdMutationStepSize();
 		double overallNormalDist = new Random().nextGaussian();
 		for (int i = 0; i < this.cfgs.getDimension(); i++) {
-			ndMutationStepSize[i] = ndMutationStepSize[i]
-					* Math.exp(this.cfgs.getMutationLearningRate() 
-					* this.cfgs.getOverallMutationCoefficient() * overallNormalDist
-					+ this.cfgs.getSecondaryMutationLearningRate() 
-					* this.cfgs.getSecondaryMutationCoefficient() * new Random().nextGaussian());
+			ndMutationStepSize[i] = ndMutationStepSize[i] * Math.exp(
+					this.cfgs.getMutationLearningRate() * this.cfgs.getOverallMutationCoefficient() * overallNormalDist
+							+ this.cfgs.getSecondaryMutationLearningRate() * this.cfgs.getSecondaryMutationCoefficient()
+									* new Random().nextGaussian());
 			if (ndMutationStepSize[i] < this.cfgs.getMutationStepSizeBound()) {
 				ndMutationStepSize[i] = this.cfgs.getMutationStepSizeBound();
 			}
@@ -135,11 +134,10 @@ public class Variations {
 		double[] means = new double[this.cfgs.getDimension()];
 
 		for (int i = 0; i < this.cfgs.getDimension(); i++) {
-			ndMutationStepSize[i] = ndMutationStepSize[i]
-					* Math.exp(this.cfgs.getMutationLearningRate() 
-					* this.cfgs.getOverallMutationCoefficient() * overallNormalDist
-					+ this.cfgs.getSecondaryMutationLearningRate() 
-					* this.cfgs.getSecondaryMutationCoefficient() * new Random().nextGaussian());
+			ndMutationStepSize[i] = ndMutationStepSize[i] * Math.exp(
+					this.cfgs.getMutationLearningRate() * this.cfgs.getOverallMutationCoefficient() * overallNormalDist
+							+ this.cfgs.getSecondaryMutationLearningRate() * this.cfgs.getSecondaryMutationCoefficient()
+									* new Random().nextGaussian());
 			if (ndMutationStepSize[i] < this.cfgs.getMutationStepSizeBound()) {
 				ndMutationStepSize[i] = this.cfgs.getMutationStepSizeBound();
 			}
@@ -148,7 +146,10 @@ public class Variations {
 		// System.out.println(Arrays.toString(ndMutationStepSize));
 
 		for (int i = 0; i < this.cfgs.getDimension() * (this.cfgs.getDimension() - 1) / 2; i++) {
-			correlationFactors[i] = correlationFactors[i] + this.cfgs.getCorrelationAngle() * new Random().nextGaussian();
+			// TODO: Check whether the gaussian sample is the same for all.
+			// correlationFactors[i] = correlationFactors[i]
+			// + this.cfgs.getCorrelationAngle() * new Random().nextGaussian();
+			correlationFactors[i] = correlationFactors[i] + this.cfgs.getCorrelationAngle() * overallNormalDist;
 			if (Math.abs(correlationFactors[i]) > Math.PI) {
 				correlationFactors[i] = correlationFactors[i] - 2 * Math.PI * Math.signum(correlationFactors[i]);
 			}
@@ -156,23 +157,13 @@ public class Variations {
 		// System.out.println(Arrays.toString(correlationFactors));
 
 		this.cfgs.setCovarianceMatrix(ndMutationStepSize, correlationFactors);
-		// DoubleMatrix2D covarianceMatrix = new
-		// DoubleFactory2D.make(this.cfgs.getCovarienceMatrix());
 		RandomStream stream = new MRG31k3p();
+		// RandomStream stream = new MRG32k3a();
+		// RandomStream stream = new LFSR113();
 		NormalGen generator1 = new NormalGen(stream);
-		// MultinormalGen generator2 = new MultinormalGen(generator1, means,
-		// covarianceMatrix);
-		// MultinormalGen generator2 = new MultinormalGen(generator1, means,
-		// this.cfgs.getCovarienceMatrix());
-		MultinormalCholeskyGen generator2 = new MultinormalCholeskyGen(generator1, means,
-				this.cfgs.getCovarienceMatrix());
+		MultinormalPCAGen generator2 = new MultinormalPCAGen(generator1, means, this.cfgs.getCovarienceMatrix());
 		double[] tmp = new double[this.cfgs.getDimension()];
 		generator2.nextPoint(tmp);
-		// System.out.println(Arrays.toString(tmp));
-		// RandomGenerator rng = new JDKRandomGenerator();
-		// MultivariateNormalDistribution sampler = new
-		// MultivariateNormalDistribution(rng, means, covarianceMatrix);
-		// double[] tmp = sampler.sample();
 		for (int i = 0; i < this.cfgs.getDimension(); i++) {
 			individual[i] = individual[i] + tmp[i];
 		}
