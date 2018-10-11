@@ -56,7 +56,12 @@ public class Variations {
 	 */
 	public void nonUniformMutation(double[] individual) {
 		for (int i = 0; i < this.cfgs.getDimension(); i++) {
+			double temp = individual[i];
 			individual[i] = individual[i] + new Random().nextGaussian() * this.cfgs.getMutationStepSize();
+			while (individual[i] > 5 || individual[i] < -5) {
+				individual[i] = temp;
+				individual[i] = individual[i] + new Random().nextGaussian() * this.cfgs.getMutationStepSize();
+			}
 		}
 	}
 
@@ -102,7 +107,12 @@ public class Variations {
 			this.cfgs.setMutationStepSize(this.cfgs.getMutationStepSizeBound());
 		}
 		for (int i = 0; i < this.cfgs.getDimension(); i++) {
+			double temp = individual[i];
 			individual[i] = individual[i] + this.cfgs.getMutationStepSize() * new Random().nextGaussian();
+			while (individual[i] > 5 || individual[i] < -5) {
+				individual[i] = temp;
+				individual[i] = individual[i] + this.cfgs.getMutationStepSize() * new Random().nextGaussian();
+			}
 		}
 	}
 
@@ -122,7 +132,12 @@ public class Variations {
 			if (ndMutationStepSize[i] < this.cfgs.getMutationStepSizeBound()) {
 				ndMutationStepSize[i] = this.cfgs.getMutationStepSizeBound();
 			}
+			double temp = individual[i];
 			individual[i] = individual[i] + ndMutationStepSize[i] * new Random().nextGaussian();
+			while (individual[i] > 5 || individual[i] < -5) {
+				individual[i] = temp;
+				individual[i] = individual[i] + ndMutationStepSize[i] * new Random().nextGaussian();
+			}
 		}
 		// System.out.println(Arrays.toString(this.cfgs.getNdMutationStepSize()));
 	}
@@ -165,9 +180,14 @@ public class Variations {
 		double[] tmp = new double[this.cfgs.getDimension()];
 		generator2.nextPoint(tmp);
 		for (int i = 0; i < this.cfgs.getDimension(); i++) {
+			double temp = individual[i];
 			individual[i] = individual[i] + tmp[i];
+			while (individual[i] > 5 || individual[i] < -5) {
+				individual[i] = temp;
+				generator2.nextPoint(tmp);
+				individual[i] = individual[i] + tmp[i];
+			}
 		}
-
 	}
 
 	/**

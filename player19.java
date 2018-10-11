@@ -165,38 +165,38 @@ public class player19 implements ContestSubmission {
 				// population[parentsInd[i + 1]]);
 			}
 			// Apply mutation
-			// for (int i = cfgs.getPopulationSize(); i < cfgs.getPopulationSize() +
-			// cfgs.getParentSelected(); i++) {
-			// if (new Random().nextInt((int) (1 / cfgs.getMutationRate())) == 0) {
-			// switch (cfgs.getMutationChoice()) {
-			// case 1:
-			// Vars.rnd_swap(population[i]);
-			// break;
+			for (int i = cfgs.getPopulationSize(); i < cfgs.getPopulationSize() +
+			cfgs.getParentSelected(); i++) {
+			if (new Random().nextInt((int) (1 / cfgs.getMutationRate())) == 0) {
+			switch (cfgs.getMutationChoice()) {
+			case 1:
+			Vars.rnd_swap(population[i]);
+			break;
 
-			// case 2:
-			// Vars.uniformMutation(population[i]);
-			// break;
+			case 2:
+			Vars.uniformMutation(population[i]);
+			break;
 
-			// case 3:
-			// Vars.nonUniformMutation(population[i]);
-			// break;
+			case 3:
+			Vars.nonUniformMutation(population[i]);
+			break;
 
-			// case 4:
-			// Vars.customizedMutation(population[i]);
-			// break;
+			case 4:
+			Vars.customizedMutation(population[i]);
+			break;
 
-			// case 5:
-			// Vars.singleUncorrelatedMutation(population[i]);
-			// break;
+			case 5:
+			Vars.singleUncorrelatedMutation(population[i]);
+			break;
 
-			// case 6:
-			// Vars.multiUncorrelatedMutation(population[i]);
-			// break;
+			case 6:
+			Vars.multiUncorrelatedMutation(population[i]);
+			break;
 
-			// case 7:
-			// Vars.correlatedMutation(population[i]);
-			// break;
-			// }
+			case 7:
+			Vars.correlatedMutation(population[i]);
+			break;
+			}
 			// // Vars.rnd_swap(population[i]);
 			// // Vars.customizedMutation(population[i]);
 			// // Vars.nonUniformMutation(population[i]);
