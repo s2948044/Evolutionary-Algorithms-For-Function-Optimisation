@@ -41,26 +41,6 @@ public class player19 implements ContestSubmission {
 		hasStructure = Boolean.parseBoolean(props.getProperty("Regular"));
 		isSeparable = Boolean.parseBoolean(props.getProperty("Separable"));
 
-		// Do sth with property values, e.g. specify relevant settings of your algorithm
-		// if (!isMultimodal) {
-		// if (!hasStructure){
-		// if (!isSeparable){
-		// // BentCigar
-		// }
-		// }
-		// }
-		// if (isMultimodal) {
-		// if (!hasStructure){
-		// if (!isSeparable){
-		// // KatsuuraEvaluation
-		// }
-		// }
-		// if (hasStructure){
-		// if (!isSeparable){
-		// // SchaffersEvaluation
-		// }
-		// }
-		// }
 	}
 
 	public void run() {
@@ -155,55 +135,41 @@ public class player19 implements ContestSubmission {
 							population[parentsInd[i + 1]]);
 					break;
 				}
-				// population = Vars.simpleArithmeticCrossOver(population,
-				// population[parentsInd[i]],
-				// population[parentsInd[i + 1]]);
-				// population = Vars.blendCrossOver(population, population[parentsInd[i]],
-				// population[parentsInd[i + 1]]);
-				// population = Vars.wholeArithmeticCrossOver(population,
-				// population[parentsInd[i]],
-				// population[parentsInd[i + 1]]);
 			}
 			// Apply mutation
-			for (int i = cfgs.getPopulationSize(); i < cfgs.getPopulationSize() +
-			cfgs.getParentSelected(); i++) {
-			if (new Random().nextInt((int) (1 / cfgs.getMutationRate())) == 0) {
-			switch (cfgs.getMutationChoice()) {
-			case 1:
-			Vars.rnd_swap(population[i]);
-			break;
+			for (int i = cfgs.getPopulationSize(); i < cfgs.getPopulationSize() + cfgs.getParentSelected(); i++) {
+				if (new Random().nextInt((int) (1 / cfgs.getMutationRate())) == 0) {
+					switch (cfgs.getMutationChoice()) {
+					case 1:
+						Vars.rnd_swap(population[i]);
+						break;
 
-			case 2:
-			Vars.uniformMutation(population[i]);
-			break;
+					case 2:
+						Vars.uniformMutation(population[i]);
+						break;
 
-			case 3:
-			Vars.nonUniformMutation(population[i]);
-			break;
+					case 3:
+						Vars.nonUniformMutation(population[i]);
+						break;
 
-			case 4:
-			Vars.customizedMutation(population[i]);
-			break;
+					case 4:
+						Vars.customizedMutation(population[i]);
+						break;
 
-			case 5:
-			Vars.singleUncorrelatedMutation(population[i]);
-			break;
+					case 5:
+						Vars.singleUncorrelatedMutation(population[i]);
+						break;
 
-			case 6:
-			Vars.multiUncorrelatedMutation(population[i]);
-			break;
+					case 6:
+						Vars.multiUncorrelatedMutation(population[i]);
+						break;
 
-			case 7:
-			Vars.correlatedMutation(population[i]);
-			break;
+					case 7:
+						Vars.correlatedMutation(population[i]);
+						break;
+					}
+				}
 			}
-			// // Vars.rnd_swap(population[i]);
-			// // Vars.customizedMutation(population[i]);
-			// // Vars.nonUniformMutation(population[i]);
-			// // Vars.singleUncorrelatedMutation(population[i]);
-			// // Vars.multiUncorrelatedMutation(population[i]);
-			// }
-			// }
 			// Check fitness of unknown fuction
 			for (int i = 0; i < cfgs.getParentSelected(); i++) {
 				double[] tempPop = Arrays.copyOfRange(population[cfgs.getPopulationSize() + i], 0, cfgs.getDimension());
@@ -231,11 +197,6 @@ public class player19 implements ContestSubmission {
 		// System.out.println(
 		// "Best fitness value at evaluation " + Integer.toString(evals) + ": " +
 		// Double.toString(Inits.maxScore));
-
-		// Abs abs = new Abs();
-		// System.out.println(abs.value(-10.0d));
-		// System.out.println("{'run': 1, 'vars': {'mut': 'random','cross': 'point'},
-		// 'values': [1,2,3]}");
 
 		String json = cfgs.get_data_jstring();
 		System.out.println(json);
