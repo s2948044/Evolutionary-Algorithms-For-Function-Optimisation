@@ -126,6 +126,15 @@ public class player19 implements ContestSubmission {
 				System.out.println("Best fitness value at evaluation " + Integer.toString(evals) + ": "
 						+ Double.toString(Inits.maxScore));
 			}
+			for (int i = 0; i < population.length; i++) {
+				for (int j = 0; j < population[0].length - 1; j++) {
+					// System.out.print(population[i][j] + " ");
+					if (population[i][j] > 5 || population[i][j] < -5) {
+						System.out.print(population[i][j] + " ");
+						System.out.println("Warning!"); // check if any value goes out of [-5,5]
+					}
+				}
+			}
 			// Select parents
 			Sels.sortbyColumn(population, cfgs.getDimension());
 			// System.out.println(Arrays.toString(population));
