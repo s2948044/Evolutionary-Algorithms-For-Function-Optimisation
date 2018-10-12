@@ -11,7 +11,7 @@ public class Configs {
     /**
      * Additional dimention to the solution vector to encode different values.
      */
-    private final int addtionalDimension = 1;
+    private final int addtionalDimension = 56;
 
     /**
      * Public flag for debugging.
@@ -109,20 +109,9 @@ public class Configs {
     private double initSigma;
 
     /**
-     * Standard deviation of mutation change.
-     */
-    private double mutationStepSize;
-
-    /**
      * Lower bound for mutation step size to avoid tending to 0.
      */
     private double mutationStepSizeBound;
-
-    /**
-     * Multidimensional mutation step size corresponding to each dimeansion in the
-     * solution vector.
-     */
-    private double[] ndMutationStepSize;
 
     /**
      * Coordinate wise learning rate for self-adaptive mutations.
@@ -184,7 +173,7 @@ public class Configs {
     }
 
     // public double return_last_datap(){
-    //     return this.x_data.get(this.x_data.size()-1);
+    // return this.x_data.get(this.x_data.size()-1);
     // }
 
     public double return_xdata_3() {
@@ -242,16 +231,13 @@ public class Configs {
         // setParentSelected(20); // should be less than RandomSelected.
         setMixingFactor(0.5); // should be in range (0, 1).
         setInitSigma(2);
-        setMutationStepSize(1);
-        setMutationStepSizeBound(0.001);
+        setMutationStepSizeBound(0.1);
         setSecondaryMutationCoefficient(Double.parseDouble(System.getProperty("SecondaryMC"))); // should be from 0 to
                                                                                                 // 0.1
         setSecondaryMutationLearningRate(1 / Math.sqrt(2 * Math.sqrt(this.dimension)));
-        setNdMutationStepSize(new double[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 });
         setS_value(1.9); // should be in range (0, 2].
         setCorrelationFactors(new double[this.dimension * (this.dimension - 1) / 2]);
         initCovarianceMatrix();
-        setCovarianceMatrix(this.ndMutationStepSize, this.correlationFactors);
         setCorrelationAngle(Math.toRadians(5));
     }
 
@@ -379,14 +365,6 @@ public class Configs {
         this.initSigma = initSigma;
     }
 
-    public double getMutationStepSize() {
-        return this.mutationStepSize;
-    }
-
-    public void setMutationStepSize(double mutationStepSize) {
-        this.mutationStepSize = mutationStepSize;
-    }
-
     public double getSingleMutationLearningRate() {
         return this.singleMutationLearningRate;
     }
@@ -409,14 +387,6 @@ public class Configs {
 
     public void setMutationStepSizeBound(double mutationStepSizeBound) {
         this.mutationStepSizeBound = mutationStepSizeBound;
-    }
-
-    public double[] getNdMutationStepSize() {
-        return this.ndMutationStepSize;
-    }
-
-    public void setNdMutationStepSize(double[] ndMutationStepSize) {
-        this.ndMutationStepSize = ndMutationStepSize;
     }
 
     public double getSecondaryMutationLearningRate() {
@@ -474,7 +444,6 @@ public class Configs {
                 }
             }
         }
-        // System.out.println(Arrays.deepToString(covarienceMatrix));
     }
 
     public double getCorrelationAngle() {

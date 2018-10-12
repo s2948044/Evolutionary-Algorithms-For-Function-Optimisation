@@ -12,6 +12,7 @@ public class player19 implements ContestSubmission {
 	private boolean isMultimodal;
 	private boolean hasStructure;
 	private boolean isSeparable;
+	public static double overallMaxScore = -1.0;
 
 	public player19() {
 		rnd_ = new Random();
@@ -70,9 +71,9 @@ public class player19 implements ContestSubmission {
 				if (!isSeparable) {
 					// set the customised parameters (if necessary) for KatsuuraEvaluation
 					cfgs.setPopulationSize(500);
-					cfgs.setTournamentSize(20);
+					cfgs.setTournamentSize(200);
 					cfgs.setParentSelected(250);
-					cfgs.setMutationRate(0.5);
+					cfgs.setMutationRate(0.25);
 				}
 			}
 			if (hasStructure) {
@@ -86,34 +87,22 @@ public class player19 implements ContestSubmission {
 			}
 		}
 		population = Inits.initPopulation(Initializations.RandomDistributions.NORMAL);
-		// System.out.println("Population Size " + population.length);
 		resetEvals();
 		Inits.updateFitness(population);
-
+		int fitnessCounter = 0;
+		double pastHighest;
+		double currentHighest;
 		while (evals < evaluations_limit_) {
+			pastHighest = Inits.maxScore;
 			if (evals % cfgs.getPopulationSize() == 0) {
-				cfgs.append_xdata(Inits.maxScore);
-				// System.out.println("Best fitness value at evaluation " +
-				// Integer.toString(evals) + ": "
-				// + Double.toString(Inits.maxScore));
-				// System.out.print(Double.toString(Inits.maxScore) + ",");
-
+				cfgs.append_xdata(overallMaxScore);
 			}
 			// Select parents
-			Sels.sortbyColumn(population, cfgs.getDimension());
-			// System.out.println(Arrays.toString(population));
+			Sels.sortbyColumn(population, population[0].length - 1);
 
 			int[] parentsInd = Sels.parentSelection_Tournament(population);
-
-			// int[] parentsInd = Sels.parentSelection_Elitism(population,
-			// Initializations.RandomDistributions.UNIFORM);
 			// Apply crossover
 			for (int i = 0; i < cfgs.getParentSelected(); i = i + 2) {
-				// population = Vars.order1CrossOver(population, population[parentsInd[i]],
-
-				// population = Vars.singleArithmeticCrossOver(population,
-				// population[parentsInd[i]],
-				// population[parentsInd[i + 1]]);
 				switch (cfgs.getXoverChoice()) {
 				case 1:
 					population = Vars.singleArithmeticCrossOver(population, population[parentsInd[i]],
@@ -173,17 +162,68 @@ public class player19 implements ContestSubmission {
 			// Check fitness of unknown fuction
 			for (int i = 0; i < cfgs.getParentSelected(); i++) {
 				double[] tempPop = Arrays.copyOfRange(population[cfgs.getPopulationSize() + i], 0, cfgs.getDimension());
-				double tempEval = (double) evaluation_.evaluate(tempPop);
-				population[cfgs.getPopulationSize() + i][cfgs.getDimension()] = tempEval;
+				double tempEval = 0.0;
+
+				try {
+					tempEval = (double) evaluation_.evaluate(tempPop);
+				} catch (NullPointerException e) {
+					cfgs.append_mbfdata(overallMaxScore);
+					cfgs.make_data_jstring(cfgs.get_mbfdata());
+					String json = cfgs.get_data_jstring();
+					System.out.println(json);
+					System.exit(1);
+				}
+
+				population[cfgs.getPopulationSize() + i][population[i].length - 1] = tempEval;
 				if (cfgs.getDEBUG()) {
 					if (tempEval >= Inits.maxScore) {
 						Inits.maxScore = tempEval;
 					}
+					if (tempEval >= overallMaxScore) {
+						overallMaxScore = tempEval;
+					}
 				}
 				evals++;
+				// System.out.println("this is " + population[cfgs.getPopulationSize() +
+				// i][population[i].length - 1]);
 			}
 			// Select survivors
 			population = Sels.survSelection_Elitism(population);
+
+			try {
+				currentHighest = Inits.maxScore;
+				if (pastHighest == currentHighest) {
+					fitnessCounter++;
+				} else {
+					fitnessCounter = 0;
+				}
+				if (fitnessCounter >= 2 && currentHighest < 6) {
+					fitnessCounter = 0;
+					population = Inits.initPopulation(Initializations.RandomDistributions.NORMAL);
+					Inits.updateFitness(population);
+				}
+				if (fitnessCounter >= 4 && currentHighest < 7) {
+					fitnessCounter = 0;
+					population = Inits.initPopulation(Initializations.RandomDistributions.NORMAL);
+					Inits.updateFitness(population);
+				}
+				if (fitnessCounter >= 6 && currentHighest < 8) {
+					fitnessCounter = 0;
+					population = Inits.initPopulation(Initializations.RandomDistributions.NORMAL);
+					Inits.updateFitness(population);
+				}
+				if (fitnessCounter >= 8 && currentHighest < 9) {
+					fitnessCounter = 0;
+					population = Inits.initPopulation(Initializations.RandomDistributions.NORMAL);
+					Inits.updateFitness(population);
+				}
+			} catch (NullPointerException e) {
+				cfgs.append_mbfdata(overallMaxScore);
+				cfgs.make_data_jstring(cfgs.get_mbfdata());
+				String json = cfgs.get_data_jstring();
+				System.out.println(json);
+				System.exit(1);
+			}
 
 		}
 
@@ -191,22 +231,11 @@ public class player19 implements ContestSubmission {
 		// cfgs.make_data_jstring(cfgs.get_xdata());
 
 		// For MBF statistics:
-		cfgs.append_mbfdata(Inits.maxScore);
+		cfgs.append_mbfdata(overallMaxScore);
 		cfgs.make_data_jstring(cfgs.get_mbfdata());
-
-		// System.out.println(
-		// "Best fitness value at evaluation " + Integer.toString(evals) + ": " +
-		// Double.toString(Inits.maxScore));
 
 		String json = cfgs.get_data_jstring();
 		System.out.println(json);
-		// System.out.println(cfgs.build_methods_jstring());
-
-		// TEST COMMANDLINE SETS
-		// System.out.println(Double.parseDouble(System.getProperty("SingleMC")));
-		// System.out.println(Double.parseDouble(System.getProperty("OverallMC")));
-		// System.out.println(Double.parseDouble(System.getProperty("SecondaryMC")));
-
 	}
 
 }
