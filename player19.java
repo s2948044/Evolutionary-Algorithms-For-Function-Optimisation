@@ -92,9 +92,9 @@ public class player19 implements ContestSubmission {
 					// set the customised parameters (if necessary) for KatsuuraEvaluation
 					System.out.println("KatsuuraEvaluation");
 					cfgs.setPopulationSize(500);
-					cfgs.setTournamentSize(20);
+					cfgs.setTournamentSize(200);
 					cfgs.setParentSelected(250);
-					cfgs.setMutationRate(0.5);
+					cfgs.setMutationRate(0.25);
 				}
 			}
 			if (hasStructure) {
@@ -110,7 +110,7 @@ public class player19 implements ContestSubmission {
 		}
 		population = Inits.initPopulation(Initializations.RandomDistributions.NORMAL);
 		for (int i = 0; i < population.length; i++) {
-			for (int j = 0; j < population[0].length - 1; j++) {
+			for (int j = 0; j < cfgs.getDimension(); j++) {
 				// System.out.print(population[i][j] + " ");
 				if (population[i][j] > 5 || population[i][j] < -5) {
 					System.out.print(population[i][j] + " ");
@@ -121,13 +121,17 @@ public class player19 implements ContestSubmission {
 		// System.out.println("Population Size " + population.length);
 		resetEvals();
 		Inits.updateFitness(population);
+		int fitnessCounter = 0;
+		double pastHighest;
+		double currentHighest;
 		while (evals < evaluations_limit_) {
+			pastHighest = Inits.maxScore;
 			if (evals % cfgs.getPopulationSize() == 0) {
 				System.out.println("Best fitness value at evaluation " + Integer.toString(evals) + ": "
 						+ Double.toString(Inits.maxScore));
 			}
 			for (int i = 0; i < population.length; i++) {
-				for (int j = 0; j < population[0].length - 1; j++) {
+				for (int j = 0; j < cfgs.getDimension(); j++) {
 					// System.out.print(population[i][j] + " ");
 					if (population[i][j] > 5 || population[i][j] < -5) {
 						System.out.print(population[i][j] + " ");
@@ -136,10 +140,11 @@ public class player19 implements ContestSubmission {
 				}
 			}
 			// Select parents
-			Sels.sortbyColumn(population, cfgs.getDimension());
+			Sels.sortbyColumn(population, population[0].length - 1);
 			// System.out.println(Arrays.toString(population));
 
 			int[] parentsInd = Sels.parentSelection_Tournament(population);
+			// System.out.println(Arrays.toString(parentsInd));
 
 			// int[] parentsInd = Sels.parentSelection_Elitism(population,
 			// Initializations.RandomDistributions.UNIFORM);
@@ -202,9 +207,11 @@ public class player19 implements ContestSubmission {
 						}
 						if (hasStructure) {
 							if (!isSeparable) {
+								// System.out.println("before: " + Arrays.toString(population[i]));
 								// set the mutation operator for SchaffersEvaluation
 								// Vars.multiUncorrelatedMutation(population[i]);
 								Vars.correlatedMutation(population[i]);
+								// System.out.println("after: " + Arrays.toString(population[i]));
 							}
 						}
 					}
@@ -221,21 +228,56 @@ public class player19 implements ContestSubmission {
 			for (int i = 0; i < cfgs.getParentSelected(); i++) {
 				double[] tempPop = Arrays.copyOfRange(population[cfgs.getPopulationSize() + i], 0, cfgs.getDimension());
 				double tempEval = (double) evaluation_.evaluate(tempPop);
-				population[cfgs.getPopulationSize() + i][cfgs.getDimension()] = tempEval;
+				population[cfgs.getPopulationSize() + i][population[i].length - 1] = tempEval;
 				if (cfgs.getDEBUG()) {
 					if (tempEval >= Inits.maxScore) {
 						Inits.maxScore = tempEval;
 					}
 				}
 				evals++;
+				//System.out.println("this is " + population[cfgs.getPopulationSize() + i][population[i].length - 1]);
 			}
 			// Select survivors
 			population = Sels.survSelection_Elitism(population);
+			// for (int i = 0; i < population.length; i++) {
+			// 	for (int j = 0; j < cfgs.getDimension() + 10; j++) {
+			// 		System.out.print(population[i][j] + " ");
+			// 	}
+			// 	System.out.println(population[i][population[0].length - 1]);
+			// }
+			currentHighest = Inits.maxScore;
+			if (pastHighest == currentHighest) {
+				fitnessCounter++;
+			}
+			else{
+				fitnessCounter = 0;
+			}
+			// System.out.println(fitnessCounter);
+			if (fitnessCounter >= 2 && currentHighest < 6) {
+				fitnessCounter = 0;
+				population = Inits.initPopulation(Initializations.RandomDistributions.NORMAL);
+				Inits.updateFitness(population);
+			}
+			if (fitnessCounter >= 4 && currentHighest < 7) {
+				fitnessCounter = 0;
+				population = Inits.initPopulation(Initializations.RandomDistributions.NORMAL);
+				Inits.updateFitness(population);
+			}
+			if (fitnessCounter >= 6 && currentHighest < 8) {
+				fitnessCounter = 0;
+				population = Inits.initPopulation(Initializations.RandomDistributions.NORMAL);
+				Inits.updateFitness(population);
+			}
+			if (fitnessCounter >= 8 && currentHighest < 9) {
+				fitnessCounter = 0;
+				population = Inits.initPopulation(Initializations.RandomDistributions.NORMAL);
+				Inits.updateFitness(population);
+			}
 		}
 		System.out.println(
 				"Best fitness value at evaluation " + Integer.toString(evals) + ": " + Double.toString(Inits.maxScore));
 		for (int i = 0; i < population.length; i++) {
-			for (int j = 0; j < population[0].length - 1; j++) {
+			for (int j = 0; j < cfgs.getDimension(); j++) {
 				// System.out.print(population[i][j] + " ");
 				if (population[i][j] > 5 || population[i][j] < -5) {
 					System.out.print(population[i][j] + " ");

@@ -22,12 +22,12 @@ public class Variations {
 	public void rnd_swap(double[] individual) {
 
 		// take 2 idx numbers between 0 and 9
-		int idx1 = new Random().nextInt(9);
-		int idx2 = new Random().nextInt(9);
+		int idx1 = new Random().nextInt(this.cfgs.getDimension());
+		int idx2 = new Random().nextInt(this.cfgs.getDimension());
 
 		// check for uniqueness else change
 		while (idx1 == idx2) {
-			idx2 = new Random().nextInt(9);
+			idx2 = new Random().nextInt(this.cfgs.getDimension());
 		}
 
 		// switch numbers
@@ -57,10 +57,10 @@ public class Variations {
 	public void nonUniformMutation(double[] individual) {
 		for (int i = 0; i < this.cfgs.getDimension(); i++) {
 			double temp = individual[i];
-			individual[i] = individual[i] + new Random().nextGaussian() * this.cfgs.getMutationStepSize();
+			individual[i] = individual[i] + new Random().nextGaussian() * individual[this.cfgs.getDimension()];
 			while (individual[i] > 5 || individual[i] < -5) {
 				individual[i] = temp;
-				individual[i] = individual[i] + new Random().nextGaussian() * this.cfgs.getMutationStepSize();
+				individual[i] = individual[i] + new Random().nextGaussian() * individual[this.cfgs.getDimension()];
 			}
 		}
 	}
@@ -90,7 +90,7 @@ public class Variations {
 		}
 		for (int mutationInd : mutationInds) {
 			individual[mutationInd] = individual[mutationInd]
-					+ new Random().nextGaussian() * this.cfgs.getMutationStepSize();
+					+ new Random().nextGaussian() * individual[this.cfgs.getDimension()];
 		}
 	}
 
@@ -100,18 +100,18 @@ public class Variations {
 	 * @param individual
 	 */
 	public void singleUncorrelatedMutation(double[] individual) {
-		this.cfgs.setMutationStepSize(
-				this.cfgs.getMutationStepSize() * Math.exp(this.cfgs.getSingleMutationLearningRate()
-						* this.cfgs.getSingleMutationCoefficient() * new Random().nextGaussian()));
-		if (this.cfgs.getMutationStepSize() < this.cfgs.getMutationStepSizeBound()) {
-			this.cfgs.setMutationStepSize(this.cfgs.getMutationStepSizeBound());
+		individual[this.cfgs.getDimension()] = individual[this.cfgs.getDimension()]
+						* Math.exp(this.cfgs.getSingleMutationLearningRate()
+						* this.cfgs.getSingleMutationCoefficient() * new Random().nextGaussian());
+		if (individual[this.cfgs.getDimension()] < this.cfgs.getMutationStepSizeBound()) {
+			individual[this.cfgs.getDimension()] = this.cfgs.getMutationStepSizeBound();
 		}
 		for (int i = 0; i < this.cfgs.getDimension(); i++) {
 			double temp = individual[i];
-			individual[i] = individual[i] + this.cfgs.getMutationStepSize() * new Random().nextGaussian();
+			individual[i] = individual[i] + individual[this.cfgs.getDimension()] * new Random().nextGaussian();
 			while (individual[i] > 5 || individual[i] < -5) {
 				individual[i] = temp;
-				individual[i] = individual[i] + this.cfgs.getMutationStepSize() * new Random().nextGaussian();
+				individual[i] = individual[i] + individual[this.cfgs.getDimension()] * new Random().nextGaussian();
 			}
 		}
 	}
@@ -122,56 +122,56 @@ public class Variations {
 	 * @param individual
 	 */
 	public void multiUncorrelatedMutation(double[] individual) {
-		double[] ndMutationStepSize = this.cfgs.getNdMutationStepSize();
 		double overallNormalDist = new Random().nextGaussian();
 		for (int i = 0; i < this.cfgs.getDimension(); i++) {
-			ndMutationStepSize[i] = ndMutationStepSize[i] * Math.exp(
+			individual[this.cfgs.getDimension() + i] = individual[this.cfgs.getDimension() + i] * Math.exp(
 					this.cfgs.getMutationLearningRate() * this.cfgs.getOverallMutationCoefficient() * overallNormalDist
 							+ this.cfgs.getSecondaryMutationLearningRate() * this.cfgs.getSecondaryMutationCoefficient()
 									* new Random().nextGaussian());
-			if (ndMutationStepSize[i] < this.cfgs.getMutationStepSizeBound()) {
-				ndMutationStepSize[i] = this.cfgs.getMutationStepSizeBound();
+			if (individual[this.cfgs.getDimension() + i] < this.cfgs.getMutationStepSizeBound()) {
+				individual[this.cfgs.getDimension() + i] = this.cfgs.getMutationStepSizeBound();
 			}
 			double temp = individual[i];
-			individual[i] = individual[i] + ndMutationStepSize[i] * new Random().nextGaussian();
+			individual[i] = individual[i] + individual[this.cfgs.getDimension() + i] * new Random().nextGaussian();
 			while (individual[i] > 5 || individual[i] < -5) {
 				individual[i] = temp;
-				individual[i] = individual[i] + ndMutationStepSize[i] * new Random().nextGaussian();
+				individual[i] = individual[i] + individual[this.cfgs.getDimension() + i] * new Random().nextGaussian();
 			}
 		}
-		// System.out.println(Arrays.toString(this.cfgs.getNdMutationStepSize()));
 	}
 
 	public void correlatedMutation(double[] individual) {
-		double[] ndMutationStepSize = this.cfgs.getNdMutationStepSize();
 		double[] correlationFactors = this.cfgs.getCorrelationFactors();
 		double overallNormalDist = new Random().nextGaussian();
 		double[] means = new double[this.cfgs.getDimension()];
 
 		for (int i = 0; i < this.cfgs.getDimension(); i++) {
-			ndMutationStepSize[i] = ndMutationStepSize[i] * Math.exp(
+			individual[this.cfgs.getDimension() + i] = individual[this.cfgs.getDimension() + i] * Math.exp(
 					this.cfgs.getMutationLearningRate() * this.cfgs.getOverallMutationCoefficient() * overallNormalDist
 							+ this.cfgs.getSecondaryMutationLearningRate() * this.cfgs.getSecondaryMutationCoefficient()
 									* new Random().nextGaussian());
-			if (ndMutationStepSize[i] < this.cfgs.getMutationStepSizeBound()) {
-				ndMutationStepSize[i] = this.cfgs.getMutationStepSizeBound();
+			if (individual[this.cfgs.getDimension() + i] < this.cfgs.getMutationStepSizeBound()) {
+				individual[this.cfgs.getDimension() + i] = this.cfgs.getMutationStepSizeBound();
 			}
 		}
 
 		// System.out.println(Arrays.toString(ndMutationStepSize));
 
 		for (int i = 0; i < this.cfgs.getDimension() * (this.cfgs.getDimension() - 1) / 2; i++) {
-			// TODO: Check whether the gaussian sample is the same for all.
 			// correlationFactors[i] = correlationFactors[i]
 			// + this.cfgs.getCorrelationAngle() * new Random().nextGaussian();
-			correlationFactors[i] = correlationFactors[i] + this.cfgs.getCorrelationAngle() * overallNormalDist;
-			if (Math.abs(correlationFactors[i]) > Math.PI) {
-				correlationFactors[i] = correlationFactors[i] - 2 * Math.PI * Math.signum(correlationFactors[i]);
+			individual[this.cfgs.getDimension() + 10 + i] = individual[this.cfgs.getDimension() + 10 + i] 
+					+ this.cfgs.getCorrelationAngle() * new Random().nextGaussian();
+			if (Math.abs(individual[this.cfgs.getDimension() + 10 + i]) > Math.PI) {
+				individual[this.cfgs.getDimension() + 10 + i] = individual[this.cfgs.getDimension() + 10 + i]
+						- 2 * Math.PI * Math.signum(individual[this.cfgs.getDimension() + 10 + i]);
 			}
 		}
 		// System.out.println(Arrays.toString(correlationFactors));
 
-		this.cfgs.setCovarianceMatrix(ndMutationStepSize, correlationFactors);
+		this.cfgs.setCovarianceMatrix(Arrays.copyOfRange(individual, this.cfgs.getDimension(), this.cfgs.getDimension() + 10), 
+				Arrays.copyOfRange(individual, this.cfgs.getDimension() + 10, this.cfgs.getDimension() + 10 + 
+						this.cfgs.getDimension() * (this.cfgs.getDimension() - 1) / 2));
 		RandomStream stream = new MRG31k3p();
 		// RandomStream stream = new MRG32k3a();
 		// RandomStream stream = new LFSR113();
@@ -216,6 +216,11 @@ public class Variations {
 			child1[i] = parent1[i];
 			child2[i] = parent2[i];
 		}
+		
+		for (int i = this.cfgs.getDimension(); i < this.cfgs.getDimension() + 10; i++){
+			child1[i] = 1;
+			child2[i] = 1;
+		}
 
 		for (int i = 0; i < population.length; i++) {
 			renewedPopulation[i] = population[i];
@@ -249,6 +254,11 @@ public class Variations {
 			child1[i] = this.cfgs.getMixingFactor() * parent2[i] + (1 - this.cfgs.getMixingFactor()) * parent1[i];
 			child2[i] = this.cfgs.getMixingFactor() * parent1[i] + (1 - this.cfgs.getMixingFactor()) * parent2[i];
 		}
+		
+		for (int i = this.cfgs.getDimension(); i < this.cfgs.getDimension() + 10; i++){
+			child1[i] = 1;
+			child2[i] = 1;
+		}
 
 		for (int i = 0; i < population.length; i++) {
 			renewedPopulation[i] = population[i];
@@ -275,6 +285,11 @@ public class Variations {
 		for (int i = 0; i < this.cfgs.getDimension(); i++) {
 			child1[i] = this.cfgs.getMixingFactor() * parent2[i] + (1 - this.cfgs.getMixingFactor()) * parent1[i];
 			child2[i] = this.cfgs.getMixingFactor() * parent1[i] + (1 - this.cfgs.getMixingFactor()) * parent2[i];
+		}
+		
+		for (int i = this.cfgs.getDimension(); i < this.cfgs.getDimension() + 10; i++){
+			child1[i] = 1;
+			child2[i] = 1;
 		}
 
 		for (int i = 0; i < population.length; i++) {
@@ -308,6 +323,11 @@ public class Variations {
 			child2[i] = (Math.min(parent1[i], parent2[i]) - this.cfgs.getMixingFactor() * d)
 					+ new Random().nextDouble() * ((Math.min(parent1[i], parent2[i]) + this.cfgs.getMixingFactor() * d)
 							- (Math.min(parent1[i], parent2[i]) - this.cfgs.getMixingFactor() * d));
+		}
+		
+		for (int i = this.cfgs.getDimension(); i < this.cfgs.getDimension() + 10; i++){
+			child1[i] = 1;
+			child2[i] = 1;
 		}
 
 		for (int i = 0; i < population.length; i++) {
@@ -348,6 +368,11 @@ public class Variations {
 		for (int i = endInd; i < this.cfgs.getDimension(); i++) {
 			child1[i] = parent2[i];
 			child2[i] = parent1[i];
+		}
+		
+		for (int i = this.cfgs.getDimension(); i < this.cfgs.getDimension() + 10; i++){
+			child1[i] = 1;
+			child2[i] = 1;
 		}
 
 		for (int i = 0; i < population.length; i++) {

@@ -27,7 +27,7 @@ public class Initializations {
             double tempEval = (double) this.evaluation_.evaluate(tempPop);
             player19.evals++;
 
-            population[i][this.cfgs.getDimension()] = tempEval;
+            population[i][population[i].length - 1] = tempEval;
 
             if (this.cfgs.getDEBUG()) {
                 if (tempEval >= maxScore) {
@@ -66,6 +66,11 @@ public class Initializations {
                 }
             }
         }
+        for (int i = 0; i < this.cfgs.getPopulationSize(); i++){
+			for (int j = this.cfgs.getDimension(); j < this.cfgs.getDimension() + 10; j++) {
+				population[i][j] = 1;
+			}
+		}
         return population;
     }
 }
