@@ -11,7 +11,7 @@ public class Configs {
     /**
      * Additional dimention to the solution vector to encode different values.
      */
-    private final int addtionalDimension = 1;
+    private final int addtionalDimension = 56;
 
     /**
      * Public flag for debugging.
@@ -114,20 +114,9 @@ public class Configs {
     private double initSigma;
 
     /**
-     * Standard deviation of mutation change.
-     */
-    private double mutationStepSize;
-
-    /**
      * Lower bound for mutation step size to avoid tending to 0.
      */
     private double mutationStepSizeBound;
-
-    /**
-     * Multidimensional mutation step size corresponding to each dimeansion in the
-     * solution vector.
-     */
-    private double[] ndMutationStepSize;
 
     /**
      * Coordinate wise learning rate for self-adaptive mutations.
@@ -250,7 +239,6 @@ public class Configs {
         setS_value(1.9); // should be in range (0, 2].
         setCorrelationFactors(new double[this.dimension * (this.dimension - 1) / 2]);
         initCovarianceMatrix();
-        setCovarianceMatrix(this.ndMutationStepSize, this.correlationFactors);
         setCorrelationAngle(Math.toRadians(5));
     }
 
@@ -391,14 +379,6 @@ public class Configs {
         this.initSigma = initSigma;
     }
 
-    public double getMutationStepSize() {
-        return this.mutationStepSize;
-    }
-
-    public void setMutationStepSize(double mutationStepSize) {
-        this.mutationStepSize = mutationStepSize;
-    }
-
     public double getSingleMutationLearningRate() {
         return this.singleMutationLearningRate;
     }
@@ -421,14 +401,6 @@ public class Configs {
 
     public void setMutationStepSizeBound(double mutationStepSizeBound) {
         this.mutationStepSizeBound = mutationStepSizeBound;
-    }
-
-    public double[] getNdMutationStepSize() {
-        return this.ndMutationStepSize;
-    }
-
-    public void setNdMutationStepSize(double[] ndMutationStepSize) {
-        this.ndMutationStepSize = ndMutationStepSize;
     }
 
     public double getSecondaryMutationLearningRate() {
@@ -486,7 +458,6 @@ public class Configs {
                 }
             }
         }
-        // System.out.println(Arrays.deepToString(covarienceMatrix));
     }
 
     public double getCorrelationAngle() {

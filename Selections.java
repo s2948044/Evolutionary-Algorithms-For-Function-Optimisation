@@ -9,7 +9,7 @@ public class Selections {
     }
 
     /**
-     * Sort the population by fitness value at the 11th dimension.
+     * Sort the population by fitness value at the last dimension.
      * 
      * @param population
      * @param colToSort  Index of column to sort on.
@@ -64,7 +64,7 @@ public class Selections {
         // Extract the fitness values per individuals in the population.
         double[] fitnessValues = new double[population.length];
         for (int i = 0; i < population.length; i++) {
-            fitnessValues[i] = population[i][this.cfgs.getDimension()];
+            fitnessValues[i] = population[i][population[i].length - 1];
         }
 
         // Use roulette wheel selection to pick (randomSize) of individuals out of the
@@ -176,7 +176,7 @@ public class Selections {
      * @return Purged population.
      */
     public double[][] survSelection_Elitism(double[][] population) {
-        sortbyColumn(population, this.cfgs.getDimension()); // sort the current matrix of the population based on the
+        sortbyColumn(population, population[0].length - 1); // sort the current matrix of the population based on the
         // fitness stored at the last column
         double[][] new_population = new double[this.cfgs.getPopulationSize()][population[0].length]; // create a new
                                                                                                      // matrix
