@@ -30,6 +30,11 @@ public class Configs {
 
     // Mutable parameters:
     /**
+     * Probability prooptions corresponding to the 6 combinations.
+     */
+    private double[] probs;
+
+    /**
      * Choice for the crossover method.
      */
     private int xoverChoice;
@@ -184,7 +189,7 @@ public class Configs {
     }
 
     // public double return_last_datap(){
-    //     return this.x_data.get(this.x_data.size()-1);
+    // return this.x_data.get(this.x_data.size()-1);
     // }
 
     public double return_xdata_3() {
@@ -228,31 +233,38 @@ public class Configs {
     }
 
     public void initParams() {
-        setXoverChoice(Integer.parseInt(System.getProperty("xoverChoice")));
-        setMutationChoice(Integer.parseInt(System.getProperty("mutationChoice")));
-        // setPopulationSize(Integer.parseInt(System.getProperty("population")));
-        // setMutationRate(0.1); // should be in range [populationSize, 0.1].
         setMutationSize(1);
-        // setTournamentSize(100);
-        setSingleMutationCoefficient(Double.parseDouble(System.getProperty("SingleMC"))); // should be from 0 to 0.1
+        setProbs(System.getProperty("Probs"));
+        setSingleMutationCoefficient(0.01);
         setSingleMutationLearningRate(1 / Math.sqrt(this.dimension));
-        setOverallMutationCoefficient(Double.parseDouble(System.getProperty("OverallMC"))); // should be from 0 to 0.1
+        setOverallMutationCoefficient(0.003);
         setMutationLearningRate(1 / Math.sqrt(2 * this.dimension));
+        setSecondaryMutationCoefficient(0.007);
+        setSecondaryMutationLearningRate(1 / Math.sqrt(2 * Math.sqrt(this.dimension)));
         setRandomSelected(50); // should be less than populationSize.
-        // setParentSelected(20); // should be less than RandomSelected.
         setMixingFactor(0.5); // should be in range (0, 1).
         setInitSigma(2);
         setMutationStepSize(1);
         setMutationStepSizeBound(0.001);
-        setSecondaryMutationCoefficient(Double.parseDouble(System.getProperty("SecondaryMC"))); // should be from 0 to
-                                                                                                // 0.1
-        setSecondaryMutationLearningRate(1 / Math.sqrt(2 * Math.sqrt(this.dimension)));
         setNdMutationStepSize(new double[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 });
         setS_value(1.9); // should be in range (0, 2].
         setCorrelationFactors(new double[this.dimension * (this.dimension - 1) / 2]);
         initCovarianceMatrix();
         setCovarianceMatrix(this.ndMutationStepSize, this.correlationFactors);
         setCorrelationAngle(Math.toRadians(5));
+    }
+
+    public double[] getProbs() {
+        return this.probs;
+    }
+
+    public void setProbs(String probs_str) {
+        String[] list_probs_str = probs_str.split(" ");
+        double[] probs = new double[list_probs_str.length];
+        for (int i = 0; i < list_probs_str.length; i++) {
+            probs[i] = Double.parseDouble(list_probs_str[i]);
+        }
+        this.probs = probs;
     }
 
     public int getXoverChoice() {

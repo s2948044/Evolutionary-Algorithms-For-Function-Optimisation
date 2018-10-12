@@ -358,4 +358,25 @@ public class Variations {
 		return renewedPopulation;
 	}
 
+	public void selectCombination() {
+		int combination = Sels.rouletteWheelSelection(cfgs.getProbs());
+		switch (combination) {
+
+		case 1:
+			cfgs.setXoverChoice(2);
+			cfgs.setMutationChoice(7);
+			break;
+
+		case 2:
+			cfgs.setXoverChoice(3);
+			cfgs.setMutationChoice(7);
+			break;
+
+		case 3:
+			cfgs.setXoverChoice(4);
+			cfgs.setMutationChoice(7);
+			break;
+		}
+	}
+
 }

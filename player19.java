@@ -86,34 +86,24 @@ public class player19 implements ContestSubmission {
 			}
 		}
 		population = Inits.initPopulation(Initializations.RandomDistributions.NORMAL);
-		// System.out.println("Population Size " + population.length);
 		resetEvals();
 		Inits.updateFitness(population);
 
 		while (evals < evaluations_limit_) {
 			if (evals % cfgs.getPopulationSize() == 0) {
 				cfgs.append_xdata(Inits.maxScore);
-				// System.out.println("Best fitness value at evaluation " +
-				// Integer.toString(evals) + ": "
-				// + Double.toString(Inits.maxScore));
-				// System.out.print(Double.toString(Inits.maxScore) + ",");
-
 			}
 			// Select parents
 			Sels.sortbyColumn(population, cfgs.getDimension());
-			// System.out.println(Arrays.toString(population));
 
 			int[] parentsInd = Sels.parentSelection_Tournament(population);
-
 			// int[] parentsInd = Sels.parentSelection_Elitism(population,
 			// Initializations.RandomDistributions.UNIFORM);
 			// Apply crossover
 			for (int i = 0; i < cfgs.getParentSelected(); i = i + 2) {
-				// population = Vars.order1CrossOver(population, population[parentsInd[i]],
 
-				// population = Vars.singleArithmeticCrossOver(population,
-				// population[parentsInd[i]],
-				// population[parentsInd[i + 1]]);
+				Vars.selectCombination();
+
 				switch (cfgs.getXoverChoice()) {
 				case 1:
 					population = Vars.singleArithmeticCrossOver(population, population[parentsInd[i]],
@@ -139,6 +129,7 @@ public class player19 implements ContestSubmission {
 			// Apply mutation
 			for (int i = cfgs.getPopulationSize(); i < cfgs.getPopulationSize() + cfgs.getParentSelected(); i++) {
 				if (new Random().nextInt((int) (1 / cfgs.getMutationRate())) == 0) {
+
 					switch (cfgs.getMutationChoice()) {
 					case 1:
 						Vars.rnd_swap(population[i]);
