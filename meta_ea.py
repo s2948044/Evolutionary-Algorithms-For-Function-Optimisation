@@ -22,7 +22,7 @@ class cma_es:
         self.evalChoice = 0
         self.covarianceMatrix = np.empty(shape=self.dimension, dtype=np.float32)
         self.m = np.empty(shape=[self.dimension, ], dtype=np.float32)
-        self.bestScore = 0.0
+        self.bestScore = -1.0
         self.bestSolution = np.empty(shape=[self.dimension, ], dtype=np.float32)
         self.gens = 0
         self.gens_limit = 0

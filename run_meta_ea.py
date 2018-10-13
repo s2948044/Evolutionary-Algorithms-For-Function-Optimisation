@@ -110,6 +110,9 @@ def main():
             population[k].y = np.dot(np.dot(ea.B, ea.D), population[k].z)
             population[k].x = ea.m + ea.sigma * population[k].y
             population[k].fitness = ea.evaluation(ea.geno_to_pheno(population[k].x))
+            if population[k].fitness > ea.bestScore:
+                ea.bestScore = population[k].fitness
+                ea.bestSolution = population[k].x
 
         # Selection and recombination.
         population.sort(key=lambda x: x.fitness, reverse=True)
@@ -145,6 +148,9 @@ def main():
         delta_h_sigma = (1 - ea.h_sigma) * ea.cc * (2 - ea.cc)
         ea.covarianceMatrix = (1 + ea.c1 * delta_h_sigma - ea.c1 - ea.c_mu * sum_w_mu) * ea.covarianceMatrix + \
             ea.c1 * np.dot(ea.p_c, np.transpose(ea.p_c)) + ea.c_mu * tmp_sum
+
+    print("Best score: {}".format(ea.bestScore))
+    print("Best solution: {}".format(ea.bestSolution))
 
 
 if __name__ == "__main__":

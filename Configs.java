@@ -225,16 +225,16 @@ public class Configs {
     public void initParams() {
         setMutationSize(1);
         setProbs(System.getProperty("Probs"));
-        setSingleMutationCoefficient(0.01);
+        setSingleMutationCoefficient(0.1);
         setSingleMutationLearningRate(1 / Math.sqrt(this.dimension));
-        setOverallMutationCoefficient(0.003);
+        setOverallMutationCoefficient(0.7);
         setMutationLearningRate(1 / Math.sqrt(2 * this.dimension));
-        setSecondaryMutationCoefficient(0.007);
+        setSecondaryMutationCoefficient(0.3);
         setSecondaryMutationLearningRate(1 / Math.sqrt(2 * Math.sqrt(this.dimension)));
         setRandomSelected(50); // should be less than populationSize.
         setMixingFactor(0.5); // should be in range (0, 1).
         setInitSigma(2);
-        setMutationStepSizeBound(0.001);
+        setMutationStepSizeBound(0.1);
         setS_value(1.9); // should be in range (0, 2].
         setCorrelationFactors(new double[this.dimension * (this.dimension - 1) / 2]);
         initCovarianceMatrix();
