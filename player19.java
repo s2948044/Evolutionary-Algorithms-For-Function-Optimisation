@@ -104,25 +104,25 @@ public class player19 implements ContestSubmission {
 			// Apply crossover
 			for (int i = 0; i < cfgs.getParentSelected(); i = i + 2) {
 				switch (cfgs.getXoverChoice()) {
-					case 1:
-						population = Vars.singleArithmeticCrossOver(population, population[parentsInd[i]],
-								population[parentsInd[i + 1]]);
-						break;
+				case 1:
+					population = Vars.singleArithmeticCrossOver(population, population[parentsInd[i]],
+							population[parentsInd[i + 1]]);
+					break;
 
-					case 2:
-						population = Vars.simpleArithmeticCrossOver(population, population[parentsInd[i]],
-								population[parentsInd[i + 1]]);
-						break;
+				case 2:
+					population = Vars.simpleArithmeticCrossOver(population, population[parentsInd[i]],
+							population[parentsInd[i + 1]]);
+					break;
 
-					case 3:
-						population = Vars.wholeArithmeticCrossOver(population, population[parentsInd[i]],
-								population[parentsInd[i + 1]]);
-						break;
+				case 3:
+					population = Vars.wholeArithmeticCrossOver(population, population[parentsInd[i]],
+							population[parentsInd[i + 1]]);
+					break;
 
-					case 4:
-						population = Vars.blendCrossOver(population, population[parentsInd[i]],
-								population[parentsInd[i + 1]]);
-						break;
+				case 4:
+					population = Vars.blendCrossOver(population, population[parentsInd[i]],
+							population[parentsInd[i + 1]]);
+					break;
 				}
 			}
 			// Apply mutation
