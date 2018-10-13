@@ -1,10 +1,5 @@
-import os
 import numpy as np
-import matplotlib.pyplot as plt
-import json
 import time
-import pandas as pd
-import glob
 import math
 from meta_ea import cma_es, individual
 
@@ -14,9 +9,6 @@ start_time = time.time()
 xoverChoices = [1, 2]
 mutationChoices = [4, 5, 6]
 evalChoices = [0, 1, 2]
-
-
-# run algorithm with parameter values. Returns json string
 
 
 def main():
@@ -149,6 +141,7 @@ def main():
         ea.covarianceMatrix = (1 + ea.c1 * delta_h_sigma - ea.c1 - ea.c_mu * sum_w_mu) * ea.covarianceMatrix + \
             ea.c1 * np.dot(ea.p_c, np.transpose(ea.p_c)) + ea.c_mu * tmp_sum
 
+    ea.normalizeBestSolution()
     print("Best score: {}".format(ea.bestScore))
     print("Best solution: {}".format(ea.bestSolution))
 
