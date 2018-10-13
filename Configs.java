@@ -241,22 +241,6 @@ public class Configs {
         setCorrelationAngle(Math.toRadians(5));
     }
 
-    public int getXoverChoice() {
-        return this.xoverChoice;
-    }
-
-    public void setXoverChoice(int xoverChoice) {
-        this.xoverChoice = xoverChoice;
-    }
-
-    public int getMutationChoice() {
-        return this.mutationChoice;
-    }
-
-    public void setMutationChoice(int mutationChoice) {
-        this.mutationChoice = mutationChoice;
-    }
-
     public int getPopulationSize() {
         return this.populationSize;
     }
@@ -284,6 +268,22 @@ public class Configs {
     public int getUpperBound() {
         return this.upperBound;
     }
+    
+    public int getMutationChoice() {
+		return this.mutationChoice;
+	}
+    
+    public void setMutationChoice(int mutationChoice) {
+		this.mutationChoice = mutationChoice;
+	}
+	
+	public int getXoverChoice() {
+		return this.xoverChoice;
+	}
+    
+    public void setXoverChoice(int xoverChoice) {
+		this.xoverChoice = xoverChoice;
+	}
 
     public int getTournamentSize() {
         return this.tournamentSize;
@@ -405,10 +405,6 @@ public class Configs {
         this.s_value = s_value;
     }
 
-    public void print_values(double score) {
-        System.out.println(score);
-    }
-
     public double[] getCorrelationFactors() {
         return this.correlationFactors;
     }
@@ -444,6 +440,7 @@ public class Configs {
                 }
             }
         }
+        // System.out.println(Arrays.deepToString(covarienceMatrix));
     }
 
     public double getCorrelationAngle() {

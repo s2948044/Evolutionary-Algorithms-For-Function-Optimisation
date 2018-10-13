@@ -101,8 +101,8 @@ public class Variations {
 	 */
 	public void singleUncorrelatedMutation(double[] individual) {
 		individual[this.cfgs.getDimension()] = individual[this.cfgs.getDimension()]
-				* Math.exp(this.cfgs.getSingleMutationLearningRate() * this.cfgs.getSingleMutationCoefficient()
-						* new Random().nextGaussian());
+						* Math.exp(this.cfgs.getSingleMutationLearningRate()
+						* this.cfgs.getSingleMutationCoefficient() * new Random().nextGaussian());
 		if (individual[this.cfgs.getDimension()] < this.cfgs.getMutationStepSizeBound()) {
 			individual[this.cfgs.getDimension()] = this.cfgs.getMutationStepSizeBound();
 		}
@@ -160,7 +160,7 @@ public class Variations {
 		for (int i = 0; i < this.cfgs.getDimension() * (this.cfgs.getDimension() - 1) / 2; i++) {
 			// correlationFactors[i] = correlationFactors[i]
 			// + this.cfgs.getCorrelationAngle() * new Random().nextGaussian();
-			individual[this.cfgs.getDimension() + 10 + i] = individual[this.cfgs.getDimension() + 10 + i]
+			individual[this.cfgs.getDimension() + 10 + i] = individual[this.cfgs.getDimension() + 10 + i] 
 					+ this.cfgs.getCorrelationAngle() * new Random().nextGaussian();
 			if (Math.abs(individual[this.cfgs.getDimension() + 10 + i]) > Math.PI) {
 				individual[this.cfgs.getDimension() + 10 + i] = individual[this.cfgs.getDimension() + 10 + i]
@@ -169,10 +169,9 @@ public class Variations {
 		}
 		// System.out.println(Arrays.toString(correlationFactors));
 
-		this.cfgs.setCovarianceMatrix(
-				Arrays.copyOfRange(individual, this.cfgs.getDimension(), this.cfgs.getDimension() + 10),
-				Arrays.copyOfRange(individual, this.cfgs.getDimension() + 10,
-						this.cfgs.getDimension() + 10 + this.cfgs.getDimension() * (this.cfgs.getDimension() - 1) / 2));
+		this.cfgs.setCovarianceMatrix(Arrays.copyOfRange(individual, this.cfgs.getDimension(), this.cfgs.getDimension() + 10), 
+				Arrays.copyOfRange(individual, this.cfgs.getDimension() + 10, this.cfgs.getDimension() + 10 + 
+						this.cfgs.getDimension() * (this.cfgs.getDimension() - 1) / 2));
 		RandomStream stream = new MRG31k3p();
 		// RandomStream stream = new MRG32k3a();
 		// RandomStream stream = new LFSR113();
@@ -217,8 +216,8 @@ public class Variations {
 			child1[i] = parent1[i];
 			child2[i] = parent2[i];
 		}
-
-		for (int i = this.cfgs.getDimension(); i < this.cfgs.getDimension() + 10; i++) {
+		
+		for (int i = this.cfgs.getDimension(); i < this.cfgs.getDimension() + 10; i++){
 			child1[i] = 1;
 			child2[i] = 1;
 		}
@@ -255,8 +254,8 @@ public class Variations {
 			child1[i] = this.cfgs.getMixingFactor() * parent2[i] + (1 - this.cfgs.getMixingFactor()) * parent1[i];
 			child2[i] = this.cfgs.getMixingFactor() * parent1[i] + (1 - this.cfgs.getMixingFactor()) * parent2[i];
 		}
-
-		for (int i = this.cfgs.getDimension(); i < this.cfgs.getDimension() + 10; i++) {
+		
+		for (int i = this.cfgs.getDimension(); i < this.cfgs.getDimension() + 10; i++){
 			child1[i] = 1;
 			child2[i] = 1;
 		}
@@ -287,8 +286,8 @@ public class Variations {
 			child1[i] = this.cfgs.getMixingFactor() * parent2[i] + (1 - this.cfgs.getMixingFactor()) * parent1[i];
 			child2[i] = this.cfgs.getMixingFactor() * parent1[i] + (1 - this.cfgs.getMixingFactor()) * parent2[i];
 		}
-
-		for (int i = this.cfgs.getDimension(); i < this.cfgs.getDimension() + 10; i++) {
+		
+		for (int i = this.cfgs.getDimension(); i < this.cfgs.getDimension() + 10; i++){
 			child1[i] = 1;
 			child2[i] = 1;
 		}
@@ -325,8 +324,8 @@ public class Variations {
 					+ new Random().nextDouble() * ((Math.min(parent1[i], parent2[i]) + this.cfgs.getMixingFactor() * d)
 							- (Math.min(parent1[i], parent2[i]) - this.cfgs.getMixingFactor() * d));
 		}
-
-		for (int i = this.cfgs.getDimension(); i < this.cfgs.getDimension() + 10; i++) {
+		
+		for (int i = this.cfgs.getDimension(); i < this.cfgs.getDimension() + 10; i++){
 			child1[i] = 1;
 			child2[i] = 1;
 		}
@@ -370,8 +369,8 @@ public class Variations {
 			child1[i] = parent2[i];
 			child2[i] = parent1[i];
 		}
-
-		for (int i = this.cfgs.getDimension(); i < this.cfgs.getDimension() + 10; i++) {
+		
+		for (int i = this.cfgs.getDimension(); i < this.cfgs.getDimension() + 10; i++){
 			child1[i] = 1;
 			child2[i] = 1;
 		}

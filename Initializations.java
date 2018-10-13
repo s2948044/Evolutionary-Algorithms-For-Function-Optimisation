@@ -1,6 +1,5 @@
 import java.util.*;
 import org.vu.contest.ContestEvaluation;
-import java.io.*;
 
 public class Initializations {
     public double maxScore;
@@ -70,11 +69,11 @@ public class Initializations {
                 }
             }
         }
-        for (int i = 0; i < this.cfgs.getPopulationSize(); i++) {
-            for (int j = this.cfgs.getDimension(); j < this.cfgs.getDimension() + 10; j++) {
-                population[i][j] = 1;
-            }
-        }
+        for (int i = 0; i < this.cfgs.getPopulationSize(); i++){
+			for (int j = this.cfgs.getDimension(); j < this.cfgs.getDimension() + 10; j++) {
+				population[i][j] = 1;
+			}
+		}
         return population;
     }
 }
