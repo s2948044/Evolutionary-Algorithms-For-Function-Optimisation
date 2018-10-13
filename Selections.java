@@ -150,32 +150,32 @@ public class Selections {
         // Compute the corresponding probabilities.
         int selectedNr = 0;
         while (selectedNr < this.cfgs.getParentSelected()) {
-			int tournamentNr = 0;
-			int currentMin = 99999;
-			int occurZero = 0;
-			int[] tournamentHis = new int[this.cfgs.getTournamentSize()];
-			while (tournamentNr < this.cfgs.getTournamentSize()) {
-				int ranIndex = new Random().nextInt(this.cfgs.getPopulationSize());
-				for (int i = 0; i < tournamentHis.length; i++) {
-					if (tournamentHis[i] == ranIndex) {
-						if (ranIndex != 0 || occurZero != 0) {
-							break;
-						}
-					}
-					if (i == tournamentHis.length - 1) {
-						if (ranIndex == 0) {
-							occurZero = 1;
-						}
-						tournamentHis[tournamentNr] = ranIndex;
-						if (ranIndex < currentMin){
-							currentMin = ranIndex;
-						}
-						tournamentNr++;
-					}
-				}
-			}
-			parentsInd[selectedNr] = currentMin;
-			selectedNr++;
+            int tournamentNr = 0;
+            int currentMin = 99999;
+            int occurZero = 0;
+            int[] tournamentHis = new int[this.cfgs.getTournamentSize()];
+            while (tournamentNr < this.cfgs.getTournamentSize()) {
+                int ranIndex = new Random().nextInt(this.cfgs.getPopulationSize());
+                for (int i = 0; i < tournamentHis.length; i++) {
+                    if (tournamentHis[i] == ranIndex) {
+                        if (ranIndex != 0 || occurZero != 0) {
+                            break;
+                        }
+                    }
+                    if (i == tournamentHis.length - 1) {
+                        if (ranIndex == 0) {
+                            occurZero = 1;
+                        }
+                        tournamentHis[tournamentNr] = ranIndex;
+                        if (ranIndex < currentMin){
+                            currentMin = ranIndex;
+                        }
+                        tournamentNr++;
+                    }
+                }
+            }
+            parentsInd[selectedNr] = currentMin;
+            selectedNr++;
         }
         return parentsInd;
     }
@@ -219,7 +219,7 @@ public class Selections {
         // System.out.println(this.cfgs.getPopulationSize());
         // System.out.println(population.length);
         for (i = 0; i < this.cfgs.getPopulationSize() - this.cfgs.getParentSelected(); i++) {
-			// System.out.println(this.cfgs.getPopulationSize() - this.cfgs.getParentSelected()
+            // System.out.println(this.cfgs.getPopulationSize() - this.cfgs.getParentSelected()
             for (int j = 0; j < population[0].length; j++) {
                 new_population[i][j] = population[i][j]; // copy from the old matrix to the new matrix
             }

@@ -11,8 +11,8 @@ start_time = time.time()
 
 mixs = [0.3, 0.5, 0.7]
 # p1s = [0.01, 0.05, 0.1]
-p2s = [0.001, 0.003, 0.005]
-p3s = [0.005, 0.007, 0.009]
+p2s = [0.1, 0.3, 0.5, 0.7]
+p3s = [0.1, 0.3, 0.5, 0.7]
 # xoverChoices = [0, 1, 2, 3]
 xoverChoices = [1, 2, 3]
 
@@ -23,7 +23,7 @@ mutationChoices = [6]
 # varchoices = [0, 1]
 
 evalChoices = [0, 1, 2]
-epochs = 1
+epochs = 5
 
 evaluations = ["BentCigarFunction", "KatsuuraEvaluation", "SchaffersEvaluation"]
 xoverNames = ["singleArithmeticCrossOver", "simpleArithmeticCrossOver", "wholeArithmeticCrossOver", "blendCrossOver"]
