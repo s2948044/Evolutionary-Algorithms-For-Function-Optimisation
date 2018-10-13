@@ -133,7 +133,6 @@ public class player19 implements ContestSubmission {
 			// Apply mutation
 			for (int i = cfgs.getPopulationSize(); i < cfgs.getPopulationSize() + cfgs.getParentSelected(); i++) {
 				if (new Random().nextDouble() < cfgs.getMutationRate()) {
-
 					switch (cfgs.getMutationChoice()) {
 					case 1:
 						Vars.rnd_swap(population[i]);

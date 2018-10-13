@@ -183,6 +183,7 @@ public class Configs {
 
     public double return_xdata_3() {
         return this.x_data.get(this.x_data.size() - 3);
+        // return this.x_data.get(this.x_data.size());
     }
 
     public void make_data_jstring(ArrayList x) {
@@ -196,8 +197,8 @@ public class Configs {
         for (int i = 0; i < x.size() - 1; i++) {
             this.jstring = this.jstring + Integer.toString(i) + ",";
         }
-        this.jstring = this.jstring + Integer.toString(x.size()) + "] } }";
-
+        this.jstring = this.jstring + Integer.toString(x.size()) + "], 'bf': [";
+        this.jstring = this.jstring + Double.toString(this.mbf_data.get(this.mbf_data.size() - 1)) + "] } }";
         this.methods_jstring = build_methods_jstring();
         concat_jstring(this.methods_jstring);
     }
@@ -253,22 +254,6 @@ public class Configs {
         this.probs = probs;
     }
 
-    public int getXoverChoice() {
-        return this.xoverChoice;
-    }
-
-    public void setXoverChoice(int xoverChoice) {
-        this.xoverChoice = xoverChoice;
-    }
-
-    public int getMutationChoice() {
-        return this.mutationChoice;
-    }
-
-    public void setMutationChoice(int mutationChoice) {
-        this.mutationChoice = mutationChoice;
-    }
-
     public int getPopulationSize() {
         return this.populationSize;
     }
@@ -295,6 +280,22 @@ public class Configs {
 
     public int getUpperBound() {
         return this.upperBound;
+    }
+
+    public int getMutationChoice() {
+        return this.mutationChoice;
+    }
+
+    public void setMutationChoice(int mutationChoice) {
+        this.mutationChoice = mutationChoice;
+    }
+
+    public int getXoverChoice() {
+        return this.xoverChoice;
+    }
+
+    public void setXoverChoice(int xoverChoice) {
+        this.xoverChoice = xoverChoice;
     }
 
     public int getTournamentSize() {
@@ -417,10 +418,6 @@ public class Configs {
         this.s_value = s_value;
     }
 
-    public void print_values(double score) {
-        System.out.println(score);
-    }
-
     public double[] getCorrelationFactors() {
         return this.correlationFactors;
     }
@@ -456,6 +453,7 @@ public class Configs {
                 }
             }
         }
+        // System.out.println(Arrays.deepToString(covarienceMatrix));
     }
 
     public double getCorrelationAngle() {

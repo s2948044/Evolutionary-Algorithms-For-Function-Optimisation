@@ -269,7 +269,7 @@ class cma_es:
         BFs = []
         for i in range(self.epochs):
             js = json.loads(self.run_lower_ea(probs))
-            BFs.append(js['data']['y'])
+            BFs.append(js['data']['bf'])
         return np.mean(BFs)
 
     # TODO: Check whether the mapping is appropriate.

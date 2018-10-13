@@ -70,7 +70,8 @@ def main():
                             js = json.loads(runEA(mixingfactor=mix, xoverChoice=xoverChoice, mutationChoice=mutationChoice,
                                                   evalChoice=evalChoice, SingleMC=0.0, OverallMC=p2, SecondaryMC=p3))
                             print("epochs loop")
-                            y = js['data']['y']
+                            # y = js['data']['y']
+                            y = js['data']['bf']
                             BF.append(y)
                         MBF.append([('%f' % np.mean(BF)), xoverChoice, mutationChoice, mix, "-", p2, p3])
                         print("p3 loop")
