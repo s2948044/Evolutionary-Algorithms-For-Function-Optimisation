@@ -106,7 +106,7 @@ public class player19 implements ContestSubmission {
 			// Apply crossover
 			for (int i = 0; i < cfgs.getParentSelected(); i = i + 2) {
 
-				Vars.selectCombination();
+				Vars.selectCombination(Sels);
 
 				switch (cfgs.getXoverChoice()) {
 				case 1:
@@ -132,7 +132,7 @@ public class player19 implements ContestSubmission {
 			}
 			// Apply mutation
 			for (int i = cfgs.getPopulationSize(); i < cfgs.getPopulationSize() + cfgs.getParentSelected(); i++) {
-				if (new Random().nextInt((int) (1 / cfgs.getMutationRate())) == 0) {
+				if (new Random().nextDouble() < cfgs.getMutationRate()) {
 
 					switch (cfgs.getMutationChoice()) {
 					case 1:

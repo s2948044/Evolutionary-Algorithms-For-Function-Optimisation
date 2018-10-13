@@ -233,9 +233,7 @@ public class Configs {
         setRandomSelected(50); // should be less than populationSize.
         setMixingFactor(0.5); // should be in range (0, 1).
         setInitSigma(2);
-        setMutationStepSize(1);
         setMutationStepSizeBound(0.001);
-        setNdMutationStepSize(new double[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 });
         setS_value(1.9); // should be in range (0, 2].
         setCorrelationFactors(new double[this.dimension * (this.dimension - 1) / 2]);
         initCovarianceMatrix();
@@ -247,7 +245,7 @@ public class Configs {
     }
 
     public void setProbs(String probs_str) {
-        String[] list_probs_str = probs_str.split(" ");
+        String[] list_probs_str = probs_str.split(",");
         double[] probs = new double[list_probs_str.length];
         for (int i = 0; i < list_probs_str.length; i++) {
             probs[i] = Double.parseDouble(list_probs_str[i]);

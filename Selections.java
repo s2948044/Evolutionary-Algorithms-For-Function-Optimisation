@@ -38,7 +38,18 @@ public class Selections {
      * @return Index of the selected individual.
      */
 
-    public int rouletteWheelSelection(double[] proportions) {
+    public int rouletteWheelSelection(double[] fitnessValues) {
+        // Sum up the fitnessValues of all the selectees.
+        double fitnessSum = 0;
+        for (double fitness : fitnessValues) {
+            fitnessSum += Math.abs(fitness);
+        }
+
+        // Compute the corresponding probabilities.
+        double[] probs = new double[fitnessValues.length];
+        for (int i = 0; i < probs.length; i++) {
+            probs[i] = Math.abs(fitnessValues[i]) / fitnessSum;
+        }
 
         // Init a random probability and return its corresponding index.
         double prob = 0;
@@ -47,7 +58,7 @@ public class Selections {
         double probSum = 0;
         int i = 0;
         while (prob - probSum > 0) {
-            probSum += proportions[i];
+            probSum += probs[i];
             i++;
         }
         return i - 1;

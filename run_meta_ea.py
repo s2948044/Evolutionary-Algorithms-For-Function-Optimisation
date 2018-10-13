@@ -21,7 +21,7 @@ evalChoices = [0, 1, 2]
 
 def main():
     ea = cma_es()
-
+    ea.compile()
     # Set ea parameters.
     ea.epochs = 5
     ea.dimension = 3
@@ -30,7 +30,7 @@ def main():
     ea.gens_limit = 10
 
     ea.lambda_ea = 4 + math.floor(3 * math.log(ea.dimension))
-
+    ea.mu = math.floor(ea.lambda_ea / 2)
     # Initialize population.
     population = []
     sum_w_mu = 0
@@ -40,7 +40,7 @@ def main():
     sum_pos_w = 0
     sum_neg_w = 0
     for i in range(ea.lambda_ea):
-        population.append(individual(cma_es))
+        population.append(individual(ea.dimension))
         population[i].w = math.log((ea.lambda_ea + 1) / 2) - math.log(i + 1)
         if (i < ea.mu):
             sum_w_mu += population[i].w
@@ -54,12 +54,22 @@ def main():
         else:
             sum_neg_w += population[i].w
 
+    # for i in range(ea.lambda_ea):
+    #     population.append(individual(ea.dimension))
+    #     if (i < ea.mu):
+    #         population[i].w = math.log((ea.lambda_ea + 1) / 2) - math.log(i + 1)
+    #         sum_w_mu += population[i].w
+
+    # for i in range(ea.mu):
+    #     population[i].w = population[i].w / sum_w_mu
+    #     sum_w_mu_2 += population[i].w ** 2
+
     # Set default strategy parameters.
-    ea.mu = math.floor(ea.lambda_ea / 2)
     ea.mu_eff = sum_w_mu ** 2 / sum_w_mu_2
+    # ea.mu_eff = 1 / sum_w_mu_2
     mu_eff_n = sum_w_lambda ** 2 / sum_w_lambda_2
     ea.c_sigma = (ea.mu_eff + 2) / (ea.dimension + ea.mu_eff + 5)
-    ea.d_sigma = 1 + 2 * max(0, math.sqrt((ea.mu_eff - 1) / (ea.dimension + 1) - 1)) + ea.c_sigma
+    ea.d_sigma = 1 + 2 * max(0, math.sqrt((ea.mu_eff - 1) / (ea.dimension + 1)) - 1) + ea.c_sigma
     ea.cc = (4 + ea.mu_eff / ea.dimension) / (ea.dimension + 4 + 2 * ea.mu_eff / ea.dimension)
     alpha_cov = 2
     ea.c1 = alpha_cov / ((ea.dimension + 1.3) ** 2 + ea.mu_eff)
@@ -76,12 +86,12 @@ def main():
             population[i].w = min(alpha_mu_n, alpha_mu_eff_n, alpha_pos_def_n) / (-sum_neg_w) * population[i].w
 
     # Initialization.
-    ea.p_sigma = np.zeros(shape=[1, ea.dimension], dtype=np.float32)
-    ea.p_c = np.zeros(shape=[1, ea.dimension], dtype=np.float32)
+    ea.p_sigma = np.zeros(shape=[ea.dimension, ], dtype=np.float32)
+    ea.p_c = np.zeros(shape=[ea.dimension, ], dtype=np.float32)
     ea.covarianceMatrix = np.eye(N=ea.dimension)
     ea.evals = 0
     ea.gens = 0
-    ea.m = np.full(shape=[1, ea.dimension], fill_value=(1 / float(ea.dimension)), dtype=np.float32)
+    ea.m = np.full(shape=[ea.dimension, ], fill_value=(1 / float(ea.dimension)), dtype=np.float32)
     ea.sigma = 0.3
     ea.expectation_N = math.sqrt(ea.dimension) * (1 - 1 / (4 * ea.dimension) + 1 / (21 * ea.dimension ** 2))
 
@@ -96,14 +106,14 @@ def main():
             ea.D[i, i] = math.sqrt(eig_vals[i])
 
         for k in range(ea.lambda_ea):
-            population[k].z = np.random.multivariate_normal(np.zeros(shape=[1, ea.dimension], dtype=np.float32), np.eye(ea.dimension))
+            population[k].z = np.random.multivariate_normal(np.zeros(shape=[ea.dimension, ], dtype=np.float32), np.eye(ea.dimension))
             population[k].y = np.dot(np.dot(ea.B, ea.D), population[k].z)
             population[k].x = ea.m + ea.sigma * population[k].y
             population[k].fitness = ea.evaluation(ea.geno_to_pheno(population[k].x))
 
         # Selection and recombination.
         population.sort(key=lambda x: x.fitness, reverse=True)
-        weighted_sum_y = np.zeros(shape=[1, ea.dimension], dtype=np.float32)
+        weighted_sum_y = np.zeros(shape=[ea.dimension, ], dtype=np.float32)
         for i in range(ea.mu):
             weighted_sum_y = weighted_sum_y + population[i].w * population[i].y
         ea.m = ea.m + ea.c_m * ea.sigma * weighted_sum_y
