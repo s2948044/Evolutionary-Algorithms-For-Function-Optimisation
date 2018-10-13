@@ -19,7 +19,7 @@ def main():
     ea.dimension = 3
     ea.evalChoice = 2
     ea.evals_limit = 200
-    ea.gens_limit = 10
+    ea.gens_limit = 30
 
     ea.lambda_ea = 4 + math.floor(3 * math.log(ea.dimension))
     ea.mu = math.floor(ea.lambda_ea / 2)
@@ -89,10 +89,10 @@ def main():
 
     # TODO: Select termination criterion.
     while ea.gens < ea.gens_limit:
-        ea.gens += 1
         # Sample new population of search points.
         ea.D = np.zeros(shape=[ea.dimension, ea.dimension], dtype=np.float32)
         # TODO: Check whether normilization of B is needed.
+        ea.covarianceMatrix = np.triu(ea.covarianceMatrix) + np.transpose(np.triu(ea.covarianceMatrix, 1))
         eig_vals, ea.B = np.linalg.eig(ea.covarianceMatrix)
         for i in range(ea.dimension):
             ea.D[i, i] = math.sqrt(eig_vals[i])
@@ -140,6 +140,10 @@ def main():
         delta_h_sigma = (1 - ea.h_sigma) * ea.cc * (2 - ea.cc)
         ea.covarianceMatrix = (1 + ea.c1 * delta_h_sigma - ea.c1 - ea.c_mu * sum_w_mu) * ea.covarianceMatrix + \
             ea.c1 * np.dot(ea.p_c, np.transpose(ea.p_c)) + ea.c_mu * tmp_sum
+        ea.normalizeBestSolution()
+        print("Best score at generation {} : {}".format(ea.gens, ea.bestScore))
+        print("Best solution: {}".format(ea.bestSolution))
+        ea.gens += 1
 
     ea.normalizeBestSolution()
     print("Best score: {}".format(ea.bestScore))

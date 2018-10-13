@@ -95,10 +95,10 @@ public class player19 implements ContestSubmission {
 		while (evals < evaluations_limit_) {
 			pastHighest = Inits.maxScore;
 			if (evals % cfgs.getPopulationSize() == 0) {
-				cfgs.append_xdata(Inits.maxScore);
+				cfgs.append_xdata(overallMaxScore);
 			}
 			// Select parents
-			Sels.sortbyColumn(population, cfgs.getDimension());
+			Sels.sortbyColumn(population, population[0].length - 1);
 
 			int[] parentsInd = Sels.parentSelection_Tournament(population);
 			// int[] parentsInd = Sels.parentSelection_Elitism(population,
