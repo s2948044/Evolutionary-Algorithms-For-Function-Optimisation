@@ -55,10 +55,12 @@ public class Variations {
      * @param individual
      */
     public void nonUniformMutation(double[] individual) {
+		int counter = 0;
         for (int i = 0; i < this.cfgs.getDimension(); i++) {
             double temp = individual[i];
             individual[i] = individual[i] + new Random().nextGaussian() * individual[this.cfgs.getDimension()];
-            while (individual[i] > 5 || individual[i] < -5) {
+            while ((individual[i] > 5 || individual[i] < -5) && counter <= 5) {
+				counter++;
                 individual[i] = temp;
                 individual[i] = individual[i] + new Random().nextGaussian() * individual[this.cfgs.getDimension()];
             }
@@ -100,6 +102,7 @@ public class Variations {
      * @param individual
      */
     public void singleUncorrelatedMutation(double[] individual) {
+		int counter = 0;
         individual[this.cfgs.getDimension()] = individual[this.cfgs.getDimension()]
                         * Math.exp(this.cfgs.getSingleMutationLearningRate()
                         * this.cfgs.getSingleMutationCoefficient() * new Random().nextGaussian());
@@ -109,7 +112,8 @@ public class Variations {
         for (int i = 0; i < this.cfgs.getDimension(); i++) {
             double temp = individual[i];
             individual[i] = individual[i] + individual[this.cfgs.getDimension()] * new Random().nextGaussian();
-            while (individual[i] > 5 || individual[i] < -5) {
+            while ((individual[i] > 5 || individual[i] < -5) && counter <= 5) {
+				counter++;
                 individual[i] = temp;
                 individual[i] = individual[i] + individual[this.cfgs.getDimension()] * new Random().nextGaussian();
             }
@@ -122,6 +126,7 @@ public class Variations {
      * @param individual
      */
     public void multiUncorrelatedMutation(double[] individual) {
+		int counter = 0;
         double overallNormalDist = new Random().nextGaussian();
         for (int i = 0; i < this.cfgs.getDimension(); i++) {
             individual[this.cfgs.getDimension() + i] = individual[this.cfgs.getDimension() + i] * Math.exp(
@@ -133,7 +138,8 @@ public class Variations {
             }
             double temp = individual[i];
             individual[i] = individual[i] + individual[this.cfgs.getDimension() + i] * new Random().nextGaussian();
-            while (individual[i] > 5 || individual[i] < -5) {
+            while ((individual[i] > 5 || individual[i] < -5) && counter <= 5) {
+				counter++;
                 individual[i] = temp;
                 individual[i] = individual[i] + individual[this.cfgs.getDimension() + i] * new Random().nextGaussian();
             }
@@ -141,6 +147,7 @@ public class Variations {
     }
 
     public void correlatedMutation(double[] individual) {
+		int counter = 0;
         double[] correlationFactors = this.cfgs.getCorrelationFactors();
         double overallNormalDist = new Random().nextGaussian();
         double[] means = new double[this.cfgs.getDimension()];
@@ -182,7 +189,8 @@ public class Variations {
         for (int i = 0; i < this.cfgs.getDimension(); i++) {
             double temp = individual[i];
             individual[i] = individual[i] + tmp[i];
-            while (individual[i] > 5 || individual[i] < -5) {
+            while ((individual[i] > 5 || individual[i] < -5) && counter <= 5) {
+				counter++;
                 individual[i] = temp;
                 generator2.nextPoint(tmp);
                 individual[i] = individual[i] + tmp[i];
