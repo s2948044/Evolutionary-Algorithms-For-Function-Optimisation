@@ -18,3 +18,5 @@ csv/output-004.csv
 csv/output-003.csv
 csv/output-002.csv
 csv/output-001.csv
+testrun.jar
+trivial_tuning_crossover.py

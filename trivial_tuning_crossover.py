@@ -9,7 +9,7 @@ import glob
 
 start_time = time.time()
 
-mixs = [0.1, 0.3, 0.5, 0.7]
+mixs = [0.5, 0.55, 0.6, 0.65]
 # p1s = [0.01, 0.05, 0.1]
 p2s = [0.1, 0.3, 0.5, 0.7]
 p3s = [0.1, 0.3, 0.5, 0.7]
@@ -34,7 +34,7 @@ mutationNames = ["rnd_swap", "uniformMutation", "nonUniformMutation", "customize
 
 
 def make():
-    subprocess.run("mingw32-make")
+    subprocess.run("makeme")
 
 # run algorithm with parameter values. Returns json string
 
