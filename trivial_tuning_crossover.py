@@ -9,7 +9,7 @@ import glob
 
 start_time = time.time()
 
-mixs = [0.3, 0.5, 0.7]
+mixs = [0.1, 0.3, 0.5, 0.7]
 # p1s = [0.01, 0.05, 0.1]
 p2s = [0.1, 0.3, 0.5, 0.7]
 p3s = [0.1, 0.3, 0.5, 0.7]
@@ -34,7 +34,7 @@ mutationNames = ["rnd_swap", "uniformMutation", "nonUniformMutation", "customize
 
 
 def make():
-    subprocess.run("makeme")
+    subprocess.run("mingw32-make")
 
 # run algorithm with parameter values. Returns json string
 
@@ -67,6 +67,7 @@ def main():
                         BF = []
                         for i in range(epochs):
                             # make json object
+							print("mix:", mix , "xoverChoice:", xoverChoice,  "Overall:" ,  p2 , "Secondary:" , p3  , "run:" , i + 1)
                             js = json.loads(runEA(mixingfactor=mix, xoverChoice=xoverChoice, mutationChoice=mutationChoice,
                                                   evalChoice=evalChoice, SingleMC=0.0, OverallMC=p2, SecondaryMC=p3))
                             print("epochs loop")
@@ -84,7 +85,7 @@ def main():
     savenum += 1
 
     my_df = pd.DataFrame(MBF)
-    my_df.to_csv('csv/Dirksoutput-'+str("%03d" % savenum)+'.csv', index=False, header=['MBF', 'xover', 'mutation', 'mixingfactor', 'p1', 'p2', 'p3'])
+    my_df.to_csv('csv/output-'+str("%03d" % savenum)+'.csv', index=False, header=['MBF', 'xover', 'mutation', 'mixingfactor', 'p1', 'p2', 'p3'])
     # plot data of algortihm
     # plt.plot(mix, MBF, label=xoverNames[xoverChoice], color=colors[xoverChoice])
     # plt.legend()
