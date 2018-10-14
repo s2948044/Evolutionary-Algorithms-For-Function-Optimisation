@@ -155,8 +155,8 @@ public class Configs {
 
     public String build_methods_jstring() {
         this.methods_jstring = "{ 'methods': {'variables': {'populationsize':" + Integer.toString(getPopulationSize())
-                + ", 'mutationsize':" + Integer.toString(getMutationSize()) + ", 'mixingfactor':"
-                + Double.toString(getMixingFactor()) + "}, 'crossover':" + Integer.toString(this.xoverChoice) + " }, ";
+                + ", 'mixingfactor':" + Double.toString(getMixingFactor()) + ", 'p2':" + Double.toString(getOverallMutationCoefficient())
+                + ", 'p3':" + Double.toString(getSecondaryMutationCoefficient()) + "}, 'crossover':" + Integer.toString(this.xoverChoice) + " }, ";
         return this.methods_jstring;
     }
 
@@ -230,7 +230,7 @@ public class Configs {
         setMutationLearningRate(1 / Math.sqrt(2 * this.dimension));
         setRandomSelected(50); // should be less than populationSize.
         // setParentSelected(20); // should be less than RandomSelected.
-        setMixingFactor(Double.parseDouble(System.getProperty("mixingfactor"))); // should be in range (0, 1).
+        setMixingFactor(Double.parseDouble(System.getProperty("mixingFactor"))); // should be in range (0, 1).
         setInitSigma(2);
         setMutationStepSizeBound(0.1);
         setSecondaryMutationCoefficient(Double.parseDouble(System.getProperty("SecondaryMC"))); // should be from 0 to
