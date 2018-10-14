@@ -105,8 +105,9 @@ public class player19 implements ContestSubmission {
                     cfgs.setTournamentSize(100);
                     cfgs.setParentSelected(1000);
                     cfgs.setMutationRate(0.8);
-                    cfgs.setOverallMutationCoefficient(0.3);
-                    cfgs.setSecondaryMutationCoefficient(0.5);
+                    cfgs.setMixingFactor(0.7);
+                    cfgs.setOverallMutationCoefficient(0.5);
+                    cfgs.setSecondaryMutationCoefficient(0.3);
                 }
             }
         }
