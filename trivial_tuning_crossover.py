@@ -34,7 +34,7 @@ mutationNames = ["rnd_swap", "uniformMutation", "nonUniformMutation", "customize
 
 
 def make():
-    subprocess.run("mingw32-make")
+    subprocess.run("makeme")
 
 # run algorithm with parameter values. Returns json string
 
@@ -84,7 +84,7 @@ def main():
     savenum += 1
 
     my_df = pd.DataFrame(MBF)
-    my_df.to_csv('csv/output-'+str("%03d" % savenum)+'.csv', index=False, header=['MBF', 'xover', 'mutation', 'mixingfactor', 'p1', 'p2', 'p3'])
+    my_df.to_csv('csv/Dirksoutput-'+str("%03d" % savenum)+'.csv', index=False, header=['MBF', 'xover', 'mutation', 'mixingfactor', 'p1', 'p2', 'p3'])
     # plot data of algortihm
     # plt.plot(mix, MBF, label=xoverNames[xoverChoice], color=colors[xoverChoice])
     # plt.legend()
