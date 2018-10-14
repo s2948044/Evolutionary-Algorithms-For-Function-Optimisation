@@ -105,6 +105,8 @@ public class player19 implements ContestSubmission {
                     cfgs.setTournamentSize(100);
                     cfgs.setParentSelected(1000);
                     cfgs.setMutationRate(0.8);
+                    cfgs.setOverallMutationCoefficient(0.3);
+                    cfgs.setSecondaryMutationCoefficient(0.5);
                 }
             }
         }
@@ -170,7 +172,7 @@ public class player19 implements ContestSubmission {
                     if (hasStructure) {
                         if (!isSeparable) {
                             // set the crossover operator for SchaffersEvaluation
-                            population = Vars.wholeArithmeticCrossOver(population, population[parentsInd[i]],
+                            population = Vars.simpleArithmeticCrossOver(population, population[parentsInd[i]],
                                     population[parentsInd[i + 1]]);
                         }
                     }
