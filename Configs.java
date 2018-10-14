@@ -230,7 +230,7 @@ public class Configs {
         setMutationLearningRate(1 / Math.sqrt(2 * this.dimension));
         setRandomSelected(50); // should be less than populationSize.
         // setParentSelected(20); // should be less than RandomSelected.
-        setMixingFactor(0.5); // should be in range (0, 1).
+        setMixingFactor(Double.parseDouble(System.getProperty("mixingfactor"))); // should be in range (0, 1).
         setInitSigma(2);
         setMutationStepSizeBound(0.1);
         setSecondaryMutationCoefficient(Double.parseDouble(System.getProperty("SecondaryMC"))); // should be from 0 to
