@@ -1,6 +1,7 @@
 import numpy as np
 import time
 import math
+import random
 from meta_ea import cma_es, individual
 
 
@@ -15,25 +16,25 @@ def main():
     ea = cma_es()
     ea.compile()
     # Set ea parameters.
-    ea.epochs = 5
+    ea.epochs = 1
     ea.dimension = 3
     ea.evalChoice = 2
     ea.evals_limit = 200
-    ea.gens_limit = 30
+    ea.gens_limit = 20
 
     ea.lambda_ea = 4 + math.floor(3 * math.log(ea.dimension))
-    ea.mu = math.floor(ea.lambda_ea / 2)
+    ea.mu = math.floor(float(ea.lambda_ea) / 2)
     # Initialize population.
     population = []
-    sum_w_mu = 0
-    sum_w_mu_2 = 0
-    sum_w_lambda = 0
-    sum_w_lambda_2 = 0
-    sum_pos_w = 0
-    sum_neg_w = 0
+    sum_w_mu = 0.0
+    sum_w_mu_2 = 0.0
+    sum_w_lambda = 0.0
+    sum_w_lambda_2 = 0.0
+    sum_pos_w = 0.0
+    sum_neg_w = 0.0
     for i in range(ea.lambda_ea):
         population.append(individual(ea.dimension))
-        population[i].w = math.log((ea.lambda_ea + 1) / 2) - math.log(i + 1)
+        population[i].w = math.log(float(ea.lambda_ea + 1) / 2) - math.log(i + 1)
         if (i < ea.mu):
             sum_w_mu += population[i].w
             sum_w_mu_2 += population[i].w ** 2
@@ -49,7 +50,7 @@ def main():
     # for i in range(ea.lambda_ea):
     #     population.append(individual(ea.dimension))
     #     if (i < ea.mu):
-    #         population[i].w = math.log((ea.lambda_ea + 1) / 2) - math.log(i + 1)
+    #         population[i].w = math.log(float(ea.lambda_ea + 1) / 2) - math.log(i + 1)
     #         sum_w_mu += population[i].w
 
     # for i in range(ea.mu):
@@ -60,13 +61,13 @@ def main():
     ea.mu_eff = sum_w_mu ** 2 / sum_w_mu_2
     # ea.mu_eff = 1 / sum_w_mu_2
     mu_eff_n = sum_w_lambda ** 2 / sum_w_lambda_2
-    ea.c_sigma = (ea.mu_eff + 2) / (ea.dimension + ea.mu_eff + 5)
-    ea.d_sigma = 1 + 2 * max(0, math.sqrt((ea.mu_eff - 1) / (ea.dimension + 1)) - 1) + ea.c_sigma
-    ea.cc = (4 + ea.mu_eff / ea.dimension) / (ea.dimension + 4 + 2 * ea.mu_eff / ea.dimension)
-    alpha_cov = 2
+    ea.c_sigma = (ea.mu_eff + 2.0) / (float(ea.dimension) + ea.mu_eff + 5.0)
+    ea.d_sigma = 1.0 + 2 * max(0, math.sqrt((ea.mu_eff - 1) / (ea.dimension + 1)) - 1) + ea.c_sigma
+    ea.cc = (4.0 + ea.mu_eff / ea.dimension) / (ea.dimension + 4 + 2.0 * ea.mu_eff / ea.dimension)
+    alpha_cov = 2.0
     ea.c1 = alpha_cov / ((ea.dimension + 1.3) ** 2 + ea.mu_eff)
-    ea.c_mu = min(1 - ea.c1, alpha_cov * (ea.mu_eff - 2 + 1 / ea.mu_eff) / ((ea.dimension + 2) ** 2) + alpha_cov * ea.mu_eff / 2)
-    ea.c_m = 1
+    ea.c_mu = min(1 - ea.c1, alpha_cov * (ea.mu_eff - 2 + 1 / ea.mu_eff) / ((ea.dimension + 2.0) ** 2) + alpha_cov * ea.mu_eff / 2)
+    ea.c_m = 1.0
     # Additional modifications on the weights.
     alpha_mu_n = 1 + ea.c1 / ea.c_mu
     alpha_mu_eff_n = 1 + (2 * mu_eff_n) / (ea.mu_eff + 2)
@@ -83,17 +84,23 @@ def main():
     ea.covarianceMatrix = np.eye(N=ea.dimension)
     ea.evals = 0
     ea.gens = 0
-    ea.m = np.full(shape=[ea.dimension, ], fill_value=(1 / float(ea.dimension)), dtype=np.float32)
+    # ea.m = np.full(shape=[ea.dimension, ], fill_value=(1 / float(ea.dimension)), dtype=np.float32)
+    ea.m = np.empty(shape=[ea.dimension, ], dtype=np.float32)
+    for i in range(ea.dimension):
+        ea.m[i] = random.random()
     ea.sigma = 0.3
-    ea.expectation_N = math.sqrt(ea.dimension) * (1 - 1 / (4 * ea.dimension) + 1 / (21 * ea.dimension ** 2))
+    ea.expectation_N = math.sqrt(ea.dimension) * (1 - 1 / (4.0 * ea.dimension) + 1 / (21.0 * ea.dimension ** 2))
 
     # TODO: Select termination criterion.
-    while ea.gens < ea.gens_limit:
+    while (ea.gens < ea.gens_limit):
         # Sample new population of search points.
         ea.D = np.zeros(shape=[ea.dimension, ea.dimension], dtype=np.float32)
-        # TODO: Check whether normilization of B is needed.
         ea.covarianceMatrix = np.triu(ea.covarianceMatrix) + np.transpose(np.triu(ea.covarianceMatrix, 1))
         eig_vals, ea.B = np.linalg.eig(ea.covarianceMatrix)
+
+        if (np.min(eig_vals) < 1e-6) or (np.max(eig_vals) > 1e6 * np.min(eig_vals)):
+            break
+
         for i in range(ea.dimension):
             ea.D[i, i] = math.sqrt(eig_vals[i])
 
@@ -101,7 +108,11 @@ def main():
             population[k].z = np.random.multivariate_normal(np.zeros(shape=[ea.dimension, ], dtype=np.float32), np.eye(ea.dimension))
             population[k].y = np.dot(np.dot(ea.B, ea.D), population[k].z)
             population[k].x = ea.m + ea.sigma * population[k].y
+
+            # For debugging.
             population[k].fitness = ea.evaluation(ea.geno_to_pheno(population[k].x))
+            print("Finished evaluating solution: " + str(population[k]))
+
             if population[k].fitness > ea.bestScore:
                 ea.bestScore = population[k].fitness
                 ea.bestSolution = population[k].x
@@ -123,16 +134,16 @@ def main():
         ea.sigma = ea.sigma * math.exp(ea.c_sigma / ea.d_sigma * (np.linalg.norm(ea.p_sigma) / ea.expectation_N - 1))
 
         # Covariance matrix adaptation.
-        if ((np.linalg.norm(ea.p_sigma) / (math.sqrt(1 - (1 - ea.c_sigma) ** (2 * (ea.gens + 1))))) < ((1.4 + 2 / (ea.dimension + 1)) * ea.expectation_N)):
+        if ((np.linalg.norm(ea.p_sigma) / (math.sqrt(1 - (1 - ea.c_sigma) ** (2 * (ea.gens + 1))))) < ((1.4 + 2.0 / (ea.dimension + 1)) * ea.expectation_N)):
             ea.h_sigma = 1
         else:
             ea.h_sigma = 0
 
         ea.p_c = (1 - ea.cc) * ea.p_c + ea.h_sigma * math.sqrt(ea.cc * (2 - ea.cc) * ea.mu_eff) * weighted_sum_y
-        sum_w_mu = 0
+        sum_w_mu = 0.0
         for j in range(ea.mu):
             sum_w_mu += population[j].w
-        tmp_sum = 0
+        tmp_sum = 0.0
         for i in range(ea.lambda_ea):
             if (population[i].w < 0):
                 population[i].w = ea.dimension / (np.norm(np.dot(inv_sqrt_C, population[i].y)) ** 2)

@@ -42,7 +42,7 @@ class cma_es:
             probSum += abs(self.bestSolution[i])
 
         for i in range(self.bestSolution.shape[0]):
-            self.bestSolution[i] = self.bestSolution[i] / probSum
+            self.bestSolution[i] = abs(self.bestSolution[i]) / probSum
 
     def compile(self):
         subprocess.run(self.make)
@@ -81,10 +81,15 @@ class individual:
         self.w = 0.0
         self.fitness = 0.0
 
+    def __str__(self):
+        return str(self.normalizeSolution()) + ", fitness: {}".format(self.fitness)
+
     def normalizeSolution(self):
         probSum = 0.0
+        normalized = []
         for i in range(self.x.shape[0]):
             probSum += abs(self.x[i])
 
         for i in range(self.x.shape[0]):
-            self.x[i] = self.x[i] / probSum
+            normalized.append(abs(self.x[i]) / probSum)
+        return normalized

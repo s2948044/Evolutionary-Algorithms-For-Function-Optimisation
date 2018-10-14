@@ -227,9 +227,9 @@ public class Configs {
         setProbs(System.getProperty("Probs"));
         setSingleMutationCoefficient(0.1);
         setSingleMutationLearningRate(1 / Math.sqrt(this.dimension));
-        setOverallMutationCoefficient(0.7);
+        setOverallMutationCoefficient(0.3);
         setMutationLearningRate(1 / Math.sqrt(2 * this.dimension));
-        setSecondaryMutationCoefficient(0.3);
+        setSecondaryMutationCoefficient(0.5);
         setSecondaryMutationLearningRate(1 / Math.sqrt(2 * Math.sqrt(this.dimension)));
         setRandomSelected(50); // should be less than populationSize.
         setMixingFactor(0.5); // should be in range (0, 1).
