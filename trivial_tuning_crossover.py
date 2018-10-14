@@ -67,7 +67,7 @@ def main():
                         BF = []
                         for i in range(epochs):
                             # make json object
-							print("mix:", mix , "xoverChoice:", xoverChoice,  "Overall:" ,  p2 , "Secondary:" , p3  , "run:" , i + 1)
+                            print("mix:", mix , "xoverChoice:", xoverChoice,  "Overall:" ,  p2 , "Secondary:" , p3  , "run:" , i + 1)
                             js = json.loads(runEA(mixingfactor=mix, xoverChoice=xoverChoice, mutationChoice=mutationChoice,
                                                   evalChoice=evalChoice, SingleMC=0.0, OverallMC=p2, SecondaryMC=p3))
                             print("epochs loop")
