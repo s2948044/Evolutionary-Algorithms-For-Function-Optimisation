@@ -137,7 +137,7 @@ public class Selections {
         }
         return parentsInd;
     }
-    
+
     /**
      * Parent selection based on Tournament.
      * 
@@ -167,7 +167,7 @@ public class Selections {
                             occurZero = 1;
                         }
                         tournamentHis[tournamentNr] = ranIndex;
-                        if (ranIndex < currentMin){
+                        if (ranIndex < currentMin) {
                             currentMin = ranIndex;
                         }
                         tournamentNr++;
@@ -201,7 +201,7 @@ public class Selections {
         }
         return new_population;
     }
-    
+
     /**
      * Survivor selection based on Delete Parents.
      * 
@@ -219,18 +219,19 @@ public class Selections {
         // System.out.println(this.cfgs.getPopulationSize());
         // System.out.println(population.length);
         for (i = 0; i < this.cfgs.getPopulationSize() - this.cfgs.getParentSelected(); i++) {
-            // System.out.println(this.cfgs.getPopulationSize() - this.cfgs.getParentSelected()
+            // System.out.println(this.cfgs.getPopulationSize() -
+            // this.cfgs.getParentSelected()
             for (int j = 0; j < population[0].length; j++) {
                 new_population[i][j] = population[i][j]; // copy from the old matrix to the new matrix
             }
         }
         // System.out.println(i);
         while (i < this.cfgs.getPopulationSize()) {
-           for (int j = 0; j < population[0].length; j++) {
-               new_population[i][j] = population[this.cfgs.getPopulationSize() + childCount][j]; 
-           }
-           i++;
-           childCount++;
+            for (int j = 0; j < population[0].length; j++) {
+                new_population[i][j] = population[this.cfgs.getPopulationSize() + childCount][j];
+            }
+            i++;
+            childCount++;
         }
         return new_population;
     }

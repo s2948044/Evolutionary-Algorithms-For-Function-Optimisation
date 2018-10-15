@@ -16,7 +16,7 @@ def main():
     ea = cma_es()
     ea.compile()
     # Set ea parameters.
-    ea.epochs = 1
+    ea.epochs = 10
     ea.dimension = 3
     ea.evalChoice = 2
     ea.evals_limit = 200
@@ -110,8 +110,10 @@ def main():
             population[k].x = ea.m + ea.sigma * population[k].y
 
             # For debugging.
+            evaluation_time = time.time()
             population[k].fitness = ea.evaluation(ea.geno_to_pheno(population[k].x))
             print("Finished evaluating solution: " + str(population[k]))
+            print("Time elpased: {}s".format(time.time() - evaluation_time))
 
             if population[k].fitness > ea.bestScore:
                 ea.bestScore = population[k].fitness
