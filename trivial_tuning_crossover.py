@@ -9,7 +9,7 @@ import glob
 
 start_time = time.time()
 
-mixs = [0.5, 0.55, 0.6, 0.65, 0.7]
+mixs = [0.3, 0.4 , 0.5]
 # p1s = [0.01, 0.05, 0.1]
 p2s = [0.1, 0.3, 0.5, 0.7]
 p3s = [0.1, 0.3, 0.5, 0.7]
@@ -23,7 +23,7 @@ mutationChoices = [6]
 # varchoices = [0, 1]
 
 evalChoices = [0, 1, 2]
-epochs = 7
+epochs = 10
 
 evaluations = ["BentCigarFunction", "KatsuuraEvaluation", "SchaffersEvaluation"]
 xoverNames = ["singleArithmeticCrossOver", "simpleArithmeticCrossOver", "wholeArithmeticCrossOver", "blendCrossOver"]
