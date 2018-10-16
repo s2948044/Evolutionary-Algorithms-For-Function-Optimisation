@@ -18,7 +18,7 @@ def main():
     ea = cma_es()
     ea.compile()
     # Set ea parameters.
-    ea.epochs = 1
+    ea.epochs = 10
     ea.dimension = 3
     ea.evalChoice = 2
     ea.evals_limit = 200
