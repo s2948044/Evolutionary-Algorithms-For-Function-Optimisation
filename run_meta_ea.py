@@ -2,6 +2,8 @@ import numpy as np
 import time
 import math
 import random
+import pandas as pd
+import os
 from meta_ea import cma_es, individual
 
 
@@ -16,7 +18,7 @@ def main():
     ea = cma_es()
     ea.compile()
     # Set ea parameters.
-    ea.epochs = 10
+    ea.epochs = 1
     ea.dimension = 3
     ea.evalChoice = 2
     ea.evals_limit = 200
@@ -91,7 +93,7 @@ def main():
     ea.sigma = 0.3
     ea.expectation_N = math.sqrt(ea.dimension) * (1 - 1 / (4.0 * ea.dimension) + 1 / (21.0 * ea.dimension ** 2))
 
-    # TODO: Select termination criterion.
+    BF_gen = []
     while (ea.gens < ea.gens_limit):
         # Sample new population of search points.
         ea.D = np.zeros(shape=[ea.dimension, ea.dimension], dtype=np.float32)
@@ -156,11 +158,27 @@ def main():
         ea.normalizeBestSolution()
         print("Best score at generation {} : {}".format(ea.gens, ea.bestScore))
         print("Best solution: {}".format(ea.bestSolution))
+        BF_gen.append([ea.gens, ('%f' % ea.bestSolution[0]), ('%f' % ea.bestSolution[1]), ('%f' % ea.bestSolution[2]), ('%f' % ea.bestScore)])
         ea.gens += 1
 
     ea.normalizeBestSolution()
     print("Best score: {}".format(ea.bestScore))
     print("Best solution: {}".format(ea.bestSolution))
+
+    if ea.evalChoice == 2:
+        filenames = os.listdir("./meta_results/Schaffers/")
+        savenum = int(filenames[-1].split('-')[1][0:3])
+        savenum += 1
+
+        my_df = pd.DataFrame(BF_gen)
+        my_df.to_csv('meta_results/Schaffers/output-'+str("%03d" % savenum)+'.csv', index=False, header=['generation', 'P_comb1', 'P_comb2', 'P_comb3', 'MBF'])
+    else:
+        filenames = os.listdir("./meta_results/Katsuura/")
+        savenum = int(filenames[-1].split('-')[1][0:3])
+        savenum += 1
+
+        my_df = pd.DataFrame(BF_gen)
+        my_df.to_csv('meta_results/Katsuura/output-'+str("%03d" % savenum)+'.csv', index=False, header=['generation', 'P_comb1', 'P_comb2', 'P_comb3', 'MBF'])
 
 
 if __name__ == "__main__":
