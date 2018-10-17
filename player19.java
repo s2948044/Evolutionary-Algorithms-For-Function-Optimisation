@@ -198,7 +198,7 @@ public class player19 implements ContestSubmission {
                 if (pastHighest == currentHighest) {
                     fitnessCounter++;
                 }
-                else{
+                else {
                     fitnessCounter = 0;
                 }
                 if (isMultimodal) {

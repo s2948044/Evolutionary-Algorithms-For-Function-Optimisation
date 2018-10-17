@@ -170,7 +170,7 @@ public class Configs {
         this.x_data.add(x);
     }
 
-    // public double return_last_datap(){
+    // public double return_last_datap() {
     // return this.x_data.get(this.x_data.size()-1);
     // }
 
