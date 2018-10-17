@@ -213,6 +213,7 @@ public class player19 implements ContestSubmission {
                             if (fitnessCounter >= 4 && currentHighest < 7) {
                                 fitnessCounter = 0;
                                 population = Inits.initPopulation(Initializations.RandomDistributions.NORMAL);
+                                Inits.updateFitness(population);
                             }
                             if (fitnessCounter >= 6 && currentHighest < 8) {
                                 fitnessCounter = 0;
