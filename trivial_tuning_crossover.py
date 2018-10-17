@@ -9,12 +9,11 @@ import glob
 
 start_time = time.time()
 
-mixs = [0.3, 0.4 , 0.5]
-# p1s = [0.01, 0.05, 0.1]
-p2s = [0.1, 0.3, 0.5, 0.7]
-p3s = [0.1, 0.3, 0.5, 0.7]
-# xoverChoices = [0, 1, 2, 3]
-xoverChoices = [2]
+mixs = [0,1, 0.3, 0.4, 0.5, 0.7]
+p2s = [0.001, 0.003, 0.005, 0.007]
+p3s = [0.001, 0.003, 0.005, 0.007]
+#xoverChoices = [0, 1, 2, 3]
+xoverChoices = [1, 2, 3]
 
 # mutationChoices = [0, 1, 2, 3, 4, 5, 6]
 mutationChoices = [6]
@@ -23,7 +22,7 @@ mutationChoices = [6]
 # varchoices = [0, 1]
 
 evalChoices = [0, 1, 2]
-epochs = 10
+epochs = 5
 
 evaluations = ["BentCigarFunction", "KatsuuraEvaluation", "SchaffersEvaluation"]
 xoverNames = ["singleArithmeticCrossOver", "simpleArithmeticCrossOver", "wholeArithmeticCrossOver", "blendCrossOver"]
@@ -55,7 +54,7 @@ def main():
 
     MBF = []
     colors = ['b', 'g', 'r', 'c']
-    evalChoice = evalChoices[2]
+    evalChoice = evalChoices[1]
     # mutationChoice = 0
 
     for xoverChoice in xoverChoices:

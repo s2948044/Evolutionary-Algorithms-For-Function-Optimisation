@@ -15,13 +15,10 @@ public class Selections {
      * @param colToSort  Index of column to sort on.
      */
     public void sortbyColumn(double population[][], int colToSort) {
-        // Using built-in sort function Arrays.sort
         Arrays.sort(population, new Comparator<double[]>() {
 
             @Override
-            // Compare values according to columns
             public int compare(final double[] entry1, final double[] entry2) {
-
                 // To sort in descending order
                 Double fitness1 = new Double(entry1[colToSort]);
                 Double fitness2 = new Double(entry2[colToSort]);
@@ -82,20 +79,7 @@ public class Selections {
         // population and select the best (intensionSize) of them.
         int[] chosenInd = new int[this.cfgs.getRandomSelected()];
         for (int i = 0; i < this.cfgs.getRandomSelected(); i++) {
-            // chosenInd[i] = rouletteWheelSelection(fitnessValues);
             chosenInd[i] = new Random().nextInt(population.length);
-            // boolean overlapping = true;
-            // while (overlapping) {
-            // overlapping = false;
-            // for (int j = 0; j < i; j++) {
-            // if (chosenInd[i] == chosenInd[j]) {
-            // // chosenInd[i] = rouletteWheelSelection(fitnessValues);
-            // chosenInd[i] = new Random().nextInt(population.length);
-            // overlapping = true;
-            // break;
-            // }
-            // }
-            // }
         }
         Arrays.sort(chosenInd);
         int[] parentsInd = new int[this.cfgs.getParentSelected()];
@@ -113,7 +97,6 @@ public class Selections {
      */
     public int[] parentSelection_RankedBased(double[][] population) {
         int[] parentsInd = new int[this.cfgs.getParentSelected()];
-        // System.out.println(this.cfgs.getParentSelected());
         // Compute the corresponding probabilities.
         double[] probs = new double[population.length];
         for (int i = 0; i < probs.length; i++) {
@@ -125,7 +108,6 @@ public class Selections {
         while (selectedNr < this.cfgs.getParentSelected()) {
             double prob = 0;
             prob = new Random().nextDouble();
-            // System.out.println(prob);
             double probSum = 0;
             int i = 0;
             while (prob - probSum > 0) {
@@ -146,7 +128,6 @@ public class Selections {
      */
     public int[] parentSelection_Tournament(double[][] population) {
         int[] parentsInd = new int[this.cfgs.getParentSelected()];
-        // System.out.println(this.cfgs.getParentSelected());
         // Compute the corresponding probabilities.
         int selectedNr = 0;
         while (selectedNr < this.cfgs.getParentSelected()) {
@@ -167,7 +148,7 @@ public class Selections {
                             occurZero = 1;
                         }
                         tournamentHis[tournamentNr] = ranIndex;
-                        if (ranIndex < currentMin){
+                        if (ranIndex < currentMin) {
                             currentMin = ranIndex;
                         }
                         tournamentNr++;
@@ -187,16 +168,11 @@ public class Selections {
      * @return Purged population.
      */
     public double[][] survSelection_Elitism(double[][] population) {
-        sortbyColumn(population, population[0].length - 1); // sort the current matrix of the population based on the
-        // fitness stored at the last column
-        double[][] new_population = new double[this.cfgs.getPopulationSize()][population[0].length]; // create a new
-                                                                                                     // matrix
-        // for storing
-        // only the top numbers of
-        // individuals
+        sortbyColumn(population, population[0].length - 1);
+        double[][] new_population = new double[this.cfgs.getPopulationSize()][population[0].length];
         for (int i = 0; i < this.cfgs.getPopulationSize(); i++) {
             for (int j = 0; j < population[0].length; j++) {
-                new_population[i][j] = population[i][j]; // copy from the old matrix to the new matrix
+                new_population[i][j] = population[i][j];
             }
         }
         return new_population;
@@ -209,22 +185,14 @@ public class Selections {
      * @return Purged population.
      */
     public double[][] survSelection_DeleteParents(double[][] population) {
-        double[][] new_population = new double[this.cfgs.getPopulationSize()][population[0].length]; // create a new
-                                                                                                     // matrix
-        // for storing
-        // only the top numbers of
-        // individuals
+        double[][] new_population = new double[this.cfgs.getPopulationSize()][population[0].length];
         int i;
         int childCount = 0;
-        // System.out.println(this.cfgs.getPopulationSize());
-        // System.out.println(population.length);
         for (i = 0; i < this.cfgs.getPopulationSize() - this.cfgs.getParentSelected(); i++) {
-            // System.out.println(this.cfgs.getPopulationSize() - this.cfgs.getParentSelected()
             for (int j = 0; j < population[0].length; j++) {
-                new_population[i][j] = population[i][j]; // copy from the old matrix to the new matrix
+                new_population[i][j] = population[i][j];
             }
         }
-        // System.out.println(i);
         while (i < this.cfgs.getPopulationSize()) {
            for (int j = 0; j < population[0].length; j++) {
                new_population[i][j] = population[this.cfgs.getPopulationSize() + childCount][j]; 

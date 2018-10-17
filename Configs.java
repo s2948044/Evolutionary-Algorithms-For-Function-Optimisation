@@ -1,7 +1,6 @@
 import java.util.*;
 
 public class Configs {
-
     // Immutable parameters:
     /**
      * Dimension of the solution vector to the problem. (1 x N)
@@ -122,12 +121,11 @@ public class Configs {
      * A factor to measure advantage of best individual (set from 1.0 ~ 2.0)
      */
     private double s_value;
-
+    
     /**
-     * Factors indicating the correlation between each dimensions in the solution
-     * vector.
+     * The initial value of mutation step size.
      */
-    private double[] correlationFactors;
+    private double initialStepSize;
 
     /**
      * Covarience matrix for self-apative correlated mutation.
@@ -218,26 +216,19 @@ public class Configs {
     }
 
     public void initParams() {
+        setInitSigma(2);
         setXoverChoice(Integer.parseInt(System.getProperty("xoverChoice")));
         setMutationChoice(Integer.parseInt(System.getProperty("mutationChoice")));
-        // setPopulationSize(Integer.parseInt(System.getProperty("population")));
-        // setMutationRate(0.1); // should be in range [populationSize, 0.1].
         setMutationSize(1);
-        // setTournamentSize(100);
         setSingleMutationCoefficient(Double.parseDouble(System.getProperty("SingleMC"))); // should be from 0 to 0.1
         setSingleMutationLearningRate(1 / Math.sqrt(this.dimension));
         setOverallMutationCoefficient(Double.parseDouble(System.getProperty("OverallMC"))); // should be from 0 to 0.1
         setMutationLearningRate(1 / Math.sqrt(2 * this.dimension));
-        setRandomSelected(50); // should be less than populationSize.
-        // setParentSelected(20); // should be less than RandomSelected.
         setMixingFactor(Double.parseDouble(System.getProperty("mixingFactor"))); // should be in range (0, 1).
-        setInitSigma(2);
-        setMutationStepSizeBound(0.1);
-        setSecondaryMutationCoefficient(Double.parseDouble(System.getProperty("SecondaryMC"))); // should be from 0 to
-                                                                                                // 0.1
+        setSecondaryMutationCoefficient(Double.parseDouble(System.getProperty("SecondaryMC"))); // should be from 0 to 0.1
         setSecondaryMutationLearningRate(1 / Math.sqrt(2 * Math.sqrt(this.dimension)));
         setS_value(1.9); // should be in range (0, 2].
-        setCorrelationFactors(new double[this.dimension * (this.dimension - 1) / 2]);
+        setInitialStepSize(1);
         initCovarianceMatrix();
         setCorrelationAngle(Math.toRadians(5));
     }
@@ -325,6 +316,14 @@ public class Configs {
     public void setSecondaryMutationCoefficient(double secondaryMutationCoefficient) {
         this.secondaryMutationCoefficient = secondaryMutationCoefficient;
     }
+    
+    public double getInitialStepSize() {
+        return this.initialStepSize;
+    }
+
+    public void setInitialStepSize(double initialStepSize) {
+        this.initialStepSize = initialStepSize;
+    }
 
     public int getMutationSize() {
         return this.mutationSize;
@@ -404,14 +403,6 @@ public class Configs {
 
     public void setS_value(double s_value) {
         this.s_value = s_value;
-    }
-
-    public double[] getCorrelationFactors() {
-        return this.correlationFactors;
-    }
-
-    public void setCorrelationFactors(double[] correlationFactors) {
-        this.correlationFactors = correlationFactors;
     }
 
     public void initCovarianceMatrix() {
