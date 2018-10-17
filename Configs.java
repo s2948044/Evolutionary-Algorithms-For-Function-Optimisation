@@ -1,7 +1,6 @@
 import java.util.*;
 
 public class Configs {
-
     // Immutable parameters:
     /**
      * Dimension of the solution vector to the problem. (1 x N)
@@ -129,10 +128,9 @@ public class Configs {
     private double s_value;
 
     /**
-     * Factors indicating the correlation between each dimensions in the solution
-     * vector.
+     * The initial value of mutation step size.
      */
-    private double[] correlationFactors;
+    private double initialStepSize;
 
     /**
      * Covarience matrix for self-apative correlated mutation.
@@ -143,6 +141,11 @@ public class Configs {
      * Correlation angle for self-adaptive correlated mutation.
      */
     private double correlationAngle;
+
+    /**
+     * Evaluation used in this run. 0 - BentCigar, 1 - Katsuura, 2 - Schaffers F7
+     */
+    private int evalChoice;
 
     /**
      * JSON string creater (For data block)
@@ -160,8 +163,10 @@ public class Configs {
 
     public String build_methods_jstring() {
         this.methods_jstring = "{ 'methods': {'variables': {'populationsize':" + Integer.toString(getPopulationSize())
-                + ", 'mutationsize':" + Integer.toString(getMutationSize()) + ", 'mixingfactor':"
-                + Double.toString(getMixingFactor()) + "}, 'crossover':" + Integer.toString(this.xoverChoice) + " }, ";
+                + ", 'mixingfactor':" + Double.toString(getMixingFactor()) + ", 'p2':"
+                + Double.toString(getOverallMutationCoefficient()) + ", 'p3':"
+                + Double.toString(getSecondaryMutationCoefficient()) + "}, 'crossover':"
+                + Integer.toString(this.xoverChoice) + " }, ";
         return this.methods_jstring;
     }
 
@@ -177,7 +182,7 @@ public class Configs {
         this.x_data.add(x);
     }
 
-    // public double return_last_datap(){
+    // public double return_last_datap() {
     // return this.x_data.get(this.x_data.size()-1);
     // }
 
@@ -227,16 +232,9 @@ public class Configs {
         setProbs(System.getProperty("Probs"));
         setSingleMutationCoefficient(0.1);
         setSingleMutationLearningRate(1 / Math.sqrt(this.dimension));
-        setOverallMutationCoefficient(0.3);
         setMutationLearningRate(1 / Math.sqrt(2 * this.dimension));
-        setSecondaryMutationCoefficient(0.5);
         setSecondaryMutationLearningRate(1 / Math.sqrt(2 * Math.sqrt(this.dimension)));
-        setRandomSelected(50); // should be less than populationSize.
-        setMixingFactor(0.5); // should be in range (0, 1).
-        setInitSigma(2);
-        setMutationStepSizeBound(0.1);
         setS_value(1.9); // should be in range (0, 2].
-        setCorrelationFactors(new double[this.dimension * (this.dimension - 1) / 2]);
         initCovarianceMatrix();
         setCorrelationAngle(Math.toRadians(5));
     }
@@ -338,6 +336,14 @@ public class Configs {
         this.secondaryMutationCoefficient = secondaryMutationCoefficient;
     }
 
+    public double getInitialStepSize() {
+        return this.initialStepSize;
+    }
+
+    public void setInitialStepSize(double initialStepSize) {
+        this.initialStepSize = initialStepSize;
+    }
+
     public int getMutationSize() {
         return this.mutationSize;
     }
@@ -418,14 +424,6 @@ public class Configs {
         this.s_value = s_value;
     }
 
-    public double[] getCorrelationFactors() {
-        return this.correlationFactors;
-    }
-
-    public void setCorrelationFactors(double[] correlationFactors) {
-        this.correlationFactors = correlationFactors;
-    }
-
     public void initCovarianceMatrix() {
         this.covarienceMatrix = new double[this.dimension][this.dimension];
     }
@@ -462,6 +460,14 @@ public class Configs {
 
     public void setCorrelationAngle(double correlationAngle) {
         this.correlationAngle = correlationAngle;
+    }
+
+    public int getEvalChoice() {
+        return this.evalChoice;
+    }
+
+    public void setEvalChoice(int evalChoice) {
+        this.evalChoice = evalChoice;
     }
 
 }

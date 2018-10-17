@@ -20,17 +20,13 @@ public class Variations {
      * @param individual
      */
     public void rnd_swap(double[] individual) {
-
-        // take 2 idx numbers between 0 and 9
         int idx1 = new Random().nextInt(this.cfgs.getDimension());
         int idx2 = new Random().nextInt(this.cfgs.getDimension());
 
-        // check for uniqueness else change
         while (idx1 == idx2) {
             idx2 = new Random().nextInt(this.cfgs.getDimension());
         }
 
-        // switch numbers
         double temp = individual[idx1];
         individual[idx1] = individual[idx2];
         individual[idx2] = temp;
@@ -55,11 +51,11 @@ public class Variations {
      * @param individual
      */
     public void nonUniformMutation(double[] individual) {
-        int counter = 0;
         for (int i = 0; i < this.cfgs.getDimension(); i++) {
+            int counter = 0;
             double temp = individual[i];
             individual[i] = individual[i] + new Random().nextGaussian() * individual[this.cfgs.getDimension()];
-            while ((individual[i] > 5 || individual[i] < -5) && counter <= 5) {
+            while ((individual[i] > 5 || individual[i] < -5) && counter < 5) {
                 counter++;
                 individual[i] = temp;
                 individual[i] = individual[i] + new Random().nextGaussian() * individual[this.cfgs.getDimension()];
@@ -102,7 +98,6 @@ public class Variations {
      * @param individual
      */
     public void singleUncorrelatedMutation(double[] individual) {
-        int counter = 0;
         individual[this.cfgs.getDimension()] = individual[this.cfgs.getDimension()]
                 * Math.exp(this.cfgs.getSingleMutationLearningRate() * this.cfgs.getSingleMutationCoefficient()
                         * new Random().nextGaussian());
@@ -110,9 +105,10 @@ public class Variations {
             individual[this.cfgs.getDimension()] = this.cfgs.getMutationStepSizeBound();
         }
         for (int i = 0; i < this.cfgs.getDimension(); i++) {
+            int counter = 0;
             double temp = individual[i];
             individual[i] = individual[i] + individual[this.cfgs.getDimension()] * new Random().nextGaussian();
-            while ((individual[i] > 5 || individual[i] < -5) && counter <= 5) {
+            while ((individual[i] > 5 || individual[i] < -5) && counter < 5) {
                 counter++;
                 individual[i] = temp;
                 individual[i] = individual[i] + individual[this.cfgs.getDimension()] * new Random().nextGaussian();
@@ -126,9 +122,9 @@ public class Variations {
      * @param individual
      */
     public void multiUncorrelatedMutation(double[] individual) {
-        int counter = 0;
         double overallNormalDist = new Random().nextGaussian();
         for (int i = 0; i < this.cfgs.getDimension(); i++) {
+            int counter = 0;
             individual[this.cfgs.getDimension() + i] = individual[this.cfgs.getDimension() + i] * Math.exp(
                     this.cfgs.getMutationLearningRate() * this.cfgs.getOverallMutationCoefficient() * overallNormalDist
                             + this.cfgs.getSecondaryMutationLearningRate() * this.cfgs.getSecondaryMutationCoefficient()
@@ -138,7 +134,7 @@ public class Variations {
             }
             double temp = individual[i];
             individual[i] = individual[i] + individual[this.cfgs.getDimension() + i] * new Random().nextGaussian();
-            while ((individual[i] > 5 || individual[i] < -5) && counter <= 5) {
+            while ((individual[i] > 5 || individual[i] < -5) && counter < 5) {
                 counter++;
                 individual[i] = temp;
                 individual[i] = individual[i] + individual[this.cfgs.getDimension() + i] * new Random().nextGaussian();
@@ -147,8 +143,6 @@ public class Variations {
     }
 
     public void correlatedMutation(double[] individual) {
-        int counter = 0;
-        double[] correlationFactors = this.cfgs.getCorrelationFactors();
         double overallNormalDist = new Random().nextGaussian();
         double[] means = new double[this.cfgs.getDimension()];
 
@@ -162,11 +156,7 @@ public class Variations {
             }
         }
 
-        // System.out.println(Arrays.toString(ndMutationStepSize));
-
         for (int i = 0; i < this.cfgs.getDimension() * (this.cfgs.getDimension() - 1) / 2; i++) {
-            // correlationFactors[i] = correlationFactors[i]
-            // + this.cfgs.getCorrelationAngle() * new Random().nextGaussian();
             individual[this.cfgs.getDimension() + 10 + i] = individual[this.cfgs.getDimension() + 10 + i]
                     + this.cfgs.getCorrelationAngle() * new Random().nextGaussian();
             if (Math.abs(individual[this.cfgs.getDimension() + 10 + i]) > Math.PI) {
@@ -174,7 +164,6 @@ public class Variations {
                         - 2 * Math.PI * Math.signum(individual[this.cfgs.getDimension() + 10 + i]);
             }
         }
-        // System.out.println(Arrays.toString(correlationFactors));
 
         this.cfgs.setCovarianceMatrix(
                 Arrays.copyOfRange(individual, this.cfgs.getDimension(), this.cfgs.getDimension() + 10),
@@ -188,9 +177,10 @@ public class Variations {
         double[] tmp = new double[this.cfgs.getDimension()];
         generator2.nextPoint(tmp);
         for (int i = 0; i < this.cfgs.getDimension(); i++) {
+            int counter = 0;
             double temp = individual[i];
             individual[i] = individual[i] + tmp[i];
-            while ((individual[i] > 5 || individual[i] < -5) && counter <= 5) {
+            while ((individual[i] > 5 || individual[i] < -5) && counter < 5) {
                 counter++;
                 individual[i] = temp;
                 generator2.nextPoint(tmp);
@@ -227,8 +217,8 @@ public class Variations {
         }
 
         for (int i = this.cfgs.getDimension(); i < this.cfgs.getDimension() + 10; i++) {
-            child1[i] = 1;
-            child2[i] = 1;
+            child1[i] = this.cfgs.getInitialStepSize();
+            child2[i] = this.cfgs.getInitialStepSize();
         }
 
         for (int i = 0; i < population.length; i++) {
@@ -265,8 +255,8 @@ public class Variations {
         }
 
         for (int i = this.cfgs.getDimension(); i < this.cfgs.getDimension() + 10; i++) {
-            child1[i] = 1;
-            child2[i] = 1;
+            child1[i] = this.cfgs.getInitialStepSize();
+            child2[i] = this.cfgs.getInitialStepSize();
         }
 
         for (int i = 0; i < population.length; i++) {
@@ -297,8 +287,8 @@ public class Variations {
         }
 
         for (int i = this.cfgs.getDimension(); i < this.cfgs.getDimension() + 10; i++) {
-            child1[i] = 1;
-            child2[i] = 1;
+            child1[i] = this.cfgs.getInitialStepSize();
+            child2[i] = this.cfgs.getInitialStepSize();
         }
 
         for (int i = 0; i < population.length; i++) {
@@ -335,8 +325,8 @@ public class Variations {
         }
 
         for (int i = this.cfgs.getDimension(); i < this.cfgs.getDimension() + 10; i++) {
-            child1[i] = 1;
-            child2[i] = 1;
+            child1[i] = this.cfgs.getInitialStepSize();
+            child2[i] = this.cfgs.getInitialStepSize();
         }
 
         for (int i = 0; i < population.length; i++) {
@@ -380,8 +370,8 @@ public class Variations {
         }
 
         for (int i = this.cfgs.getDimension(); i < this.cfgs.getDimension() + 10; i++) {
-            child1[i] = 1;
-            child2[i] = 1;
+            child1[i] = this.cfgs.getInitialStepSize();
+            child2[i] = this.cfgs.getInitialStepSize();
         }
 
         for (int i = 0; i < population.length; i++) {
@@ -397,27 +387,90 @@ public class Variations {
         switch (combination) {
 
         case 0:
+            // SimpleXover + CorrelatedMutation
             cfgs.setXoverChoice(2);
             cfgs.setMutationChoice(7);
-            cfgs.setMixingFactor(0.7);
-            cfgs.setOverallMutationCoefficient(0.3);
-            cfgs.setSecondaryMutationCoefficient(0.1);
+            switch (this.cfgs.getEvalChoice()) {
+
+            case 0:
+                // BentCigar
+                // TODO: Update best params correponding to different combiantions.
+                cfgs.setMixingFactor(0.7);
+                cfgs.setOverallMutationCoefficient(0.3);
+                cfgs.setSecondaryMutationCoefficient(0.1);
+                break;
+            case 1:
+                // Katsuura
+                // TODO: Update best params correponding to different combinations.
+                cfgs.setMixingFactor(0.7);
+                cfgs.setOverallMutationCoefficient(0.3);
+                cfgs.setSecondaryMutationCoefficient(0.1);
+                break;
+            case 2:
+                // Schaffers F7
+                cfgs.setMixingFactor(0.7);
+                cfgs.setOverallMutationCoefficient(0.3);
+                cfgs.setSecondaryMutationCoefficient(0.1);
+                break;
+            }
             break;
 
         case 1:
+            // WholeXover + CorrelatedMutation
             cfgs.setXoverChoice(3);
             cfgs.setMutationChoice(7);
-            cfgs.setMixingFactor(0.4);
-            cfgs.setOverallMutationCoefficient(0.5);
-            cfgs.setSecondaryMutationCoefficient(0.1);
+            switch (this.cfgs.getEvalChoice()) {
+
+            case 0:
+                // BentCigar
+                // TODO: Update best params correponding to different combiantions.
+                cfgs.setMixingFactor(0.4);
+                cfgs.setOverallMutationCoefficient(0.5);
+                cfgs.setSecondaryMutationCoefficient(0.1);
+                break;
+            case 1:
+                // Katsuura
+                // TODO: Update best params correponding to different combinations.
+                cfgs.setMixingFactor(0.4);
+                cfgs.setOverallMutationCoefficient(0.5);
+                cfgs.setSecondaryMutationCoefficient(0.1);
+                break;
+            case 2:
+                // Schaffers F7
+                cfgs.setMixingFactor(0.4);
+                cfgs.setOverallMutationCoefficient(0.5);
+                cfgs.setSecondaryMutationCoefficient(0.1);
+                break;
+            }
             break;
 
         case 2:
+            // BlendXover + CorrelatedMutation
             cfgs.setXoverChoice(4);
             cfgs.setMutationChoice(7);
-            cfgs.setMixingFactor(0.7);
-            cfgs.setOverallMutationCoefficient(0.5);
-            cfgs.setSecondaryMutationCoefficient(0.1);
+            switch (this.cfgs.getEvalChoice()) {
+
+            case 0:
+                // BentCigar
+                // TODO: Update best params correponding to different combiantions.
+                cfgs.setMixingFactor(0.7);
+                cfgs.setOverallMutationCoefficient(0.5);
+                cfgs.setSecondaryMutationCoefficient(0.1);
+                break;
+            case 1:
+                // Katsuura
+                // TODO: Update best params correponding to different combinations.
+                cfgs.setMixingFactor(0.7);
+                cfgs.setOverallMutationCoefficient(0.5);
+                cfgs.setSecondaryMutationCoefficient(0.1);
+                break;
+            case 2:
+                // Schaffers F7
+                cfgs.setMixingFactor(0.7);
+                cfgs.setOverallMutationCoefficient(0.5);
+                cfgs.setSecondaryMutationCoefficient(0.1);
+                break;
+            }
             break;
         }
     }
