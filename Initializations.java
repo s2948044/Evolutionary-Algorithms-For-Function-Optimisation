@@ -66,9 +66,9 @@ public class Initializations {
                 }
             }
         }
-        for (int i = 0; i < this.cfgs.getPopulationSize(); i++){
+        for (int i = 0; i < this.cfgs.getPopulationSize(); i++) {
             for (int j = this.cfgs.getDimension(); j < this.cfgs.getDimension() + 10; j++) {
-                population[i][j] = 1;
+                population[i][j] = this.cfgs.getInitialStepSize();
             }
         }
         return population;

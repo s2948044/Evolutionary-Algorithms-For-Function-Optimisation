@@ -20,17 +20,13 @@ public class Variations {
      * @param individual
      */
     public void rnd_swap(double[] individual) {
-
-        // take 2 idx numbers between 0 and 9
         int idx1 = new Random().nextInt(this.cfgs.getDimension());
         int idx2 = new Random().nextInt(this.cfgs.getDimension());
 
-        // check for uniqueness else change
         while (idx1 == idx2) {
             idx2 = new Random().nextInt(this.cfgs.getDimension());
         }
 
-        // switch numbers
         double temp = individual[idx1];
         individual[idx1] = individual[idx2];
         individual[idx2] = temp;
@@ -147,7 +143,6 @@ public class Variations {
     }
 
     public void correlatedMutation(double[] individual) {
-        double[] correlationFactors = this.cfgs.getCorrelationFactors();
         double overallNormalDist = new Random().nextGaussian();
         double[] means = new double[this.cfgs.getDimension()];
 
@@ -161,11 +156,7 @@ public class Variations {
             }
         }
 
-        // System.out.println(Arrays.toString(ndMutationStepSize));
-
         for (int i = 0; i < this.cfgs.getDimension() * (this.cfgs.getDimension() - 1) / 2; i++) {
-            // correlationFactors[i] = correlationFactors[i]
-            // + this.cfgs.getCorrelationAngle() * new Random().nextGaussian();
             individual[this.cfgs.getDimension() + 10 + i] = individual[this.cfgs.getDimension() + 10 + i] 
                     + this.cfgs.getCorrelationAngle() * new Random().nextGaussian();
             if (Math.abs(individual[this.cfgs.getDimension() + 10 + i]) > Math.PI) {
@@ -173,7 +164,6 @@ public class Variations {
                         - 2 * Math.PI * Math.signum(individual[this.cfgs.getDimension() + 10 + i]);
             }
         }
-        // System.out.println(Arrays.toString(correlationFactors));
 
         this.cfgs.setCovarianceMatrix(Arrays.copyOfRange(individual, this.cfgs.getDimension(), this.cfgs.getDimension() + 10), 
                 Arrays.copyOfRange(individual, this.cfgs.getDimension() + 10, this.cfgs.getDimension() + 10 + 
@@ -225,9 +215,9 @@ public class Variations {
             child2[i] = parent2[i];
         }
         
-        for (int i = this.cfgs.getDimension(); i < this.cfgs.getDimension() + 10; i++){
-            child1[i] = 1;
-            child2[i] = 1;
+        for (int i = this.cfgs.getDimension(); i < this.cfgs.getDimension() + 10; i++) {
+            child1[i] = this.cfgs.getInitialStepSize();
+            child2[i] = this.cfgs.getInitialStepSize();
         }
 
         for (int i = 0; i < population.length; i++) {
@@ -263,9 +253,9 @@ public class Variations {
             child2[i] = this.cfgs.getMixingFactor() * parent1[i] + (1 - this.cfgs.getMixingFactor()) * parent2[i];
         }
         
-        for (int i = this.cfgs.getDimension(); i < this.cfgs.getDimension() + 10; i++){
-            child1[i] = 1;
-            child2[i] = 1;
+        for (int i = this.cfgs.getDimension(); i < this.cfgs.getDimension() + 10; i++) {
+            child1[i] = this.cfgs.getInitialStepSize();
+            child2[i] = this.cfgs.getInitialStepSize();
         }
 
         for (int i = 0; i < population.length; i++) {
@@ -295,9 +285,9 @@ public class Variations {
             child2[i] = this.cfgs.getMixingFactor() * parent1[i] + (1 - this.cfgs.getMixingFactor()) * parent2[i];
         }
         
-        for (int i = this.cfgs.getDimension(); i < this.cfgs.getDimension() + 10; i++){
-            child1[i] = 1;
-            child2[i] = 1;
+        for (int i = this.cfgs.getDimension(); i < this.cfgs.getDimension() + 10; i++) {
+            child1[i] = this.cfgs.getInitialStepSize();
+            child2[i] = this.cfgs.getInitialStepSize();
         }
 
         for (int i = 0; i < population.length; i++) {
@@ -333,9 +323,9 @@ public class Variations {
                             - (Math.min(parent1[i], parent2[i]) - this.cfgs.getMixingFactor() * d));
         }
         
-        for (int i = this.cfgs.getDimension(); i < this.cfgs.getDimension() + 10; i++){
-            child1[i] = 1;
-            child2[i] = 1;
+        for (int i = this.cfgs.getDimension(); i < this.cfgs.getDimension() + 10; i++) {
+            child1[i] = this.cfgs.getInitialStepSize();
+            child2[i] = this.cfgs.getInitialStepSize();
         }
 
         for (int i = 0; i < population.length; i++) {
@@ -378,9 +368,9 @@ public class Variations {
             child2[i] = parent1[i];
         }
         
-        for (int i = this.cfgs.getDimension(); i < this.cfgs.getDimension() + 10; i++){
-            child1[i] = 1;
-            child2[i] = 1;
+        for (int i = this.cfgs.getDimension(); i < this.cfgs.getDimension() + 10; i++) {
+            child1[i] = this.cfgs.getInitialStepSize();
+            child2[i] = this.cfgs.getInitialStepSize();
         }
 
         for (int i = 0; i < population.length; i++) {

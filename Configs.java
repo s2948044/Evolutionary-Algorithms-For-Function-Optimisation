@@ -111,12 +111,11 @@ public class Configs {
      * A factor to measure advantage of best individual (set from 1.0 ~ 2.0)
      */
     private double s_value;
-
+    
     /**
-     * Factors indicating the correlation between each dimensions in the solution
-     * vector.
+     * The initial value of mutation step size.
      */
-    private double[] correlationFactors;
+    private double initialStepSize;
 
     /**
      * Covarience matrix for self-apative correlated mutation.
@@ -148,7 +147,6 @@ public class Configs {
         setSecondaryMutationCoefficient(0.3); // should be from 0 to 0.1
         setSecondaryMutationLearningRate(1 / Math.sqrt(2 * Math.sqrt(this.dimension)));
         setS_value(1.9); // should be in range (0, 2].
-        setCorrelationFactors(new double[this.dimension * (this.dimension - 1) / 2]);
         initCovarianceMatrix();
         setCorrelationAngle(Math.toRadians(5));
     }
@@ -219,6 +217,14 @@ public class Configs {
 
     public void setSecondaryMutationCoefficient(double secondaryMutationCoefficient) {
         this.secondaryMutationCoefficient = secondaryMutationCoefficient;
+    }
+    
+    public double getInitialStepSize() {
+        return this.initialStepSize;
+    }
+
+    public void setInitialStepSize(double initialStepSize) {
+        this.initialStepSize = initialStepSize;
     }
 
     public int getMutationSize() {
@@ -299,14 +305,6 @@ public class Configs {
 
     public void setS_value(double s_value) {
         this.s_value = s_value;
-    }
-
-    public double[] getCorrelationFactors() {
-        return this.correlationFactors;
-    }
-
-    public void setCorrelationFactors(double[] correlationFactors) {
-        this.correlationFactors = correlationFactors;
     }
 
     public void initCovarianceMatrix() {

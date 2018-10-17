@@ -40,27 +40,6 @@ public class player19 implements ContestSubmission {
         isMultimodal = Boolean.parseBoolean(props.getProperty("Multimodal"));
         hasStructure = Boolean.parseBoolean(props.getProperty("Regular"));
         isSeparable = Boolean.parseBoolean(props.getProperty("Separable"));
-
-        // Do sth with property values, e.g. specify relevant settings of your algorithm
-        // if (!isMultimodal) {
-        // if (!hasStructure){
-        // if (!isSeparable){
-        // // BentCigar
-        // }
-        // }
-        // }
-        // if (isMultimodal) {
-        // if (!hasStructure){
-        // if (!isSeparable){
-        // // KatsuuraEvaluation
-        // }
-        // }
-        // if (hasStructure){
-        // if (!isSeparable){
-        // // SchaffersEvaluation
-        // }
-        // }
-        // }
     }
 
     public void run() {
@@ -97,8 +76,10 @@ public class player19 implements ContestSubmission {
                     cfgs.setInitSigma(3);
                     cfgs.setMutationRate(0.5);
                     cfgs.setMixingFactor(0.5);
-                    cfgs.setOverallMutationCoefficient(0.7);
-                    cfgs.setSecondaryMutationCoefficient(0.7);
+                    cfgs.setOverallMutationCoefficient(0.003);
+                    cfgs.setSecondaryMutationCoefficient(0.007);
+                    cfgs.setInitialStepSize(0.01);
+                    cfgs.setMutationStepSizeBound(0.001);
                 }
             }
             if (hasStructure) {
@@ -112,6 +93,8 @@ public class player19 implements ContestSubmission {
                     cfgs.setMixingFactor(0.7);
                     cfgs.setOverallMutationCoefficient(0.3);
                     cfgs.setSecondaryMutationCoefficient(0.1);
+                    cfgs.setInitialStepSize(1);
+                    cfgs.setMutationStepSizeBound(0.1);
                 }
             }
         }
@@ -125,7 +108,6 @@ public class player19 implements ContestSubmission {
                 }
             }
         }
-        // System.out.println("Population Size " + population.length);
         resetEvals();
         Inits.updateFitness(population);
         int fitnessCounter = 0;
@@ -148,13 +130,9 @@ public class player19 implements ContestSubmission {
             }
             // Select parents
             Sels.sortbyColumn(population, population[0].length - 1);
-            // System.out.println(Arrays.toString(population));
 
             int[] parentsInd = Sels.parentSelection_Tournament(population);
-            // System.out.println(Arrays.toString(parentsInd));
 
-            // int[] parentsInd = Sels.parentSelection_Elitism(population,
-            // Initializations.RandomDistributions.UNIFORM);
             // Apply crossover
             for (int i = 0; i < cfgs.getParentSelected(); i = i + 2) {
                 if (!isMultimodal) {
@@ -182,16 +160,6 @@ public class player19 implements ContestSubmission {
                         }
                     }
                 }
-                // population = Vars.order1CrossOver(population,
-                // population[parentsInd[i]], population[parentsInd[i + 1]]);
-                // population = Vars.singleArithmeticCrossOver(population,
-                // population[parentsInd[i]], population[parentsInd[i + 1]]);
-                // population = Vars.simpleArithmeticCrossOver(population,
-                // population[parentsInd[i]], population[parentsInd[i + 1]]);
-                // population = Vars.blendCrossOver(population,
-                // population[parentsInd[i]], population[parentsInd[i + 1]]);
-                // population = Vars.wholeArithmeticCrossOver(population,
-                // population[parentsInd[i]], population[parentsInd[i + 1]]);
             }
             // Apply mutation
             for (int i = cfgs.getPopulationSize(); i < cfgs.getPopulationSize() + cfgs.getParentSelected(); i++) {
@@ -208,27 +176,16 @@ public class player19 implements ContestSubmission {
                         if (!hasStructure) {
                             if (!isSeparable) {
                                 // set the mutation operator for KatsuuraEvaluation
-                                // Vars.singleUncorrelatedMutation(population[i]);
                                 Vars.correlatedMutation(population[i]);
                             }
                         }
                         if (hasStructure) {
                             if (!isSeparable) {
-                                // System.out.println("before: " + Arrays.toString(population[i]));
                                 // set the mutation operator for SchaffersEvaluation
-                                // Vars.multiUncorrelatedMutation(population[i]);
                                 Vars.correlatedMutation(population[i]);
-                                // System.out.println("after: " + Arrays.toString(population[i]));
                             }
                         }
                     }
-                    // Vars.rnd_swap(population[i]);
-                    // Vars.uniformMutation(population[i]);
-                    // Vars.customizedMutation(population[i]);
-                    // Vars.nonUniformMutation(population[i]);
-                    // Vars.singleUncorrelatedMutation(population[i]);
-                    // Vars.multiUncorrelatedMutation(population[i]);
-                    // Vars.correlatedMutation(population[i]);
                 }
             }
             // Check fitness of unknown fuction
@@ -242,16 +199,9 @@ public class player19 implements ContestSubmission {
                     }
                 }
                 evals++;
-                //System.out.println("this is " + population[cfgs.getPopulationSize() + i][population[i].length - 1]);
             }
             // Select survivors
             population = Sels.survSelection_Elitism(population);
-            // for (int i = 0; i < population.length; i++) {
-            //     for (int j = 0; j < cfgs.getDimension() + 10; j++) {
-            //         System.out.print(population[i][j] + " ");
-            //     }
-            //     System.out.println(population[i][population[0].length - 1]);
-            // }
             currentHighest = Inits.maxScore;
             if (pastHighest == currentHighest) {
                 fitnessCounter++;
@@ -259,27 +209,32 @@ public class player19 implements ContestSubmission {
             else{
                 fitnessCounter = 0;
             }
-            // System.out.println(fitnessCounter);
-            //if (fitnessCounter >= 2 && currentHighest < 6) {
-            //    fitnessCounter = 0;
-            //    population = Inits.initPopulation(Initializations.RandomDistributions.NORMAL);
-            //    Inits.updateFitness(population);
-            //}
-            //if (fitnessCounter >= 4 && currentHighest < 7) {
-            //    fitnessCounter = 0;
-            //    population = Inits.initPopulation(Initializations.RandomDistributions.NORMAL);
-            //    Inits.updateFitness(population);
-            //}
-            //if (fitnessCounter >= 6 && currentHighest < 8) {
-            //    fitnessCounter = 0;
-            //    population = Inits.initPopulation(Initializations.RandomDistributions.NORMAL);
-            //    Inits.updateFitness(population);
-            //}
-            //if (fitnessCounter >= 8 && currentHighest < 9) {
-            //    fitnessCounter = 0;
-            //    population = Inits.initPopulation(Initializations.RandomDistributions.NORMAL);
-            //    Inits.updateFitness(population);
-            //}
+            if (isMultimodal) {
+                if (hasStructure) {
+                    if (!isSeparable) {
+                        // SchaffersEvaluation
+                        if (fitnessCounter >= 2 && currentHighest < 6) {
+                            fitnessCounter = 0;
+                            population = Inits.initPopulation(Initializations.RandomDistributions.NORMAL);
+                            Inits.updateFitness(population);
+                        }
+                        if (fitnessCounter >= 4 && currentHighest < 7) {
+                            fitnessCounter = 0;
+                            population = Inits.initPopulation(Initializations.RandomDistributions.NORMAL);
+                        }
+                        if (fitnessCounter >= 6 && currentHighest < 8) {
+                            fitnessCounter = 0;
+                            population = Inits.initPopulation(Initializations.RandomDistributions.NORMAL);
+                            Inits.updateFitness(population);
+                        }
+                        if (fitnessCounter >= 8 && currentHighest < 9) {
+                            fitnessCounter = 0;
+                            population = Inits.initPopulation(Initializations.RandomDistributions.NORMAL);
+                            Inits.updateFitness(population);
+                        }
+                    }
+                }
+            }
         }
         System.out.println(
                 "Best fitness value at evaluation " + Integer.toString(evals) + ": " + Double.toString(Inits.maxScore));
