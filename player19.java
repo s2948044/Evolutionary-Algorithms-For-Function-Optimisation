@@ -189,7 +189,13 @@ public class player19 implements ContestSubmission {
             // Check fitness of unknown fuction
             for (int i = 0; i < cfgs.getParentSelected(); i++) {
                 double[] tempPop = Arrays.copyOfRange(population[cfgs.getPopulationSize() + i], 0, cfgs.getDimension());
-                double tempEval = (double) evaluation_.evaluate(tempPop);
+                double tempEval = 0.0;
+                try {
+                    tempEval = (double) evaluation_.evaluate(tempPop);
+                } catch (NullPointerException e) {
+                    break;
+                }
+
                 population[cfgs.getPopulationSize() + i][population[i].length - 1] = tempEval;
                 if (cfgs.getDEBUG()) {
                     if (tempEval >= Inits.maxScore) {
@@ -200,38 +206,43 @@ public class player19 implements ContestSubmission {
             }
             // Select survivors
             population = Sels.survSelection_Elitism(population);
-            currentHighest = Inits.maxScore;
-            if (pastHighest == currentHighest) {
-                fitnessCounter++;
-            }
-            else {
-                fitnessCounter = 0;
-            }
-            if (isMultimodal) {
-                if (hasStructure) {
-                    if (!isSeparable) {
-                        // SchaffersEvaluation
-                        if (fitnessCounter >= 2 && currentHighest < 6) {
-                            fitnessCounter = 0;
-                            population = Inits.initPopulation(Initializations.RandomDistributions.NORMAL);
-                            Inits.updateFitness(population);
-                        }
-                        if (fitnessCounter >= 4 && currentHighest < 7) {
-                            fitnessCounter = 0;
-                            population = Inits.initPopulation(Initializations.RandomDistributions.NORMAL);
-                        }
-                        if (fitnessCounter >= 6 && currentHighest < 8) {
-                            fitnessCounter = 0;
-                            population = Inits.initPopulation(Initializations.RandomDistributions.NORMAL);
-                            Inits.updateFitness(population);
-                        }
-                        if (fitnessCounter >= 8 && currentHighest < 9) {
-                            fitnessCounter = 0;
-                            population = Inits.initPopulation(Initializations.RandomDistributions.NORMAL);
-                            Inits.updateFitness(population);
+
+            try {
+                currentHighest = Inits.maxScore;
+                if (pastHighest == currentHighest) {
+                    fitnessCounter++;
+                } else {
+                    fitnessCounter = 0;
+                }
+                if (isMultimodal) {
+                    if (hasStructure) {
+                        if (!isSeparable) {
+                            // SchaffersEvaluation
+                            if (fitnessCounter >= 2 && currentHighest < 6) {
+                                fitnessCounter = 0;
+                                population = Inits.initPopulation(Initializations.RandomDistributions.NORMAL);
+                                Inits.updateFitness(population);
+                            }
+                            if (fitnessCounter >= 4 && currentHighest < 7) {
+                                fitnessCounter = 0;
+                                population = Inits.initPopulation(Initializations.RandomDistributions.NORMAL);
+                                Inits.updateFitness(population);
+                            }
+                            if (fitnessCounter >= 6 && currentHighest < 8) {
+                                fitnessCounter = 0;
+                                population = Inits.initPopulation(Initializations.RandomDistributions.NORMAL);
+                                Inits.updateFitness(population);
+                            }
+                            if (fitnessCounter >= 8 && currentHighest < 9) {
+                                fitnessCounter = 0;
+                                population = Inits.initPopulation(Initializations.RandomDistributions.NORMAL);
+                                Inits.updateFitness(population);
+                            }
                         }
                     }
                 }
+            } catch (NullPointerException e) {
+                break;
             }
         }
         System.out.println(
