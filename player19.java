@@ -94,7 +94,11 @@ public class player19 implements ContestSubmission {
                     cfgs.setPopulationSize(500);
                     cfgs.setTournamentSize(200);
                     cfgs.setParentSelected(250);
-                    cfgs.setMutationRate(0.25);
+                    cfgs.setInitSigma(3);
+                    cfgs.setMutationRate(0.5);
+                    cfgs.setMixingFactor(0.5);
+                    cfgs.setOverallMutationCoefficient(0.7);
+                    cfgs.setSecondaryMutationCoefficient(0.7);
                 }
             }
             if (hasStructure) {
@@ -106,8 +110,8 @@ public class player19 implements ContestSubmission {
                     cfgs.setParentSelected(1000);
                     cfgs.setMutationRate(0.8);
                     cfgs.setMixingFactor(0.7);
-                    cfgs.setOverallMutationCoefficient(0.5);
-                    cfgs.setSecondaryMutationCoefficient(0.3);
+                    cfgs.setOverallMutationCoefficient(0.3);
+                    cfgs.setSecondaryMutationCoefficient(0.1);
                 }
             }
         }
@@ -256,26 +260,26 @@ public class player19 implements ContestSubmission {
                 fitnessCounter = 0;
             }
             // System.out.println(fitnessCounter);
-            if (fitnessCounter >= 2 && currentHighest < 6) {
-                fitnessCounter = 0;
-                population = Inits.initPopulation(Initializations.RandomDistributions.NORMAL);
-                Inits.updateFitness(population);
-            }
-            if (fitnessCounter >= 4 && currentHighest < 7) {
-                fitnessCounter = 0;
-                population = Inits.initPopulation(Initializations.RandomDistributions.NORMAL);
-                Inits.updateFitness(population);
-            }
-            if (fitnessCounter >= 6 && currentHighest < 8) {
-                fitnessCounter = 0;
-                population = Inits.initPopulation(Initializations.RandomDistributions.NORMAL);
-                Inits.updateFitness(population);
-            }
-            if (fitnessCounter >= 8 && currentHighest < 9) {
-                fitnessCounter = 0;
-                population = Inits.initPopulation(Initializations.RandomDistributions.NORMAL);
-                Inits.updateFitness(population);
-            }
+            //if (fitnessCounter >= 2 && currentHighest < 6) {
+            //    fitnessCounter = 0;
+            //    population = Inits.initPopulation(Initializations.RandomDistributions.NORMAL);
+            //    Inits.updateFitness(population);
+            //}
+            //if (fitnessCounter >= 4 && currentHighest < 7) {
+            //    fitnessCounter = 0;
+            //    population = Inits.initPopulation(Initializations.RandomDistributions.NORMAL);
+            //    Inits.updateFitness(population);
+            //}
+            //if (fitnessCounter >= 6 && currentHighest < 8) {
+            //    fitnessCounter = 0;
+            //    population = Inits.initPopulation(Initializations.RandomDistributions.NORMAL);
+            //    Inits.updateFitness(population);
+            //}
+            //if (fitnessCounter >= 8 && currentHighest < 9) {
+            //    fitnessCounter = 0;
+            //    population = Inits.initPopulation(Initializations.RandomDistributions.NORMAL);
+            //    Inits.updateFitness(population);
+            //}
         }
         System.out.println(
                 "Best fitness value at evaluation " + Integer.toString(evals) + ": " + Double.toString(Inits.maxScore));
