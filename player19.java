@@ -57,11 +57,11 @@ public class player19 implements ContestSubmission {
             if (!hasStructure) {
                 if (!isSeparable) {
                     // set the customised parameters (if necessary) for BentCigar
-                    System.out.println("BentCigar");
                     cfgs.setPopulationSize(100);
                     cfgs.setTournamentSize(10);
                     cfgs.setParentSelected(60);
                     cfgs.setMutationRate(0.8);
+                    cfgs.setMixingFactor(0.5);
                 }
             }
         }
@@ -69,7 +69,6 @@ public class player19 implements ContestSubmission {
             if (!hasStructure) {
                 if (!isSeparable) {
                     // set the customised parameters (if necessary) for KatsuuraEvaluation
-                    System.out.println("KatsuuraEvaluation");
                     cfgs.setPopulationSize(2000);
                     cfgs.setTournamentSize(200);
                     cfgs.setParentSelected(1000);
@@ -85,7 +84,6 @@ public class player19 implements ContestSubmission {
             if (hasStructure) {
                 if (!isSeparable) {
                     // set the customised parameters (if necessary) SchaffersEvaluation
-                    System.out.println("SchaffersEvaluation");
                     cfgs.setPopulationSize(2000);
                     cfgs.setTournamentSize(100);
                     cfgs.setParentSelected(1000);
@@ -206,7 +204,7 @@ public class player19 implements ContestSubmission {
             if (pastHighest == currentHighest) {
                 fitnessCounter++;
             }
-            else{
+            else {
                 fitnessCounter = 0;
             }
             if (isMultimodal) {
