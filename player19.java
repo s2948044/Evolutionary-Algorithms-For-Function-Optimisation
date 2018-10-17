@@ -70,9 +70,9 @@ public class player19 implements ContestSubmission {
                 if (!isSeparable) {
                     // set the customised parameters (if necessary) for KatsuuraEvaluation
                     System.out.println("KatsuuraEvaluation");
-                    cfgs.setPopulationSize(500);
+                    cfgs.setPopulationSize(2000);
                     cfgs.setTournamentSize(200);
-                    cfgs.setParentSelected(250);
+                    cfgs.setParentSelected(1000);
                     cfgs.setInitSigma(3);
                     cfgs.setMutationRate(0.5);
                     cfgs.setMixingFactor(0.5);
