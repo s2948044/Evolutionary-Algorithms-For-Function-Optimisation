@@ -172,11 +172,7 @@ public class player19 implements ContestSubmission {
                 try {
                     tempEval = (double) evaluation_.evaluate(tempPop);
                 } catch (NullPointerException e) {
-                    cfgs.append_mbfdata(overallMaxScore);
-                    cfgs.make_data_jstring(cfgs.get_mbfdata());
-                    String json = cfgs.get_data_jstring();
-                    System.out.println(json);
-                    System.exit(1);
+                    break;
                 }
 
                 population[cfgs.getPopulationSize() + i][population[i].length - 1] = tempEval;
@@ -197,8 +193,7 @@ public class player19 implements ContestSubmission {
                 currentHighest = Inits.maxScore;
                 if (pastHighest == currentHighest) {
                     fitnessCounter++;
-                }
-                else {
+                } else {
                     fitnessCounter = 0;
                 }
                 if (isMultimodal) {
@@ -229,11 +224,7 @@ public class player19 implements ContestSubmission {
                     }
                 }
             } catch (NullPointerException e) {
-                cfgs.append_mbfdata(overallMaxScore);
-                cfgs.make_data_jstring(cfgs.get_mbfdata());
-                String json = cfgs.get_data_jstring();
-                System.out.println(json);
-                System.exit(1);
+                break;
             }
         }
 
