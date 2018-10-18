@@ -132,12 +132,10 @@ public class Configs {
 
     public void initParams() {
         setInitSigma(2);
-        setMutationSize(1);
         setSingleMutationLearningRate(1 / Math.sqrt(this.dimension));
         setMutationLearningRate(1 / Math.sqrt(2 * this.dimension));
         setSecondaryMutationLearningRate(1 / Math.sqrt(2 * Math.sqrt(this.dimension)));
         setS_value(1.9); // should be in range (0, 2].
-        setInitialStepSize(1);
         initCovarianceMatrix();
         setCorrelationAngle(Math.toRadians(5));
     }
