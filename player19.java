@@ -59,13 +59,13 @@ public class player19 implements ContestSubmission {
                 if (!isSeparable) {
                     // set the customised parameters (if necessary) for BentCigar
                     cfgs.setEvalChoice(0);
-                    cfgs.setPopulationSize(100);
-                    cfgs.setTournamentSize(10);
-                    cfgs.setParentSelected(60);
-                    cfgs.setInitSigma(1);
+                    cfgs.setPopulationSize(500);
+                    cfgs.setTournamentSize(100);
+                    cfgs.setParentSelected(250);
+                    cfgs.setInitSigma(2);
                     cfgs.setMutationRate(0.8);
-                    cfgs.setInitialStepSize(0.01);
-                    cfgs.setMutationStepSizeBound(0.001);
+                    cfgs.setInitialStepSize(0.1);
+                    cfgs.setMutationStepSizeBound(0.01);
                 }
             }
         }

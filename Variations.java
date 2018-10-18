@@ -394,10 +394,9 @@ public class Variations {
 
             case 0:
                 // BentCigar
-                // TODO: Update best params correponding to different combiantions.
-                cfgs.setMixingFactor(0.7);
-                cfgs.setOverallMutationCoefficient(0.3);
-                cfgs.setSecondaryMutationCoefficient(0.1);
+                cfgs.setMixingFactor(0.6);
+                cfgs.setOverallMutationCoefficient(0.03);
+                cfgs.setSecondaryMutationCoefficient(0.01);
                 break;
             case 1:
                 // Katsuura
@@ -423,10 +422,9 @@ public class Variations {
 
             case 0:
                 // BentCigar
-                // TODO: Update best params correponding to different combiantions.
-                cfgs.setMixingFactor(0.4);
-                cfgs.setOverallMutationCoefficient(0.5);
-                cfgs.setSecondaryMutationCoefficient(0.1);
+                cfgs.setMixingFactor(0.3);
+                cfgs.setOverallMutationCoefficient(0.07);
+                cfgs.setSecondaryMutationCoefficient(0.05);
                 break;
             case 1:
                 // Katsuura
@@ -452,10 +450,9 @@ public class Variations {
 
             case 0:
                 // BentCigar
-                // TODO: Update best params correponding to different combiantions.
-                cfgs.setMixingFactor(0.7);
-                cfgs.setOverallMutationCoefficient(0.5);
-                cfgs.setSecondaryMutationCoefficient(0.1);
+                cfgs.setMixingFactor(0.6);
+                cfgs.setOverallMutationCoefficient(0.03);
+                cfgs.setSecondaryMutationCoefficient(0.07);
                 break;
             case 1:
                 // Katsuura
