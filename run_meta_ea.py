@@ -18,10 +18,13 @@ def main():
     ea = cma_es()
     ea.compile()
     # Set ea parameters.
-    ea.epochs = 10
     ea.dimension = 3
     ea.evalChoice = 2
-    ea.evals_limit = 200
+    if ea.evalChoice == 1:
+        # Katsuura
+        ea.epochs = 5
+    else:
+        ea.epochs = 10
     ea.gens_limit = 20
 
     ea.lambda_ea = 4 + math.floor(3 * math.log(ea.dimension))
@@ -115,7 +118,7 @@ def main():
             evaluation_time = time.time()
             population[k].fitness = ea.evaluation(ea.geno_to_pheno(population[k].x))
             print("Finished evaluating solution: " + str(population[k]))
-            print("Time elpased: {}s".format(time.time() - evaluation_time))
+            print("Time elapsed: {}s".format(time.time() - evaluation_time))
 
             if population[k].fitness > ea.bestScore:
                 ea.bestScore = population[k].fitness
@@ -165,20 +168,27 @@ def main():
     print("Best score: {}".format(ea.bestScore))
     print("Best solution: {}".format(ea.bestSolution))
 
-    if ea.evalChoice == 2:
-        filenames = os.listdir("./meta_results/Schaffers/")
+    if ea.evalChoice == 0:
+        filenames = os.listdir("./meta_results/BentCigar/")
         savenum = int(filenames[-1].split('-')[1][0:3])
         savenum += 1
 
         my_df = pd.DataFrame(BF_gen)
-        my_df.to_csv('meta_results/Schaffers/output-'+str("%03d" % savenum)+'.csv', index=False, header=['generation', 'P_comb1', 'P_comb2', 'P_comb3', 'MBF'])
-    else:
+        my_df.to_csv('meta_results/BentCigar/output-'+str("%03d" % savenum)+'.csv', index=False, header=['generation', 'P_comb1', 'P_comb2', 'P_comb3', 'MBF'])
+    elif ea.evalChoice == 1:
         filenames = os.listdir("./meta_results/Katsuura/")
         savenum = int(filenames[-1].split('-')[1][0:3])
         savenum += 1
 
         my_df = pd.DataFrame(BF_gen)
         my_df.to_csv('meta_results/Katsuura/output-'+str("%03d" % savenum)+'.csv', index=False, header=['generation', 'P_comb1', 'P_comb2', 'P_comb3', 'MBF'])
+    else:
+        filenames = os.listdir("./meta_results/Schaffers/")
+        savenum = int(filenames[-1].split('-')[1][0:3])
+        savenum += 1
+
+        my_df = pd.DataFrame(BF_gen)
+        my_df.to_csv('meta_results/Schaffers/output-'+str("%03d" % savenum)+'.csv', index=False, header=['generation', 'P_comb1', 'P_comb2', 'P_comb3', 'MBF'])
 
 
 if __name__ == "__main__":
