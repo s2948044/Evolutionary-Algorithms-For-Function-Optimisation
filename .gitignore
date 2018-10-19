@@ -22,3 +22,9 @@ testrun.jar
 trivial_tuning_crossover.py
 trivial_tuning_crossover.py
 trivial_tuning_crossover.py
+csv/BlendCorrelatedMBF.csv
+csv/OriginalOutput.csv
+csv/SimpleCorrelatedMBF.csv
+csv/WholeCorrelatedMBF.csv
+testrun.jar
+trivial_tuning_crossover.py
