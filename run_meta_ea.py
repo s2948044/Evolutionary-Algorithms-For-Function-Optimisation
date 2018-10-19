@@ -19,7 +19,7 @@ def main():
     ea.compile()
     # Set ea parameters.
     ea.dimension = 3
-    ea.evalChoice = 2
+    ea.evalChoice = 0  # 0 for BentCigar, 1 for Katsuura, 2 for Schaffers
     if ea.evalChoice == 1:
         # Katsuura
         ea.epochs = 5
