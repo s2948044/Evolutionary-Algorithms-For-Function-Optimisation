@@ -219,7 +219,6 @@ public class Configs {
         setInitSigma(2);
         setXoverChoice(Integer.parseInt(System.getProperty("xoverChoice")));
         setMutationChoice(Integer.parseInt(System.getProperty("mutationChoice")));
-        setMutationSize(1);
         setSingleMutationCoefficient(Double.parseDouble(System.getProperty("SingleMC"))); // should be from 0 to 0.1
         setSingleMutationLearningRate(1 / Math.sqrt(this.dimension));
         setOverallMutationCoefficient(Double.parseDouble(System.getProperty("OverallMC"))); // should be from 0 to 0.1
@@ -228,7 +227,6 @@ public class Configs {
         setSecondaryMutationCoefficient(Double.parseDouble(System.getProperty("SecondaryMC"))); // should be from 0 to 0.1
         setSecondaryMutationLearningRate(1 / Math.sqrt(2 * Math.sqrt(this.dimension)));
         setS_value(1.9); // should be in range (0, 2].
-        setInitialStepSize(1);
         initCovarianceMatrix();
         setCorrelationAngle(Math.toRadians(5));
     }

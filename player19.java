@@ -58,10 +58,12 @@ public class player19 implements ContestSubmission {
             if (!hasStructure) {
                 if (!isSeparable) {
                     // set the customised parameters (if necessary) for BentCigar
-                    cfgs.setPopulationSize(100);
-                    cfgs.setTournamentSize(10);
-                    cfgs.setParentSelected(60);
+                    cfgs.setPopulationSize(500);
+                    cfgs.setTournamentSize(100);
+                    cfgs.setParentSelected(250);
                     cfgs.setMutationRate(0.8);
+                    cfgs.setInitialStepSize(0.1);
+                    cfgs.setMutationStepSizeBound(0.01);
                 }
             }
         }
@@ -172,11 +174,7 @@ public class player19 implements ContestSubmission {
                 try {
                     tempEval = (double) evaluation_.evaluate(tempPop);
                 } catch (NullPointerException e) {
-                    cfgs.append_mbfdata(overallMaxScore);
-                    cfgs.make_data_jstring(cfgs.get_mbfdata());
-                    String json = cfgs.get_data_jstring();
-                    System.out.println(json);
-                    System.exit(1);
+                    break;
                 }
 
                 population[cfgs.getPopulationSize() + i][population[i].length - 1] = tempEval;
@@ -197,8 +195,7 @@ public class player19 implements ContestSubmission {
                 currentHighest = Inits.maxScore;
                 if (pastHighest == currentHighest) {
                     fitnessCounter++;
-                }
-                else {
+                } else {
                     fitnessCounter = 0;
                 }
                 if (isMultimodal) {
@@ -213,6 +210,7 @@ public class player19 implements ContestSubmission {
                             if (fitnessCounter >= 4 && currentHighest < 7) {
                                 fitnessCounter = 0;
                                 population = Inits.initPopulation(Initializations.RandomDistributions.NORMAL);
+                                Inits.updateFitness(population);
                             }
                             if (fitnessCounter >= 6 && currentHighest < 8) {
                                 fitnessCounter = 0;
@@ -228,11 +226,7 @@ public class player19 implements ContestSubmission {
                     }
                 }
             } catch (NullPointerException e) {
-                cfgs.append_mbfdata(overallMaxScore);
-                cfgs.make_data_jstring(cfgs.get_mbfdata());
-                String json = cfgs.get_data_jstring();
-                System.out.println(json);
-                System.exit(1);
+                break;
             }
         }
 
