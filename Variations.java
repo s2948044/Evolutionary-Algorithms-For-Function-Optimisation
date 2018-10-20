@@ -402,8 +402,8 @@ public class Variations {
                 // Katsuura
                 // TODO: Update best params correponding to different combinations.
                 cfgs.setMixingFactor(0.7);
-                cfgs.setOverallMutationCoefficient(0.3);
-                cfgs.setSecondaryMutationCoefficient(0.1);
+                cfgs.setOverallMutationCoefficient(0.005);
+                cfgs.setSecondaryMutationCoefficient(0.005);
                 break;
             case 2:
                 // Schaffers F7
@@ -429,9 +429,9 @@ public class Variations {
             case 1:
                 // Katsuura
                 // TODO: Update best params correponding to different combinations.
-                cfgs.setMixingFactor(0.4);
-                cfgs.setOverallMutationCoefficient(0.5);
-                cfgs.setSecondaryMutationCoefficient(0.1);
+                cfgs.setMixingFactor(0.7);
+                cfgs.setOverallMutationCoefficient(0.007);
+                cfgs.setSecondaryMutationCoefficient(0.003);
                 break;
             case 2:
                 // Schaffers F7
@@ -457,9 +457,9 @@ public class Variations {
             case 1:
                 // Katsuura
                 // TODO: Update best params correponding to different combinations.
-                cfgs.setMixingFactor(0.7);
-                cfgs.setOverallMutationCoefficient(0.5);
-                cfgs.setSecondaryMutationCoefficient(0.1);
+                cfgs.setMixingFactor(0.3);
+                cfgs.setOverallMutationCoefficient(0.007);
+                cfgs.setSecondaryMutationCoefficient(0.001);
                 break;
             case 2:
                 // Schaffers F7
