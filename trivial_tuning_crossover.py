@@ -22,7 +22,7 @@ mutationChoices = [6]
 # varchoices = [0, 1]
 
 evalChoices = [0, 1, 2]
-epochs = 5
+epochs = 1
 
 evaluations = ["BentCigarFunction", "KatsuuraEvaluation", "SchaffersEvaluation"]
 xoverNames = ["singleArithmeticCrossOver", "simpleArithmeticCrossOver", "wholeArithmeticCrossOver", "blendCrossOver"]
@@ -33,7 +33,7 @@ mutationNames = ["rnd_swap", "uniformMutation", "nonUniformMutation", "customize
 
 
 def make():
-    subprocess.run("makeme")
+    subprocess.run("mingw32-make")
 
 # run algorithm with parameter values. Returns json string
 
@@ -66,17 +66,14 @@ def main():
                         BF = []
                         for i in range(epochs):
                             # make json object
-                            print("mix:", mix , "xoverChoice:", xoverChoice,  "Overall:" ,  p2 , "Secondary:" , p3  , "run:" , i + 1)
+                            print("mix:", mix, "xoverChoice:", xoverChoice,  "Overall:",  p2, "Secondary:", p3, "run:", i + 1)
                             js = json.loads(runEA(mixingFactor=mix, xoverChoice=xoverChoice, mutationChoice=mutationChoice,
                                                   evalChoice=evalChoice, SingleMC=0.0, OverallMC=p2, SecondaryMC=p3))
-                            print("epochs loop")
                             # y = js['data']['y']
                             y = js['data']['bf']
                             BF.append(y)
                         MBF.append([('%f' % np.mean(BF)), xoverChoice, mutationChoice, mix, "-", p2, p3])
-                        print("p3 loop")
-                    print("p2 loop")
-                print("mix loop")
+                        print(MBF)
 
     filenames = os.listdir("./csv")
     # print(filenames)
