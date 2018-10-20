@@ -3,9 +3,6 @@ import umontreal.ssj.rng.*;
 import umontreal.ssj.randvar.*;
 import umontreal.ssj.randvarmulti.*;
 import cern.colt.matrix.*;
-// import org.apache.commons.math3.distribution.MultivariateNormalDistribution;
-// import org.apache.commons.math3.random.JDKRandomGenerator;
-// import org.apache.commons.math3.random.RandomGenerator;
 
 public class Variations {
     private Configs cfgs;
@@ -52,11 +49,9 @@ public class Variations {
      */
     public void nonUniformMutation(double[] individual) {
         for (int i = 0; i < this.cfgs.getDimension(); i++) {
-            int counter = 0;
             double temp = individual[i];
             individual[i] = individual[i] + new Random().nextGaussian() * individual[this.cfgs.getDimension()];
-            while ((individual[i] > 5 || individual[i] < -5) && counter < 5) {
-                counter++;
+            while (individual[i] > 5 || individual[i] < -5) {
                 individual[i] = temp;
                 individual[i] = individual[i] + new Random().nextGaussian() * individual[this.cfgs.getDimension()];
             }
@@ -105,11 +100,9 @@ public class Variations {
             individual[this.cfgs.getDimension()] = this.cfgs.getMutationStepSizeBound();
         }
         for (int i = 0; i < this.cfgs.getDimension(); i++) {
-            int counter = 0;
             double temp = individual[i];
             individual[i] = individual[i] + individual[this.cfgs.getDimension()] * new Random().nextGaussian();
-            while ((individual[i] > 5 || individual[i] < -5) && counter < 5) {
-                counter++;
+            while (individual[i] > 5 || individual[i] < -5) {
                 individual[i] = temp;
                 individual[i] = individual[i] + individual[this.cfgs.getDimension()] * new Random().nextGaussian();
             }
@@ -124,7 +117,6 @@ public class Variations {
     public void multiUncorrelatedMutation(double[] individual) {
         double overallNormalDist = new Random().nextGaussian();
         for (int i = 0; i < this.cfgs.getDimension(); i++) {
-            int counter = 0;
             individual[this.cfgs.getDimension() + i] = individual[this.cfgs.getDimension() + i] * Math.exp(
                     this.cfgs.getMutationLearningRate() * this.cfgs.getOverallMutationCoefficient() * overallNormalDist
                             + this.cfgs.getSecondaryMutationLearningRate() * this.cfgs.getSecondaryMutationCoefficient()
@@ -134,8 +126,7 @@ public class Variations {
             }
             double temp = individual[i];
             individual[i] = individual[i] + individual[this.cfgs.getDimension() + i] * new Random().nextGaussian();
-            while ((individual[i] > 5 || individual[i] < -5) && counter < 5) {
-                counter++;
+            while (individual[i] > 5 || individual[i] < -5) {
                 individual[i] = temp;
                 individual[i] = individual[i] + individual[this.cfgs.getDimension() + i] * new Random().nextGaussian();
             }
@@ -169,18 +160,14 @@ public class Variations {
                 Arrays.copyOfRange(individual, this.cfgs.getDimension() + 10, this.cfgs.getDimension() + 10 + 
                         this.cfgs.getDimension() * (this.cfgs.getDimension() - 1) / 2));
         RandomStream stream = new MRG31k3p();
-        // RandomStream stream = new MRG32k3a();
-        // RandomStream stream = new LFSR113();
         NormalGen generator1 = new NormalGen(stream);
         MultinormalPCAGen generator2 = new MultinormalPCAGen(generator1, means, this.cfgs.getCovarienceMatrix());
         double[] tmp = new double[this.cfgs.getDimension()];
         generator2.nextPoint(tmp);
         for (int i = 0; i < this.cfgs.getDimension(); i++) {
-            int counter = 0;
             double temp = individual[i];
             individual[i] = individual[i] + tmp[i];
-            while ((individual[i] > 5 || individual[i] < -5) && counter < 5) {
-                counter++;
+            while (individual[i] > 5 || individual[i] < -5) {
                 individual[i] = temp;
                 generator2.nextPoint(tmp);
                 individual[i] = individual[i] + tmp[i];
