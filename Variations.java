@@ -3,9 +3,6 @@ import umontreal.ssj.rng.*;
 import umontreal.ssj.randvar.*;
 import umontreal.ssj.randvarmulti.*;
 import cern.colt.matrix.*;
-// import org.apache.commons.math3.distribution.MultivariateNormalDistribution;
-// import org.apache.commons.math3.random.JDKRandomGenerator;
-// import org.apache.commons.math3.random.RandomGenerator;
 
 public class Variations {
     private Configs cfgs;
@@ -169,8 +166,6 @@ public class Variations {
                 Arrays.copyOfRange(individual, this.cfgs.getDimension() + 10, this.cfgs.getDimension() + 10 + 
                         this.cfgs.getDimension() * (this.cfgs.getDimension() - 1) / 2));
         RandomStream stream = new MRG31k3p();
-        // RandomStream stream = new MRG32k3a();
-        // RandomStream stream = new LFSR113();
         NormalGen generator1 = new NormalGen(stream);
         MultinormalPCAGen generator2 = new MultinormalPCAGen(generator1, means, this.cfgs.getCovarienceMatrix());
         double[] tmp = new double[this.cfgs.getDimension()];
