@@ -18,5 +18,3 @@ operators.
 2. Run with java -jar testrun.jar -submission=player19 -evaluation=KatsuuraEvaluation -seed=1
     or java -jar testrun.jar -submission=player19 -evaluation=SchaffersEvaluation -seed=1
     or java -jar testrun.jar -submission=player19 -evaluation=BentCigarFunction -seed=1
-
-Thus, the benchmark is Simple x Correlated (MBF = 5.2050985)
