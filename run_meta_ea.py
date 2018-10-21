@@ -15,8 +15,8 @@ evalChoices = [0, 1, 2]
 
 
 def main():
-    ea = cma_es()
-    ea.compile(make="mingw32-make")  # Set your make.
+    ea = cma_es(make="mingw32-make")  # Set your make.
+    ea.compile()
     # Set ea parameters.
     ea.dimension = 3
     ea.evalChoice = 1  # 0 for BentCigar, 1 for Katsuura, 2 for Schaffers
