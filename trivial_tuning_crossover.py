@@ -22,7 +22,7 @@ mutationChoices = [6]
 # varchoices = [0, 1]
 
 evalChoices = [0, 1, 2]
-epochs = 1
+epochs = 5
 
 evaluations = ["BentCigarFunction", "KatsuuraEvaluation", "SchaffersEvaluation"]
 xoverNames = ["singleArithmeticCrossOver", "simpleArithmeticCrossOver", "wholeArithmeticCrossOver", "blendCrossOver"]
