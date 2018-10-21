@@ -22,3 +22,8 @@ Thus, the benchmark is Simple x Correlated (MBF = 8.662277)
 Thus, the benchmark is Simple x Correlated (MBF = 9.991142)
 
 ### Results for Katsuura
+1. Simple x Correlated: Best setting is at mixing factor = 0.7, p2 = 0.005 and p3 = 0.005. (MBF = 5.2050985)
+2. Whole x Correlated: Best setting is at mixing factor = 0.1, p2 = 0.003 and p3 = 0.003. (MBF = 4.165157)
+3. Blend x Correlated: Best setting is at mixing factor = 0.3, p2 = 0.007 and p3 = 0.001. (MBF = 4.8280735)
+
+Thus, the benchmark is Simple x Correlated (MBF = 5.2050985)

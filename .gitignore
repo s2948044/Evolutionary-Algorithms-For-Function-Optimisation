@@ -6,4 +6,30 @@ tmp/
 *.tmp
 .DS_Store
 *.pyc
+<<<<<<< HEAD
 __pycache__
+=======
+__pycache__
+trivial_tuning_crossover.py
+testrun.jar
+csv/output-009.csv
+csv/output-008.csv
+csv/output-007.csv
+csv/output-006.csv
+csv/output-005.csv
+csv/output-004.csv
+csv/output-003.csv
+csv/output-002.csv
+csv/output-001.csv
+testrun.jar
+trivial_tuning_crossover.py
+trivial_tuning_crossover.py
+trivial_tuning_crossover.py
+csv/BlendCorrelatedMBF.csv
+csv/OriginalOutput.csv
+csv/SimpleCorrelatedMBF.csv
+csv/WholeCorrelatedMBF.csv
+testrun.jar
+trivial_tuning_crossover.py
+testrun.jar
+>>>>>>> f9c96046962fbb0663f7efc3d07cf4b9bc01f114
