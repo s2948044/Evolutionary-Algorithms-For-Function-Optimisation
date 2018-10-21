@@ -16,5 +16,7 @@ operators.
 ### Compile
 1. Under the main folder, use the Makefile (command "make") to compile.
 2. Run with java -jar testrun.jar -submission=player19 -evaluation=KatsuuraEvaluation -seed=1
+    
     or java -jar testrun.jar -submission=player19 -evaluation=SchaffersEvaluation -seed=1
+    
     or java -jar testrun.jar -submission=player19 -evaluation=BentCigarFunction -seed=1
