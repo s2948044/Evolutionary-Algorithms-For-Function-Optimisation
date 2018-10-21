@@ -16,13 +16,13 @@ evalChoices = [0, 1, 2]
 
 def main():
     ea = cma_es()
-    ea.compile()
+    ea.compile(make="mingw32-make")  # Set your make.
     # Set ea parameters.
     ea.dimension = 3
     ea.evalChoice = 1  # 0 for BentCigar, 1 for Katsuura, 2 for Schaffers
     if ea.evalChoice == 1:
         # Katsuura
-        ea.epochs = 1
+        ea.epochs = 5
     else:
         ea.epochs = 10
     ea.gens_limit = 20
